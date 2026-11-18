@@ -4,6 +4,8 @@ import EXCEPCIONES.ParametroInvalidoException;
 import EXCEPCIONES.ParametroNullException;
 import POJO.Cliente;
 
+import java.sql.SQLException;
+
 
 public class ClienteService {
 
@@ -30,4 +32,27 @@ public class ClienteService {
         return dao.insertar(c);
 
     }
+
+    public Boolean modificar(Cliente c){
+        if (c == null) {
+            throw new ParametroNullException("El cliente es NULO");
+        }
+        if (c.getDireccion() == null) {
+            throw new ParametroNullException("La direccion es NULA");
+        }
+        if(c.getIdUsuario()<=0){
+            throw new ParametroInvalidoException("El id es invalido");
+        }
+
+        return dao.modificar(c);
+    }
+
+    public Boolean eliminar(Cliente c) throws SQLException {
+
+        //TODO no tiene que ser NULL, TIENE Q EXISTIR
+
+        return dao.eliminar(c);
+    }
+
+
 }
