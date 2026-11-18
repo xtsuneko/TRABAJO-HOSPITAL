@@ -49,5 +49,30 @@ public class PersonaDao {
         return false;
     }
 
+    public Boolean modificar(Persona p) {
+
+        String sql = "UPDATE persona SET  nombre = ?, apellido = ? , telefono = ? WHERE dni = ?";
+
+        try (Connection con = DriverManager.getConnection(url, user, pass)) {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, p.getNombre());
+            ps.setString(2, p.getApellido());
+            ps.setString(3, p.getTelefono());
+            ps.setString(4, p.getDni());
+
+            int filasModificadas= ps.executeUpdate();
+            return filasModificadas > 0;
+        } catch (
+                SQLException e) {
+            System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+
+
+
 
 }

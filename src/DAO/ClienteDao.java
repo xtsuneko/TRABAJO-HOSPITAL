@@ -25,7 +25,7 @@ public class ClienteDao {
             ResultSet rs = psID.executeQuery();
             if (rs.next()) {
                 int ultimoId = rs.getInt(1);
-                c.setIdUsuario(ultimoId);
+                c.setIdCliente(ultimoId);
                 return ultimoId;
             }
 
@@ -40,11 +40,11 @@ public class ClienteDao {
 
     public boolean eliminar(Cliente c) throws SQLException {
 
-        String sql = "DELETE FROM cliente WHERE id_usuario = ?";
+        String sql = "DELETE FROM cliente WHERE id = ?";
 
         try (Connection con = DriverManager.getConnection(url, user, pass)) {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, c.getIdUsuario());
+            ps.setInt(1, c.getIdCliente());
 
             int filasEliminadas = ps.executeUpdate();
             return filasEliminadas > 0;
@@ -58,5 +58,25 @@ public class ClienteDao {
     }
 
 
+    public Boolean modificar(Cliente c) {
+
+        String sql = "UPDATE cliente SET direccion = ?, id_usuario = ?  WHERE id = ?";
+
+        try (Connection con = DriverManager.getConnection(url, user, pass)) {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, c.getDireccion());
+            ps.setInt(2, c.getIdUsuario());
+            ps.setInt(3, c.getIdCliente());
+
+            int filasModificadas= ps.executeUpdate();
+            return filasModificadas > 0;
+        } catch (
+                SQLException e) {
+            System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 
 }

@@ -1,4 +1,5 @@
 package DAO;
+import POJO.Persona;
 import POJO.Personal;
 import POJO.Usuario;
 
@@ -26,7 +27,7 @@ public class PersonalDao {
             ResultSet rs = psID.executeQuery();
             if (rs.next()) {
                 int ultimoId = rs.getInt(1);
-                p.setIdUsuario(ultimoId);
+                p.setIdPersonal(ultimoId);
                 return ultimoId;
             }
 
@@ -41,14 +42,36 @@ public class PersonalDao {
 
     public boolean eliminar(Personal p) throws SQLException {
 
-        String sql = "DELETE FROM personal WHERE id_usuario = ?";
+        String sql = "DELETE FROM personal WHERE id = ?";
 
         try (Connection con = DriverManager.getConnection(url, user, pass)) {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, p.getIdUsuario());
+            ps.setInt(1, p.getIdPersonal());
 
             int filasEliminadas = ps.executeUpdate();
             return filasEliminadas > 0;
+        } catch (
+                SQLException e) {
+            System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public Boolean modificar(Personal p) {
+
+        String sql = "UPDATE personal SET  sueldo = ?, horario_laboral = ?, id_usuario = ? WHERE id = ?";
+
+        try (Connection con = DriverManager.getConnection(url, user, pass)) {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setDouble(1, p.getSueldo());
+            ps.setInt(2, p.getHorarioLaboral().ordinal());
+            ps.setInt(3, p.getIdUsuario());
+            ps.setInt(4, p.getIdPersonal());
+
+            int filasModificadas= ps.executeUpdate();
+            return filasModificadas > 0;
         } catch (
                 SQLException e) {
             System.out.println("Error al conectar a la base de datos: " + e.getMessage());

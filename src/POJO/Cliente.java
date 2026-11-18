@@ -3,6 +3,7 @@ package POJO;
 public class Cliente extends  Usuario{
 
     private String direccion;
+    private int idCliente;
 
     //----CONSTRUCTORES----
 
@@ -24,6 +25,13 @@ public class Cliente extends  Usuario{
         this.direccion = direccion;
     }
 
+    public int getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
+    }
 
     //----METODOS----
     @Override

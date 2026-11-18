@@ -42,7 +42,7 @@ public class UsuarioDao {
 
     public boolean eliminar(Usuario u) throws SQLException {
 
-        String sql = "DELETE FROM usuario WHERE id_usuario = ?";
+        String sql = "DELETE FROM usuario WHERE id = ?";
 
         try (Connection con = DriverManager.getConnection(url, user, pass)) {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -59,6 +59,27 @@ public class UsuarioDao {
         return false;
     }
 
+    public Boolean modificar(Usuario u) {
+
+        String sql = "UPDATE usuario SET  email = ?, password = ?, dni_persona=? WHERE id = ?";
+
+        try (Connection con = DriverManager.getConnection(url, user, pass)) {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, u.getEmail());
+            ps.setString(2, u.getPassword());
+            ps.setString(3, u.getDni());
+            ps.setInt(4, u.getIdUsuario());
+
+            int filasModificadas= ps.executeUpdate();
+            return filasModificadas > 0;
+        } catch (
+                SQLException e) {
+            System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 
 
 }
