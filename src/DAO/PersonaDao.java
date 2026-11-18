@@ -15,7 +15,6 @@ public class PersonaDao {
         String sqlInsert = "INSERT INTO persona (dni, nombre, apellido, telefono) VALUES (?, ?, ?, ?)";
 
         try (Connection con = DriverManager.getConnection(url, user, pass)) {
-            System.out.println("¡Conectado!");
             PreparedStatement ps = con.prepareStatement(sqlInsert);
             ps.setString(1, p.getDni());
             ps.setString(2, p.getNombre());
@@ -31,8 +30,24 @@ public class PersonaDao {
 
     }
 
+    public boolean eliminar(Persona p) throws SQLException {
 
+        String sql = "DELETE FROM persona WHERE dni = ?";
 
+        try (Connection con = DriverManager.getConnection(url, user, pass)) {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, p.getDni());
+
+            int filasEliminadas = ps.executeUpdate();
+            return filasEliminadas > 0;
+        } catch (
+                SQLException e) {
+            System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 
 
 }

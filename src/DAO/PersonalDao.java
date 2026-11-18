@@ -1,5 +1,7 @@
 package DAO;
 import POJO.Personal;
+import POJO.Usuario;
+
 import java.sql.*;
 
 public class PersonalDao {
@@ -14,7 +16,6 @@ public class PersonalDao {
         String sqlGetId = "SELECT LAST_INSERT_ID()";
 
         try (Connection con = DriverManager.getConnection(url, user, pass)) {
-            System.out.println("¡Conectado!");
             PreparedStatement ps = con.prepareStatement(sqlInsert);
             ps.setDouble(1, p.getSueldo());
             ps.setInt(2, p.getHorarioLaboral().ordinal());
@@ -38,6 +39,24 @@ public class PersonalDao {
         return -1;
     }
 
+    public boolean eliminar(Personal p) throws SQLException {
+
+        String sql = "DELETE FROM personal WHERE id_usuario = ?";
+
+        try (Connection con = DriverManager.getConnection(url, user, pass)) {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, p.getIdUsuario());
+
+            int filasEliminadas = ps.executeUpdate();
+            return filasEliminadas > 0;
+        } catch (
+                SQLException e) {
+            System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 
 
 
