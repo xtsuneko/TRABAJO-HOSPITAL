@@ -3,29 +3,31 @@ package POJO;
 import INTERFACES.Adoptable;
 
 public class Exotico extends Animal {
-    private String tipo;
+    private String type;
 
-    public Exotico(int id, String nombre, String color, int edad, double pesoKg, String tipo) {
-        super(id, nombre, color, edad, pesoKg);
-        this.tipo = tipo;
+    public Exotico(int id, String name, String color, int age, double weight, String type) {
+        super(id, name, color, age, weight);
+        this.type = type;
     }
 
-    public Exotico(int id, String nombre, String color, int edad, double pesoKg) {
-        super(id, nombre, color, edad, pesoKg);
+    public Exotico(int id, String name, String color, int age, double weight) {
+        super(id, name, color, age, weight);
     }
 
     public String getTipo() {
-        return tipo;
+        return type;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setTipo(String type) {
+        this.type = type;
     }
 
     @Override
     public String toString() {
         return "Exotico{" +
-                "tipo='" + tipo + '\'' +
+                "tipo='" + type + '\'' +
                 "} " + super.toString();
     }
+
+    ///METHODS///
 }
