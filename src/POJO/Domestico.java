@@ -2,8 +2,6 @@ package POJO;
 
 import INTERFACES.Adoptable;
 
-import java.util.Objects;
-
 public class Domestico extends Animal implements Adoptable {
     private String species;
     private Cliente owner;
@@ -20,10 +18,6 @@ public class Domestico extends Animal implements Adoptable {
         this.inAdoption = inAdoption;
     }
 
-
-    public boolean isInAdoption() {
-        return inAdoption;
-    }
 
     public void setInAdoption(boolean inAdoption) {
         this.inAdoption = inAdoption;
@@ -55,18 +49,19 @@ public class Domestico extends Animal implements Adoptable {
     }
 
 
-    @Override
-    public boolean isEnAdopcion() {
-        return false;
+
+
+    public boolean InAdoption() {
+        return inAdoption;
     }
 
     @Override
-    public void ponerEnAdopcion() {
+    public void putUpForAdoption() {
 
     }
 
     @Override
-    public void marcarAdoptado(Cliente nuevoDueño) {
+    public void hasBeenAdopted(Cliente newOwner) {
 
     }
 }
