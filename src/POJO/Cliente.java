@@ -13,6 +13,12 @@ public class Cliente extends  Usuario{
         this.direccion = direccion;
     }
 
+    public Cliente(String direccion, int idCliente, int idUsuario) {
+        this.direccion = direccion;
+        this.idCliente = idCliente;
+        this.setIdUsuario(idUsuario);
+    }
+
     public Cliente() {
     }
 

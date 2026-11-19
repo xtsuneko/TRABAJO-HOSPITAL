@@ -14,6 +14,13 @@ public class Personal extends Usuario {
         this.horarioLaboral = horarioLaboral;
     }
 
+    public Personal(Double sueldo, int horarioLaboral, int idPersonal, int idUsuario) {
+        this.sueldo = sueldo;
+        this.horarioLaboral = HorarioLaboral.values()[horarioLaboral];
+        this.idPersonal = idPersonal;
+        this.setIdUsuario(idUsuario);
+    }
+
     public Personal() {
     }
 

@@ -68,7 +68,35 @@ public class PersonaDao {
     }
 
 
+    public Persona findBYDNI(String dni) {
 
+        String sql = "SELECT dni, nombre, apellido, telefono FROM persona WHERE dni = ?";
+        try (Connection con = ConexionDB.connect()) {
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setString(1, dni);
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                if (resultSet.next()) {
+                    return new Persona(
+
+                            resultSet.getString("nombre"),
+                            resultSet.getString("apellido"),
+                            resultSet.getString("dni"),
+                            resultSet.getString("telefono"));
+
+                } else {
+                    return null;
+                }
+            }catch(SQLException e) {
+                System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } catch(SQLException e) {
+            System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
 
 }

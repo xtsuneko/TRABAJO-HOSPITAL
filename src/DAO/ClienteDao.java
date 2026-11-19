@@ -1,6 +1,7 @@
 package DAO;
 import CONEXION.ConexionDB;
 import POJO.Cliente;
+import POJO.Personal;
 import POJO.Usuario;
 
 import java.sql.*;
@@ -75,5 +76,35 @@ public class ClienteDao {
 
         return false;
     }
+
+    public Cliente findBYID(int id) {
+
+        String sql = "SELECT id, direccion, id_usuario FROM cliente WHERE id = ?";
+        try (Connection con = ConexionDB.connect()) {
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                if (resultSet.next()) {
+                    return new Cliente(
+
+                            resultSet.getString("direccion"),
+                            resultSet.getInt("id"),
+                            resultSet.getInt("id_usuario"));
+
+                } else {
+                    return null;
+                }
+            }catch(SQLException e) {
+                System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } catch(SQLException e) {
+            System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
 
 }

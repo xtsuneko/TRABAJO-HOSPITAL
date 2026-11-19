@@ -15,6 +15,14 @@ public class Usuario extends Persona {
         this.password = password;
     }
 
+    public Usuario(int idUsuario, String email, String password, String dni) {
+        this.idUsuario = idUsuario;
+        this.email = email;
+        this.password = password;
+        this.setDni(dni);
+
+    }
+
     public Usuario() {
     }
 

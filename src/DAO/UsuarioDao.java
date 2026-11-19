@@ -77,5 +77,34 @@ public class UsuarioDao {
         return false;
     }
 
+    public Usuario findBYID(int id) {
+
+        String sql = "SELECT id, email, contraseña, dni_persona FROM persona WHERE id = ?";
+        try (Connection con = ConexionDB.connect()) {
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                if (resultSet.next()) {
+                    return new Usuario(
+
+                            resultSet.getInt("id"),
+                            resultSet.getString("email"),
+                            resultSet.getString("password"),
+                            resultSet.getString("dni"));
+
+                } else {
+                    return null;
+                }
+            }catch(SQLException e) {
+                System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } catch(SQLException e) {
+            System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
 }

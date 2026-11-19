@@ -78,6 +78,34 @@ public class PersonalDao {
         return false;
     }
 
+    public Personal findBYID(int id) {
 
+        String sql = "SELECT id, sueldo, horario_laboral_id, id_usuario FROM personal WHERE id = ?";
+        try (Connection con = ConexionDB.connect()) {
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                if (resultSet.next()) {
+                    return new Personal(
+
+                            resultSet.getDouble("sueldo"),
+                            resultSet.getInt("horario_laboral_id"),
+                            resultSet.getInt("id"),
+                            resultSet.getInt("id_usuario"));
+
+                } else {
+                    return null;
+                }
+            }catch(SQLException e) {
+                System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } catch(SQLException e) {
+            System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
 }
