@@ -1,21 +1,17 @@
 package DAO;
+import CONEXION.ConexionDB;
 import POJO.Persona;
 import POJO.Usuario;
 import java.sql.*;
 
 public class UsuarioDao {
 
-    private static final String url = "jdbc:mysql://localhost:3306/veterinaria";
-    private static final String user = "root";
-    private static final String pass = "admin";
-
-
     public int insertar(Usuario u) {
 
         String sqlInsert = "INSERT INTO usuario (email, password, dni_persona) VALUES (?, ?, ?)";
         String sqlGetId = "SELECT LAST_INSERT_ID()";
 
-        try (Connection con = DriverManager.getConnection(url, user, pass)) {
+        try (Connection con = ConexionDB.connect();) {
             PreparedStatement ps = con.prepareStatement(sqlInsert);
             ps.setString(1, u.getEmail());
             ps.setString(2, u.getPassword());
@@ -44,7 +40,7 @@ public class UsuarioDao {
 
         String sql = "DELETE FROM usuario WHERE id = ?";
 
-        try (Connection con = DriverManager.getConnection(url, user, pass)) {
+        try (Connection con = ConexionDB.connect();) {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, u.getIdUsuario());
 
@@ -63,7 +59,7 @@ public class UsuarioDao {
 
         String sql = "UPDATE usuario SET  email = ?, password = ?, dni_persona=? WHERE id = ?";
 
-        try (Connection con = DriverManager.getConnection(url, user, pass)) {
+        try (Connection con = ConexionDB.connect()) {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, u.getEmail());
             ps.setString(2, u.getPassword());

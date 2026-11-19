@@ -1,4 +1,5 @@
 package DAO;
+import CONEXION.ConexionDB;
 import POJO.Cliente;
 import POJO.Usuario;
 
@@ -6,16 +7,12 @@ import java.sql.*;
 
 public class ClienteDao {
 
-    private static final String url = "jdbc:mysql://localhost:3306/veterinaria";
-    private static final String user = "root";
-    private static final String pass = "admin";
-
     public int insertar(Cliente c) {
 
         String sqlInsert = "INSERT INTO cliente (direccion, id_usuario) VALUES (?, ?)";
         String sqlGetId = "SELECT LAST_INSERT_ID()";
 
-        try (Connection con = DriverManager.getConnection(url, user, pass)) {
+        try (Connection con = ConexionDB.connect()) {
             PreparedStatement ps = con.prepareStatement(sqlInsert);
             ps.setString(1, c.getDireccion());
             ps.setInt(2, c.getIdUsuario());
@@ -42,7 +39,7 @@ public class ClienteDao {
 
         String sql = "DELETE FROM cliente WHERE id = ?";
 
-        try (Connection con = DriverManager.getConnection(url, user, pass)) {
+        try (Connection con = ConexionDB.connect()) {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, c.getIdCliente());
 
@@ -62,7 +59,7 @@ public class ClienteDao {
 
         String sql = "UPDATE cliente SET direccion = ?, id_usuario = ?  WHERE id = ?";
 
-        try (Connection con = DriverManager.getConnection(url, user, pass)) {
+        try (Connection con = ConexionDB .connect()) {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, c.getDireccion());
             ps.setInt(2, c.getIdUsuario());

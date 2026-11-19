@@ -1,4 +1,5 @@
 package DAO;
+import CONEXION.ConexionDB;
 import POJO.Persona;
 import POJO.Personal;
 import POJO.Usuario;
@@ -7,16 +8,12 @@ import java.sql.*;
 
 public class PersonalDao {
 
-    private static final String url = "jdbc:mysql://localhost:3306/veterinaria";
-    private static final String user = "root";
-    private static final String pass = "admin";
-
     public int insertar(Personal p) {
 
         String sqlInsert = "INSERT INTO personal (sueldo, horario_laboral, id_usuario) VALUES (?, ?, ?)";
         String sqlGetId = "SELECT LAST_INSERT_ID()";
 
-        try (Connection con = DriverManager.getConnection(url, user, pass)) {
+        try (Connection con = ConexionDB.connect();) {
             PreparedStatement ps = con.prepareStatement(sqlInsert);
             ps.setDouble(1, p.getSueldo());
             ps.setInt(2, p.getHorarioLaboral().ordinal());
@@ -44,7 +41,7 @@ public class PersonalDao {
 
         String sql = "DELETE FROM personal WHERE id = ?";
 
-        try (Connection con = DriverManager.getConnection(url, user, pass)) {
+        try (Connection con = ConexionDB.connect();) {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, p.getIdPersonal());
 
@@ -63,7 +60,7 @@ public class PersonalDao {
 
         String sql = "UPDATE personal SET  sueldo = ?, horario_laboral = ?, id_usuario = ? WHERE id = ?";
 
-        try (Connection con = DriverManager.getConnection(url, user, pass)) {
+        try (Connection con = ConexionDB.connect();) {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setDouble(1, p.getSueldo());
             ps.setInt(2, p.getHorarioLaboral().ordinal());
