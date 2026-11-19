@@ -2,18 +2,18 @@ package POJO;
 
 public abstract class Animal {
     private int id;
-    private String nombre;
+    private String name;
     private String color;
-    private int edad;
-    private double pesoKg;
-    private boolean activo = true;   // baja lógica
+    private int age;
+    private double weight;
+    private boolean active = true;   // baja lógica
 
-    public Animal(int id, String nombre, String color, int edad, double pesoKg) {
+    public Animal(int id, String name, String color, int age, double weight) {
         this.id = id;
-        this.nombre = nombre;
+        this.name = name;
         this.color = color;
-        this.edad = edad;
-        this.pesoKg = pesoKg;
+        this.age = age;
+        this.weight = weight;
     }
 
 
@@ -25,12 +25,12 @@ public abstract class Animal {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getColor() {
@@ -42,27 +42,27 @@ public abstract class Animal {
     }
 
     public int getEdad() {
-        return edad;
+        return age;
     }
 
-    public void setEdad(int edad) {
-        this.edad = edad;
+    public void setEdad(int newAge) {
+        this.age = newAge;
     }
 
-    public double getPesoKg() {
-        return pesoKg;
+    public double getWeight() {
+        return weight;
     }
 
-    public void setPesoKg(double pesoKg) {
-        this.pesoKg = pesoKg;
+    public void setWeight(double weight) {
+        this.weight = weight;
     }
 
-    public boolean isActivo() {
-        return activo;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setActivo(boolean activo) {
-        this.activo = activo;
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     @Override
@@ -77,6 +77,6 @@ public abstract class Animal {
 
     @Override
     public String toString() {
-        return nombre + " (" + edad + " años, " + pesoKg + " kg)";
+        return name + " (" + age + " años, " + weight + " kg)";
     }
 }
