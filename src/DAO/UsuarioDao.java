@@ -3,6 +3,7 @@ import CONEXION.ConexionDB;
 import POJO.Persona;
 import POJO.Usuario;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class UsuarioDao {
 
@@ -94,6 +95,36 @@ public class UsuarioDao {
 
                 } else {
                     return null;
+                }
+            }catch(SQLException e) {
+                System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } catch(SQLException e) {
+            System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public ArrayList<Usuario> listarUsuarios() {
+
+        String sql = "SELECT id, email, contraseña, dni_persona FROM usuario";
+        try (Connection con = ConexionDB.connect()) {
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                while (resultSet.next()) {
+                    Usuario u = new Usuario(
+
+                            resultSet.getInt("id"),
+                            resultSet.getString("email"),
+                            resultSet.getString("password"),
+                            resultSet.getString("dni"));
+
+                    ArrayList<Usuario> listaUsuarios = new ArrayList<>();
+                    listaUsuarios.add(u);
+                    return listarUsuarios();
                 }
             }catch(SQLException e) {
                 System.out.println("Error al conectar a la base de datos: " + e.getMessage());

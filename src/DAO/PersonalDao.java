@@ -5,6 +5,7 @@ import POJO.Personal;
 import POJO.Usuario;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class PersonalDao {
 
@@ -95,6 +96,37 @@ public class PersonalDao {
 
                 } else {
                     return null;
+                }
+            }catch(SQLException e) {
+                System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } catch(SQLException e) {
+            System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
+    public ArrayList<Personal> listarPersonal() {
+
+        String sql = "SELECT id, sueldo, horario_laboral_id, id_usuario FROM personal";
+        try (Connection con = ConexionDB.connect()) {
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                while (resultSet.next()) {
+                    Personal p = new Personal(
+
+                            resultSet.getDouble("sueldo"),
+                            resultSet.getInt("horario_laboral_id"),
+                            resultSet.getInt("id"),
+                            resultSet.getInt("id_usuario"));
+
+                    ArrayList<Personal> listaPersonal = new ArrayList<>();
+                    listaPersonal.add(p);
+                    return listaPersonal;
                 }
             }catch(SQLException e) {
                 System.out.println("Error al conectar a la base de datos: " + e.getMessage());

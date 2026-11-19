@@ -4,7 +4,9 @@ import POJO.Cliente;
 import POJO.Personal;
 import POJO.Usuario;
 
+import java.lang.ref.Cleaner;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class ClienteDao {
 
@@ -106,5 +108,33 @@ public class ClienteDao {
         return null;
     }
 
+    public ArrayList<Cliente> listarClientes() {
+
+        String sql = "SELECT id, direccion, id_usuario FROM cliente";
+        try (Connection con = ConexionDB.connect()) {
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                while (resultSet.next()) {
+                    Cliente c = new Cliente(
+
+                            resultSet.getString("direccion"),
+                            resultSet.getInt("id"),
+                            resultSet.getInt("id_usuario"));
+
+                    ArrayList<Cliente> listaClientes = new ArrayList<>();
+                    listaClientes.add(c);
+                    return listaClientes;
+                }
+            }catch(SQLException e) {
+                System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } catch(SQLException e) {
+            System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
 }
