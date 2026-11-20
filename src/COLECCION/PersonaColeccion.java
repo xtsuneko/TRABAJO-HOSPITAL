@@ -6,13 +6,13 @@ import java.util.Map;
 
 public class PersonaColeccion {
 
-    Map<Integer, Persona> listaPersonas;
+    Map<String, Persona> listaPersonas;
 
     public PersonaColeccion() {
         this.listaPersonas = new HashMap<>();
     }
 
-    public String agregarPersonas(Integer clave, Persona p){
+    public String agregarPersonas(String clave, Persona p){
         String mensaje= " ";
 
         if(listaPersonas==null){
@@ -23,7 +23,7 @@ public class PersonaColeccion {
         return mensaje="Persona agregada exitosamente al sistema";
     }
 
-    public String eliminarPersonas(Integer clave){
+    public String eliminarPersonas(String clave){
         String mensaje=" ";
         if(listaPersonas.containsKey(clave)){
             listaPersonas.remove(clave);
@@ -35,8 +35,34 @@ public class PersonaColeccion {
      return mensaje;
     }
 
+    public boolean actualizarPersona(String clave, Persona p){
 
+        if(listaPersonas.containsKey(clave) && (clave.equals(p.getDni()))){
 
+            listaPersonas.put(clave, p);
 
+            return true;
+        }
+
+        return false;
+    }
+
+    public void mostrarColeccion(){
+
+        System.out.println(listaPersonas);
+
+    }
+
+    public boolean buscarPersona(String clave){
+
+        if (listaPersonas.containsKey(clave)) {
+            System.out.println("Persona encontrada: ");
+            System.out.println(listaPersonas.get(clave));
+           return true;
+        }
+
+        return false;
+
+    }
 
 }

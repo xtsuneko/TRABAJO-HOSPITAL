@@ -1,4 +1,5 @@
 package Service;
+import COLECCION.PersonaColeccion;
 import DAO.PersonaDao;
 import EXCEPCIONES.ParametroInvalidoException;
 import EXCEPCIONES.ParametroNullException;
@@ -6,14 +7,18 @@ import POJO.Cliente;
 import POJO.Persona;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 
 public class PersonaService {
 
     PersonaDao dao;
+    PersonaColeccion coleccionP;
 
     public PersonaService() {
         this.dao = new PersonaDao();
+        this.coleccionP = new PersonaColeccion();
     }
 
     public void crearPersona(Persona p){
@@ -62,9 +67,10 @@ public class PersonaService {
 
 
         dao.insertar(p);
+        coleccionP.agregarPersonas(p.getDni(), p);
     }
 
-    public Boolean modificar(Persona p){
+    public boolean modificar(Persona p){
         if(p == null){
             throw new ParametroNullException("La persona es NULA");
         }
@@ -107,17 +113,54 @@ public class PersonaService {
             }
         }
         //TODO AGREGAR VALIDACION DE Q NO SE REPITA EL DNI
+        Boolean daoBool= dao.modificar(p);
+        if(daoBool==true){
+            coleccionP.actualizarPersona(p.getDni(), p);
+        }
 
-        return dao.modificar(p);
+        return daoBool;
     }
 
 
-    public Boolean eliminar(Persona p) throws SQLException {
+    public boolean eliminar(Persona p) throws SQLException {
 
         //TODO no tiene que ser NULL, TIENE Q EXISTIR
 
-        return dao.eliminar(p);
+        boolean daoBool= dao.eliminar(p);
+        if(daoBool){
+            coleccionP.eliminarPersonas(p.getDni());
+        }
+        return daoBool;
     }
+
+    public String findPersonaByDNI(String dni){
+        if(dni == null){
+            throw new ParametroNullException("El dni es NULO");
+        }
+
+        String mensaje=" ";
+        boolean coleccionBool= coleccionP.buscarPersona(dni);
+        if(!coleccionBool){
+            Persona p = dao.findBYDNI(dni);
+            if(p==null){
+                mensaje= "No se encontro a la persona en el sistema";
+            }
+            mensaje="Persona encontrada: ";
+        }
+
+        return mensaje;
+    }
+
+    public void listarPersona() {
+
+        ArrayList<Persona> p = dao.listarPersonas();
+        for (Persona pp : p) {
+            coleccionP.agregarPersonas(pp.getDni(), pp);
+        }
+
+    }
+
+
 
 
 }

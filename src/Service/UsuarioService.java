@@ -1,19 +1,24 @@
 package Service;
+import COLECCION.UsuarioColeccion;
 import DAO.UsuarioDao;
 import EXCEPCIONES.ParametroInvalidoException;
 import EXCEPCIONES.ParametroNullException;
 import POJO.Cliente;
+import POJO.Persona;
 import POJO.Usuario;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class UsuarioService {
 
 
     UsuarioDao dao;
+    UsuarioColeccion coleccionU;
 
     public UsuarioService() {
         this.dao = new UsuarioDao();
+        this.coleccionU = new UsuarioColeccion();
     }
 
     public int crearUsuario(Usuario u) {
@@ -66,8 +71,12 @@ public class UsuarioService {
         //Al menos 1 numero y 1 letra
         //entre 5 y 8 caracteres
 
+        int idAux= dao.insertar(u);
+        if(idAux!=-1){
+            coleccionU.agregarUsuarios(u.getIdUsuario(), u);
+        }
 
-        return dao.insertar(u);
+        return idAux;
     }
 
 
@@ -112,15 +121,55 @@ public class UsuarioService {
         //TODO el mail no se puede repetir
         //TODO el dni no se puede repetir
 
-        return dao.modificar(u);
+        Boolean daoBool= dao.modificar(u);
+        if(daoBool==true){
+            coleccionU.actualizarUsuario(u.getIdUsuario(), u);
+        }
+
+        return daoBool;
     }
 
     public Boolean eliminar(Usuario u) throws SQLException {
 
         //TODO no tiene que ser NULL, TIENE Q EXISTIR
 
-        return dao.eliminar(u);
+        boolean daoBool= dao.eliminar(u);
+        if(daoBool){
+            coleccionU.eliminarUsuario(u.getIdUsuario());
+        }
+
+        return daoBool;
     }
+
+    public String findUsuarioByID(Integer id){
+
+        if(id == null){
+            throw new ParametroNullException("El ID es NULO");
+        }
+
+        String mensaje=" ";
+        boolean coleccionBool= coleccionU.buscarUsuario(id);
+        if(!coleccionBool){
+            Usuario u = dao.findBYID(id);
+            if(u==null){
+                mensaje= "No se encontro al usuario en el sistema";
+            }
+            mensaje="Usuario encontrado: ";
+        }
+
+        return mensaje;
+    }
+
+
+    public void listarUsuario() {
+
+        ArrayList<Usuario> u = dao.listarUsuarios();
+        for (Usuario uu : u) {
+            coleccionU.agregarUsuarios(uu.getIdUsuario(), uu);
+        }
+
+    }
+
 
 
 }
