@@ -9,7 +9,7 @@ public class UsuarioDao {
 
     public int insertar(Usuario u) {
 
-        String sqlInsert = "INSERT INTO usuario (email, password, dni_persona) VALUES (?, ?, ?)";
+        String sqlInsert = "INSERT INTO usuario (email, pass, dni_persona) VALUES (?, ?, ?)";
         String sqlGetId = "SELECT LAST_INSERT_ID()";
 
         try (Connection con = ConexionDB.connect();) {

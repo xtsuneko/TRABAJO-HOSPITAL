@@ -21,6 +21,11 @@ public class Cliente extends ClaseBaseBddGenerica<Integer> {
         this.setId(idCliente);
     }
 
+    public Cliente(String direccion, int idUsuario) {
+        this.direccion = direccion;
+        this.idUsuario = idUsuario;
+    }
+
     public Cliente() {
         this.usuario = new Usuario();
     }

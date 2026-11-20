@@ -31,7 +31,7 @@ public class UsuarioService {
         if (u.getPassword() == null) {
             throw new ParametroNullException("La contraseña es NULA");
         }
-        if (u.getDni() == null) {
+        if (u.getDniPersona() == null) {
             throw new ParametroNullException("El dni es NULO");
         }
         if (u.getPassword().length() < 5 || u.getPassword().length() > 8) {
@@ -90,7 +90,7 @@ public class UsuarioService {
         if (u.getPassword() == null) {
             throw new ParametroNullException("La contraseña es NULA");
         }
-        if (u.getDni() == null) {
+        if (u.getDniPersona() == null) {
             throw new ParametroNullException("El dni es NULO");
         }
         if (u.getPassword().length() < 5 || u.getPassword().length() > 8) {
