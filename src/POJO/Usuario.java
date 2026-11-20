@@ -1,38 +1,34 @@
 package POJO;
+import GENERICS.ClaseBaseBddGenerica;
 
-public class Usuario extends Persona {
+public class Usuario extends ClaseBaseBddGenerica<Integer> {
 
-    private int idUsuario;
     private String email;
     private String password;
+    private Persona persona;
+    private String dniPersona;
 
 
     //----CONSTRUCTORES----
-    public Usuario(String nombre, String apellido, String dni, String telefono, int idUsuario, String email, String password) {
-        super(nombre, apellido, dni, telefono);
-        this.idUsuario = idUsuario;
+    public Usuario(int idUsuario, String email, String password, String dniPersona) {
+        super(true, idUsuario);
         this.email = email;
         this.password = password;
+        this.dniPersona = dniPersona;
     }
 
-    public Usuario(int idUsuario, String email, String password, String dni) {
-        this.idUsuario = idUsuario;
-        this.email = email;
-        this.password = password;
-        this.setDni(dni);
-
-    }
 
     public Usuario() {
+        this.persona = new Persona();
     }
 
     //----GETTER Y SETTER----
     public int getIdUsuario() {
-        return idUsuario;
+        return getId();
     }
 
     public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
+        this.setId(idUsuario);
     }
 
     public String getEmail() {
@@ -49,6 +45,22 @@ public class Usuario extends Persona {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Persona getPersona() {
+        return persona;
+    }
+
+    public void setPersona(Persona persona) {
+        this.persona = persona;
+    }
+
+    public String getDniPersona() {
+        return dniPersona;
+    }
+
+    public void setDniPersona(String dniPersona) {
+        this.dniPersona = dniPersona;
     }
 
     //----METODOS----
