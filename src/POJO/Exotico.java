@@ -1,7 +1,5 @@
 package POJO;
 
-import INTERFACES.Adoptable;
-
 public class Exotico extends Animal {
     private String type;
 
@@ -14,11 +12,11 @@ public class Exotico extends Animal {
         super(id, name, color, age, weight);
     }
 
-    public String getTipo() {
+    public String getType() {
         return type;
     }
 
-    public void setTipo(String type) {
+    public void setType(String type) {
         this.type = type;
     }
 
