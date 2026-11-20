@@ -40,14 +40,14 @@ public class PersonalDao {
 
     public boolean eliminar(Personal p) throws SQLException {
 
-        String sql = "DELETE FROM personal WHERE id = ?";
+        String sql = "UPDATE personal SET  activo = FALSE WHERE id = ?";
 
         try (Connection con = ConexionDB.connect();) {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, p.getIdPersonal());
 
-            int filasEliminadas = ps.executeUpdate();
-            return filasEliminadas > 0;
+            int filasModificadas= ps.executeUpdate();
+            return filasModificadas > 0;
         } catch (
                 SQLException e) {
             System.out.println("Error al conectar a la base de datos: " + e.getMessage());

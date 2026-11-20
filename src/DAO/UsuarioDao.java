@@ -16,7 +16,7 @@ public class UsuarioDao {
             PreparedStatement ps = con.prepareStatement(sqlInsert);
             ps.setString(1, u.getEmail());
             ps.setString(2, u.getPassword());
-            ps.setString(3, u.getDni());
+            ps.setString(3, u.getDniPersona());
             ps.executeUpdate();
 
             PreparedStatement psID = con.prepareStatement(sqlGetId);
@@ -39,14 +39,14 @@ public class UsuarioDao {
 
     public boolean eliminar(Usuario u) throws SQLException {
 
-        String sql = "DELETE FROM usuario WHERE id = ?";
+        String sql = "UPDATE usuario SET  activo = FALSE WHERE id = ?";
 
-        try (Connection con = ConexionDB.connect();) {
+        try (Connection con = ConexionDB.connect()) {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, u.getIdUsuario());
 
-            int filasEliminadas = ps.executeUpdate();
-            return filasEliminadas > 0;
+            int filasModificadas= ps.executeUpdate();
+            return filasModificadas > 0;
         } catch (
                 SQLException e) {
             System.out.println("Error al conectar a la base de datos: " + e.getMessage());
@@ -64,7 +64,7 @@ public class UsuarioDao {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, u.getEmail());
             ps.setString(2, u.getPassword());
-            ps.setString(3, u.getDni());
+            ps.setString(3, u.getDniPersona());
             ps.setInt(4, u.getIdUsuario());
 
             int filasModificadas= ps.executeUpdate();

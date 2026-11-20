@@ -29,14 +29,14 @@ public class PersonaDao {
 
     public boolean eliminar(Persona p) throws SQLException {
 
-        String sql = "DELETE FROM persona WHERE dni = ?";
+        String sql = "UPDATE persona SET  activo = FALSE WHERE dni = ?";
 
         try (Connection con = ConexionDB.connect()) {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, p.getDni());
 
-            int filasEliminadas = ps.executeUpdate();
-            return filasEliminadas > 0;
+            int filasModificadas= ps.executeUpdate();
+            return filasModificadas > 0;
         } catch (
                 SQLException e) {
             System.out.println("Error al conectar a la base de datos: " + e.getMessage());

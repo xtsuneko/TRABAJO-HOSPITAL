@@ -1,36 +1,42 @@
 package POJO;
 import ENUM.HorarioLaboral;
+import GENERICS.ClaseBaseBddGenerica;
 
-public class Personal extends Usuario {
+public class Personal extends ClaseBaseBddGenerica<Integer> {
 
     private Double sueldo;
     private HorarioLaboral horarioLaboral;
-    private int idPersonal;
+    private Usuario usuario;
+    private int idUsuario;
 
     //----CONSTRUCTORES----
-    public Personal(String nombre, String apellido, String dni, String telefono, int id, String email, String password, Double sueldo, HorarioLaboral horarioLaboral) {
-        super(nombre, apellido, dni, telefono, id, email, password);
+    public Personal(int idPersonal, Double sueldo, HorarioLaboral horarioLaboral, int idUsuario) {
+        super(true, idPersonal);
         this.sueldo = sueldo;
         this.horarioLaboral = horarioLaboral;
+        this.setId(idPersonal);
+        this.usuario= new Usuario();
+        this.idUsuario = idUsuario;
     }
 
     public Personal(Double sueldo, int horarioLaboral, int idPersonal, int idUsuario) {
         this.sueldo = sueldo;
         this.horarioLaboral = HorarioLaboral.values()[horarioLaboral];
-        this.idPersonal = idPersonal;
-        this.setIdUsuario(idUsuario);
+        this.setId(idPersonal);
+        this.idUsuario = idUsuario;
     }
 
     public Personal() {
+        this.usuario = new Usuario();
     }
 
     //----GETTER Y SETTER----
     public int getIdPersonal() {
-        return idPersonal;
+        return getId();
     }
 
     public void setIdPersonal(int idPersonal) {
-        this.idPersonal = idPersonal;
+        this.setId(idPersonal);
     }
 
     public Double getSueldo() {
@@ -43,6 +49,22 @@ public class Personal extends Usuario {
 
     public HorarioLaboral getHorarioLaboral() {
         return horarioLaboral;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public void setHorarioLaboral(HorarioLaboral horarioLaboral) {
