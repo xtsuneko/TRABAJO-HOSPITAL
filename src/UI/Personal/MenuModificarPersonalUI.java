@@ -92,7 +92,7 @@ public class MenuModificarPersonalUI extends MenuAbstracto {
             System.out.println("Ingrese el sueldo del personal: ");
             Double sueldo;
             while (!scanner.hasNextDouble()) {
-                System.out.println("Error: debe ingresar un número válido.");
+                System.out.println("Error: debe ingresar un número valido.");
                 scanner.next();
             }
             sueldo=scanner.nextDouble();

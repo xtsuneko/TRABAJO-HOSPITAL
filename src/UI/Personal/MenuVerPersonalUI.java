@@ -16,7 +16,12 @@ public class MenuVerPersonalUI extends MenuAbstracto {
         PersonalService servicePl = new PersonalService();
 
         System.out.println("Ingrese el id del personal a buscar: ");
-        int idABuscar = scanner.nextInt();
+        int idABuscar;
+        while (!scanner.hasNextInt()) {
+            System.out.println("Error: debe ingresar un id valido.");
+            scanner.next();
+        }
+        idABuscar= scanner.nextInt();
         scanner.nextLine();
 
         Personal pl1 = new Personal();
