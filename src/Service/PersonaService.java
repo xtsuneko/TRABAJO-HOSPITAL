@@ -133,22 +133,17 @@ public class PersonaService {
         return daoBool;
     }
 
-    public String findPersonaByDNI(String dni){
+    public Persona findPersonaByDNI(String dni){
         if(dni == null){
             throw new ParametroNullException("El dni es NULO");
         }
 
-        String mensaje=" ";
         boolean coleccionBool= coleccionP.buscarPersona(dni);
-        if(!coleccionBool){
+        if(!coleccionBool) {
             Persona p = dao.findBYDNI(dni);
-            if(p==null){
-                mensaje= "No se encontro a la persona en el sistema";
-            }
-            mensaje="Persona encontrada: ";
+            return p;
         }
-
-        return mensaje;
+        return null;
     }
 
     public void listarPersona() {
