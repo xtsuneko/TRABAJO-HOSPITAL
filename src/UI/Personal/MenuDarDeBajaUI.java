@@ -52,6 +52,6 @@ public class MenuDarDeBajaUI extends MenuAbstracto {
         }
 
 
-        return null;
+        return TipoInterfaz.INVALIDO;
     }
 }
