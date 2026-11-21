@@ -4,7 +4,7 @@ import ENUM.TypeMascotPetShop;
 import EXCEPCIONES.ParametroInvalidoException;
 import INTERFACES.Descontable;
 
-public class Alimento extends Product implements Descontable {
+public class PetFood extends Product implements Descontable {
 
     private TypeMascotPetShop typeMascot;
     private double weightKG;
@@ -13,15 +13,15 @@ public class Alimento extends Product implements Descontable {
     //----CONSTRUCTORES----
 
     // Para crear un alimento nuevo.
-    public Alimento(String name, double price, int stock, TypeMascotPetShop typeMascot, double weightKG) {
+    public PetFood(String name, double price, int stock, TypeMascotPetShop typeMascot, double weightKG) {
         super(name, price, stock);
         this.typeMascot = typeMascot;
         this.weightKG = weightKG;
     }
 
     // Para reconstruir un alimento leído desde la base de datos
-    public Alimento(int id, String name, double price, int stock, boolean active, TypeMascotPetShop typeMascot,
-                    double weightKG, double percentageDiscount) {
+    public PetFood(int id, String name, double price, int stock, boolean active, TypeMascotPetShop typeMascot,
+                   double weightKG, double percentageDiscount) {
         super(id, name, price, stock, active);
         this.typeMascot = typeMascot;
         this.weightKG = weightKG;

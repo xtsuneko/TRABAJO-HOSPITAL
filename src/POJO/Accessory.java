@@ -1,6 +1,6 @@
 package POJO;
 
-public class Accesory extends Product{
+public class Accessory extends Product{
 
     private String material;
     private String size;
@@ -8,7 +8,7 @@ public class Accesory extends Product{
     // Constructores
 
     //Constructor nuevo
-    public Accesory (String name, double price, int stock, String material, String size){
+    public Accessory(String name, double price, int stock, String material, String size){
 
     super(name,price,stock);
     this.material = material;
@@ -16,7 +16,7 @@ public class Accesory extends Product{
     }
 
     //Constructor en base de datos
-    public Accesory(int id, String name, double price, int stock, boolean active, String material, String size){
+    public Accessory(int id, String name, double price, int stock, boolean active, String material, String size){
         super(id, name, price, stock, active);
         this.material = material;
         this.size = size;
