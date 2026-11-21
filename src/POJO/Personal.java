@@ -1,5 +1,6 @@
 package POJO;
 import ENUM.HorarioLaboral;
+import ENUM.Roles;
 import GENERICS.ClaseBaseBddGenerica;
 
 public class Personal extends ClaseBaseBddGenerica<Integer> {
@@ -8,22 +9,25 @@ public class Personal extends ClaseBaseBddGenerica<Integer> {
     private HorarioLaboral horarioLaboral;
     private Usuario usuario;
     private int idUsuario;
+    private Roles rol;
 
     //----CONSTRUCTORES----
-    public Personal(int idPersonal, Double sueldo, HorarioLaboral horarioLaboral, int idUsuario) {
+    public Personal(int idPersonal, Double sueldo, HorarioLaboral horarioLaboral, int idUsuario, Roles rol) {
         super(true, idPersonal);
         this.sueldo = sueldo;
         this.horarioLaboral = horarioLaboral;
         this.setId(idPersonal);
         this.usuario= new Usuario();
         this.idUsuario = idUsuario;
+        this.rol = rol;
     }
 
-    public Personal(Double sueldo, int horarioLaboral, int idPersonal, int idUsuario) {
+    public Personal(Double sueldo, int horarioLaboral, int idPersonal, int idUsuario, int rol) {
         this.sueldo = sueldo;
         this.horarioLaboral = HorarioLaboral.values()[horarioLaboral];
         this.setId(idPersonal);
         this.idUsuario = idUsuario;
+        this.rol = Roles.values()[rol];
     }
 
     public Personal() {
@@ -69,6 +73,14 @@ public class Personal extends ClaseBaseBddGenerica<Integer> {
 
     public void setHorarioLaboral(HorarioLaboral horarioLaboral) {
         this.horarioLaboral = horarioLaboral;
+    }
+
+    public Roles getRol() {
+        return rol;
+    }
+
+    public void setRol(Roles rol) {
+        this.rol = rol;
     }
 
     //----METODOS----

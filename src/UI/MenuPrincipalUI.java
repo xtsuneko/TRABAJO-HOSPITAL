@@ -17,13 +17,12 @@ public class MenuPrincipalUI extends MenuAbstracto {
         System.out.println("1.Registrarse");
         System.out.println("2.Iniciar Sesion");
 
-        int opcion= scanner.nextInt();
-        scanner.nextLine();
+        String opcion= scanner.nextLine();
 
-        if(opcion==1){
+        if(opcion=="1"){
             return TipoInterfaz.REGISTRAR;
         }
-        if(opcion==2){
+        if(opcion=="2"){
             return TipoInterfaz.INICIAR_SESION;
         }
 

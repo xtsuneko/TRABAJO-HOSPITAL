@@ -23,6 +23,11 @@ public class Usuario extends ClaseBaseBddGenerica<Integer> {
         this.dniPersona = dniPersona;
     }
 
+    public Usuario(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
     public Usuario() {
         this.persona = new Persona();
     }

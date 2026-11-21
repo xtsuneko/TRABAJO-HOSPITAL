@@ -141,24 +141,40 @@ public class UsuarioService {
         return daoBool;
     }
 
-    public String findUsuarioByID(Integer id){
+    public Usuario findUsuarioByID(Integer id){
 
         if(id == null){
             throw new ParametroNullException("El ID es NULO");
         }
 
-        String mensaje=" ";
         boolean coleccionBool= coleccionU.buscarUsuario(id);
         if(!coleccionBool){
             Usuario u = dao.findBYID(id);
-            if(u==null){
-                mensaje= "No se encontro al usuario en el sistema";
-            }
-            mensaje="Usuario encontrado: ";
+           return u;
         }
 
-        return mensaje;
+        return null;
     }
+
+
+    public Usuario findUsuarioByEmailPassword(String email, String password){
+
+        if(email == null){
+            throw new ParametroNullException("El email es NULO");
+        }
+        if(password == null){
+            throw new ParametroNullException("La password es NULA");
+        }
+
+        //TODO boolean coleccionBool= coleccionU.buscarUsuario(id);
+        /* if(!coleccionBool){
+            Usuario u = dao.findBYID(id);
+            return u;
+        }*/
+
+        return dao.findBYEmailPassword(email, password);
+    }
+
 
 
     public void listarUsuario() {
