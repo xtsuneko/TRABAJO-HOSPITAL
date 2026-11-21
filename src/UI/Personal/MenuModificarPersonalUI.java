@@ -24,7 +24,7 @@ public class MenuModificarPersonalUI extends MenuAbstracto {
             System.out.println("Ingrese el ID del personal que quiere modificar: ");
             int id;
             while (!scanner.hasNextInt()) {
-                System.out.println("Error: debe ingresar un ID válido.");
+                System.out.println("Error: debe ingresar un ID valido.");
                 scanner.next();
             }
             id = scanner.nextInt();
