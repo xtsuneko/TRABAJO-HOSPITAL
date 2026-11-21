@@ -18,6 +18,7 @@ public class MenuModificarPersonalUI extends MenuAbstracto {
 
     @Override
     public TipoInterfaz mostrarInterfaz() {
+
         Scanner scanner = new Scanner(System.in);
 
         try {
