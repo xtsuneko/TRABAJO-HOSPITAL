@@ -1,9 +1,10 @@
-package UI;
+package UI.Personal;
 
 import ENUM.TipoInterfaz;
 import Service.PersonalService;
+import UI.MenuAbstracto;
 
-public class MenuListarPersonalUI extends MenuAbstracto{
+public class MenuListarPersonalUI extends MenuAbstracto {
 
     @Override
     public TipoInterfaz mostrarInterfaz() {

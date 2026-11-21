@@ -34,6 +34,14 @@ public class Personal extends ClaseBaseBddGenerica<Integer> {
         this.usuario = new Usuario();
     }
 
+    public Personal(Double sueldo, HorarioLaboral horario, int idUsuario, Roles rol) {
+        this.sueldo = sueldo;
+        this.horarioLaboral = horario;
+        this.idUsuario=idUsuario;
+        this.rol = rol;
+
+    }
+
     //----GETTER Y SETTER----
     public int getIdPersonal() {
         return getId();

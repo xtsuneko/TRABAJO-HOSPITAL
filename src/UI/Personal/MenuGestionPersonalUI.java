@@ -1,10 +1,11 @@
-package UI;
+package UI.Personal;
 
 import ENUM.TipoInterfaz;
+import UI.MenuAbstracto;
 
 import java.util.Scanner;
 
-public class MenuGestionPersonalUI extends MenuAbstracto{
+public class MenuGestionPersonalUI extends MenuAbstracto {
 
     @Override
     public TipoInterfaz mostrarInterfaz() {
