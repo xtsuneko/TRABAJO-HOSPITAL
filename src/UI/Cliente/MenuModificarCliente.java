@@ -37,9 +37,8 @@ public class MenuModificarCliente extends MenuAbstracto {
                 return TipoInterfaz.MENU_GESTION_CLIENTES;
             }
 
-            Usuario u1 = new Usuario();
             UsuarioService serviceU = new UsuarioService();
-            u1 = serviceU.findUsuarioByID(c1.getIdUsuario());
+            Usuario u1 = serviceU.findUsuarioByID(c1.getIdUsuario());
 
             Persona p1 = new Persona();
             PersonaService serviceP = new PersonaService();
@@ -106,7 +105,7 @@ public class MenuModificarCliente extends MenuAbstracto {
         System.out.println(e.getMessage());
         }
 
-        return TipoInterfaz.INVALIDO;
+        return TipoInterfaz.MENU_MODIFICAR_CLIENTE;
     }
 
 

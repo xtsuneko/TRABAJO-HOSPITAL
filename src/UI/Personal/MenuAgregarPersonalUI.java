@@ -110,7 +110,7 @@ public class MenuAgregarPersonalUI extends MenuAbstracto {
             System.out.println(e.getMessage());
         }
 
-        return TipoInterfaz.INVALIDO;
+        return TipoInterfaz.MENU_AGREGAR_PERSONAL;
     }
 
 }

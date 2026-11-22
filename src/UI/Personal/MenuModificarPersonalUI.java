@@ -155,7 +155,7 @@ public class MenuModificarPersonalUI extends MenuAbstracto {
             System.out.println(e.getMessage());
         }
 
-        return TipoInterfaz.INVALIDO;
+        return TipoInterfaz.MENU_MODIFICAR_PERSONAL;
     }
 
 

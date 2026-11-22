@@ -50,10 +50,10 @@ public class MenuDarDeBajaClienteUI extends MenuAbstracto {
         } catch (ParametroNullException | ParametroInvalidoException e) {
         System.out.println(e.getMessage());
         } catch (SQLException e) {
-        throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
 
-        return TipoInterfaz.INVALIDO;
+        return TipoInterfaz.MENU_DAR_DE_BAJA_CLIENTE;
     }
 
 }

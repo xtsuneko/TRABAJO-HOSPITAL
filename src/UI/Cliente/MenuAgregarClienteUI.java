@@ -66,13 +66,13 @@ public class MenuAgregarClienteUI extends MenuAbstracto {
             System.out.println("Presione cualquier tecla para regresar atras...");
             scanner.nextLine();
 
-            return TipoInterfaz.MENU_GESTION_PERSONAL;
+            return TipoInterfaz.MENU_GESTION_CLIENTES;
         } catch (ParametroNullException | ParametroInvalidoException e) {
             System.out.println(e.getMessage());
         }
 
 
-        return TipoInterfaz.INVALIDO;
+        return TipoInterfaz.MENU_AGREGAR_CLIENTE;
     }
 
 }
