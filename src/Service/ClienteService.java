@@ -75,23 +75,33 @@ public class ClienteService {
         return daoBool;
     }
 
-    public String findClienteByID(Integer id){
+    public Cliente findClienteByID(Integer id){
 
         if(id == null){
             throw new ParametroNullException("El ID es NULO");
         }
 
-        String mensaje=" ";
         boolean coleccionBool= coleccionC.buscarCliente(id);
         if(!coleccionBool){
             Cliente c = dao.findBYID(id);
-            if(c==null){
-                mensaje= "No se encontro al cliente en el sistema";
-            }
-            mensaje="Cliente encontrado: ";
+            return c;
+        }
+        return null;
+    }
+
+    public Cliente findClienteByIDUsuario(Integer idU){
+
+        if(idU == null){
+            throw new ParametroNullException("El ID es NULO");
         }
 
-        return mensaje;
+        //TODO boolean coleccionBool= coleccionC.buscarCliente(id);
+        /* if(!coleccionBool){
+            Cliente c = dao.findBYID(id);
+            return c;
+        }*/
+
+        return dao.findBYIDUsuario(idU);
     }
 
     public void listarCliente() {

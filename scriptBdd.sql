@@ -25,11 +25,21 @@ DROP TABLE IF EXISTS usuario;
 CREATE TABLE usuario (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   email VARCHAR(100) NOT NULL,
-  contraseña VARCHAR(100) NOT NULL,
+  pass VARCHAR(100) NOT NULL,
   dni_persona VARCHAR(10),
   activo BOOLEAN DEFAULT TRUE,
   FOREIGN KEY (dni_persona) REFERENCES persona(dni)
 );
+
+DROP TABLE IF EXISTS rol;
+CREATE TABLE rol (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  descripcion VARCHAR(100) NOT NULL
+);
+
+INSERT INTO rol (descripcion) VALUES ('Administrador');
+INSERT INTO rol (descripcion) VALUES ('Veterinario');
+INSERT INTO rol (descripcion) VALUES ('Recepcionista');
 
 DROP TABLE IF EXISTS personal;
 CREATE TABLE personal (
@@ -38,6 +48,8 @@ CREATE TABLE personal (
   horario_laboral_id INT UNSIGNED, 
   id_usuario INT UNSIGNED,
   activo BOOLEAN DEFAULT TRUE,
+  id_rol INT UNSIGNED,
+  foreign key (id_rol) REFERENCES rol(id),
   FOREIGN KEY (id_usuario) REFERENCES usuario(id),
   FOREIGN KEY (horario_laboral_id) REFERENCES horario_laboral(id)
 );
@@ -53,21 +65,44 @@ CREATE TABLE cliente (
   FOREIGN KEY (id_usuario) REFERENCES usuario(id)
 );
 
+DROP TABLE IF EXISTS turno;
+CREATE TABLE turno (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  id_cliente int UNSIGNED,
+  id_personal int UNSIGNED,
+  fecha date,
+  horario time,
+  motivo_consulta VARCHAR(500) NOT NULL,
+  activo BOOLEAN DEFAULT TRUE,
+  FOREIGN KEY (id_personal) REFERENCES personal(id),
+  FOREIGN KEY (id_cliente) REFERENCES cliente(id)
+);
+
+DROP TABLE IF EXISTS revision;
+CREATE TABLE revision (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  id_turno int UNSIGNED,
+  diagnostico VARCHAR(500) NOT NULL,
+  tratamiento VARCHAR(500) NOT NULL,
+  activo BOOLEAN DEFAULT TRUE,
+  FOREIGN KEY (id_turno) REFERENCES turno(id)
+);
 
 
-INSERT INTO persona VALUES('42629947', 'Claudia', 'Ferreyra', 2233030495);
-INSERT INTO persona VALUES('42649956', 'Juan', 'Perez', 2232030495);
-INSERT INTO persona VALUES('42629247', 'Pedro', 'Gomez', 2233530495);
-INSERT INTO persona VALUES('42229947', 'Nicolas', 'Fernanez', 2231030495);
-INSERT INTO persona VALUES('42629957', 'Maria', 'Lopez', 2233536495);
-INSERT INTO persona VALUES('43629947', 'Lucia', 'Gallo', 2233456495);
-INSERT INTO persona VALUES('41629947', 'Victoria', 'Gutierrez', 2233078995);
-INSERT INTO persona VALUES('44655947', 'Marcos', 'Monje', 2233123456);
-INSERT INTO persona VALUES('42664467', 'Geronimo', 'Zampini', 2233030484);
+INSERT INTO persona(dni, nombre, apellido, telefono) VALUES('42629947', 'Claudia', 'Ferreyra', 2233030495);
+INSERT INTO persona(dni, nombre, apellido, telefono) VALUES('42649956', 'Juan', 'Perez', 2232030495);
+INSERT INTO persona(dni, nombre, apellido, telefono) VALUES('42629247', 'Pedro', 'Gomez', 2233530495);
+INSERT INTO persona(dni, nombre, apellido, telefono) VALUES('42229947', 'Nicolas', 'Fernanez', 2231030495);
+INSERT INTO persona(dni, nombre, apellido, telefono) VALUES('42629957', 'Maria', 'Lopez', 2233536495);
+INSERT INTO persona(dni, nombre, apellido, telefono) VALUES('43629947', 'Lucia', 'Gallo', 2233456495);
+INSERT INTO persona(dni, nombre, apellido, telefono) VALUES('41629947', 'Victoria', 'Gutierrez', 2233078995);
+INSERT INTO persona(dni, nombre, apellido, telefono) VALUES('44655947', 'Marcos', 'Monje', 2233123456);
+INSERT INTO persona(dni, nombre, apellido, telefono) VALUES('42664467', 'Geronimo', 'Zampini', 2233030484);
 
 
 select * from persona;
-
+select * from usuario;
+select * from cliente;
 
 
 

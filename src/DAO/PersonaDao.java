@@ -71,7 +71,7 @@ public class PersonaDao {
 
     public Persona findBYDNI(String dni) {
 
-        String sql = "SELECT dni, nombre, apellido, telefono FROM persona WHERE dni = ?";
+        String sql = "SELECT dni, nombre, apellido, telefono FROM persona WHERE dni = ? AND activo = TRUE";
         try (Connection con = ConexionDB.connect()) {
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setString(1, dni);
@@ -101,7 +101,7 @@ public class PersonaDao {
 
     public ArrayList<Persona> listarPersonas() {
 
-        String sql = "SELECT dni, nombre, apellido, telefono FROM persona";
+        String sql = "SELECT dni, nombre, apellido, telefono FROM persona AND activo = TRUE";
         try (Connection con = ConexionDB.connect()) {
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             try (ResultSet resultSet = preparedStatement.executeQuery()){

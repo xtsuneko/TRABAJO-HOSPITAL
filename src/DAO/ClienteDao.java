@@ -81,7 +81,7 @@ public class ClienteDao {
 
     public Cliente findBYID(int id) {
 
-        String sql = "SELECT id, direccion, id_usuario FROM cliente WHERE id = ?";
+        String sql = "SELECT id, direccion, id_usuario FROM cliente WHERE id = ? AND activo = TRUE";
         try (Connection con = ConexionDB.connect()) {
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setInt(1, id);
@@ -108,9 +108,38 @@ public class ClienteDao {
         return null;
     }
 
+    public Cliente findBYIDUsuario(int idU) {
+
+        String sql = "SELECT id, direccion, id_usuario FROM cliente WHERE id_usuario = ? AND activo = TRUE";
+        try (Connection con = ConexionDB.connect()) {
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setInt(1, idU);
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                if (resultSet.next()) {
+                    return new Cliente(
+
+                            resultSet.getString("direccion"),
+                            resultSet.getInt("id"),
+                            resultSet.getInt("id_usuario"));
+
+                } else {
+                    return null;
+                }
+            }catch(SQLException e) {
+                System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } catch(SQLException e) {
+            System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public ArrayList<Cliente> listarClientes() {
 
-        String sql = "SELECT id, direccion, id_usuario FROM cliente";
+        String sql = "SELECT id, direccion, id_usuario FROM cliente AND activo = TRUE";
         try (Connection con = ConexionDB.connect()) {
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             try (ResultSet resultSet = preparedStatement.executeQuery()){

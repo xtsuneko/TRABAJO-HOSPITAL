@@ -85,34 +85,47 @@ public class PersonalService {
         return daoBool;
     }
 
-    public String findPersonalByID(Integer id){
+    public Personal findPersonalByID(Integer id){
 
         if(id == null){
             throw new ParametroNullException("El ID es NULO");
         }
 
-        String mensaje=" ";
         boolean coleccionBool= coleccionPl.buscarPersonal(id);
         if(!coleccionBool){
             Personal pl = dao.findBYID(id);
-            if(pl==null){
-                mensaje= "No se encontro al personal en el sistema";
-            }
-            mensaje="Personal encontrado: ";
+            return pl;
         }
 
-        return mensaje;
+        return null;
+    }
+
+    public Personal findPersonalByIDUsuario(Integer idU){
+
+        if(idU == null){
+            throw new ParametroNullException("El ID es NULO");
+        }
+
+        //TODO boolean coleccionBool= coleccionPl.buscarPersonal(idU);
+        /* if(!coleccionBool){
+            Personal pl = dao.findBYID(id);
+            return pl;
+        }*/
+
+        return dao.findBYIDUsuario(idU);
     }
 
     public void listarPersonal() {
 
         ArrayList<Personal> pl = dao.listarPersonal();
+        if(pl==null || pl.isEmpty()){
+            System.out.println("No se encontro personal en el sistema");
+        }
         for (Personal ppl : pl) {
             coleccionPl.agregarPersonal(ppl.getIdUsuario(), ppl);
         }
-
+        coleccionPl.mostrarColeccion();
     }
-
 
 
 }

@@ -11,7 +11,7 @@ public class PersonalDao {
 
     public int insertar(Personal p) {
 
-        String sqlInsert = "INSERT INTO personal (sueldo, horario_laboral, id_usuario) VALUES (?, ?, ?)";
+        String sqlInsert = "INSERT INTO personal (sueldo, horario_laboral, id_usuario, id_rol) VALUES (?, ?, ?, ?)";
         String sqlGetId = "SELECT LAST_INSERT_ID()";
 
         try (Connection con = ConexionDB.connect();) {
@@ -19,6 +19,7 @@ public class PersonalDao {
             ps.setDouble(1, p.getSueldo());
             ps.setInt(2, p.getHorarioLaboral().ordinal());
             ps.setInt(3, p.getIdUsuario());
+            ps.setInt(4, p.getRol().ordinal());
             ps.executeUpdate();
 
             PreparedStatement psID = con.prepareStatement(sqlGetId);
@@ -59,14 +60,15 @@ public class PersonalDao {
 
     public Boolean modificar(Personal p) {
 
-        String sql = "UPDATE personal SET  sueldo = ?, horario_laboral = ?, id_usuario = ? WHERE id = ?";
+        String sql = "UPDATE personal SET  sueldo = ?, horario_laboral = ?, id_usuario = ?, id_rol = ? WHERE id = ?";
 
         try (Connection con = ConexionDB.connect();) {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setDouble(1, p.getSueldo());
             ps.setInt(2, p.getHorarioLaboral().ordinal());
             ps.setInt(3, p.getIdUsuario());
-            ps.setInt(4, p.getIdPersonal());
+            ps.setInt(4, p.getRol().ordinal());
+            ps.setInt(5, p.getIdPersonal());
 
             int filasModificadas= ps.executeUpdate();
             return filasModificadas > 0;
@@ -81,7 +83,7 @@ public class PersonalDao {
 
     public Personal findBYID(int id) {
 
-        String sql = "SELECT id, sueldo, horario_laboral_id, id_usuario FROM personal WHERE id = ?";
+        String sql = "SELECT id, sueldo, horario_laboral_id, id_usuario, id_rol FROM personal WHERE id = ? AND activo = TRUE";
         try (Connection con = ConexionDB.connect()) {
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setInt(1, id);
@@ -92,7 +94,8 @@ public class PersonalDao {
                             resultSet.getDouble("sueldo"),
                             resultSet.getInt("horario_laboral_id"),
                             resultSet.getInt("id"),
-                            resultSet.getInt("id_usuario"));
+                            resultSet.getInt("id_usuario"),
+                            resultSet.getInt("id_rol"));
 
                 } else {
                     return null;
@@ -109,10 +112,40 @@ public class PersonalDao {
         return null;
     }
 
+    public Personal findBYIDUsuario(int idU) {
+
+        String sql = "SELECT id, sueldo, horario_laboral_id, id_usuario, id_rol FROM personal WHERE id_usuario = ? AND activo = TRUE";
+        try (Connection con = ConexionDB.connect()) {
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setInt(1, idU);
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                if (resultSet.next()) {
+                    return new Personal(
+
+                            resultSet.getDouble("sueldo"),
+                            resultSet.getInt("horario_laboral_id"),
+                            resultSet.getInt("id"),
+                            resultSet.getInt("id_usuario"),
+                            resultSet.getInt("id_rol"));
+
+                } else {
+                    return null;
+                }
+            }catch(SQLException e) {
+                System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } catch(SQLException e) {
+            System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
     public ArrayList<Personal> listarPersonal() {
 
-        String sql = "SELECT id, sueldo, horario_laboral_id, id_usuario FROM personal";
+        String sql = "SELECT id, sueldo, horario_laboral_id, id_usuario, id_rol FROM personal AND activo = TRUE";
         try (Connection con = ConexionDB.connect()) {
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             try (ResultSet resultSet = preparedStatement.executeQuery()){
@@ -122,7 +155,8 @@ public class PersonalDao {
                             resultSet.getDouble("sueldo"),
                             resultSet.getInt("horario_laboral_id"),
                             resultSet.getInt("id"),
-                            resultSet.getInt("id_usuario"));
+                            resultSet.getInt("id_usuario"),
+                            resultSet.getInt("id_rol"));
 
                     ArrayList<Personal> listaPersonal = new ArrayList<>();
                     listaPersonal.add(p);

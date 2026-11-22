@@ -9,7 +9,7 @@ public class UsuarioDao {
 
     public int insertar(Usuario u) {
 
-        String sqlInsert = "INSERT INTO usuario (email, password, dni_persona) VALUES (?, ?, ?)";
+        String sqlInsert = "INSERT INTO usuario (email, pass, dni_persona) VALUES (?, ?, ?)";
         String sqlGetId = "SELECT LAST_INSERT_ID()";
 
         try (Connection con = ConexionDB.connect();) {
@@ -58,7 +58,7 @@ public class UsuarioDao {
 
     public Boolean modificar(Usuario u) {
 
-        String sql = "UPDATE usuario SET  email = ?, password = ?, dni_persona=? WHERE id = ?";
+        String sql = "UPDATE usuario SET  email = ?, pass = ?, dni_persona=? WHERE id = ?";
 
         try (Connection con = ConexionDB.connect()) {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -80,7 +80,7 @@ public class UsuarioDao {
 
     public Usuario findBYID(int id) {
 
-        String sql = "SELECT id, email, contraseña, dni_persona FROM persona WHERE id = ?";
+        String sql = "SELECT id, email, pass, dni_persona FROM usuario WHERE id = ? AND activo = TRUE";
         try (Connection con = ConexionDB.connect()) {
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setInt(1, id);
@@ -108,9 +108,43 @@ public class UsuarioDao {
         return null;
     }
 
+
+    public Usuario findBYEmailPassword(String email, String password) {
+
+        String sql = "SELECT id, email, pass, dni_persona FROM usuario WHERE email = ? AND pass = ? AND activo = TRUE";
+        try (Connection con = ConexionDB.connect()) {
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, password);
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                if (resultSet.next()) {
+                    return new Usuario(
+
+                            resultSet.getInt("id"),
+                            resultSet.getString("email"),
+                            resultSet.getString("password"),
+                            resultSet.getString("dni"));
+
+                } else {
+                    return null;
+                }
+            }catch(SQLException e) {
+                System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } catch(SQLException e) {
+            System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
+
     public ArrayList<Usuario> listarUsuarios() {
 
-        String sql = "SELECT id, email, contraseña, dni_persona FROM usuario";
+        String sql = "SELECT id, email, pass, dni_persona FROM usuario AND activo = TRUE";
         try (Connection con = ConexionDB.connect()) {
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             try (ResultSet resultSet = preparedStatement.executeQuery()){
