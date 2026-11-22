@@ -10,16 +10,16 @@ public class PetFood extends Product implements Descontable {
     private double weightKG;
     private double percentageDiscount;   // 0 = sin descuento
 
-    //----CONSTRUCTORES----
+    //Constructor
 
-    // Para crear un alimento nuevo.
+    // Constructor para alimento nuevo
     public PetFood(String name, double price, int stock, TypeMascotPetShop typeMascot, double weightKG) {
         super(name, price, stock);
         this.typeMascot = typeMascot;
         this.weightKG = weightKG;
     }
 
-    // Para reconstruir un alimento leído desde la base de datos
+    //Constructor de un alimento desde la base de datos
     public PetFood(int id, String name, double price, int stock, boolean active, TypeMascotPetShop typeMascot,
                    double weightKG, double percentageDiscount) {
         super(id, name, price, stock, active);
@@ -28,7 +28,6 @@ public class PetFood extends Product implements Descontable {
         this.percentageDiscount = percentageDiscount;
     }
 
-    //----GETTER Y SETTER----
     public TypeMascotPetShop getTypeMascot() {
         return typeMascot;
     }
@@ -45,7 +44,7 @@ public class PetFood extends Product implements Descontable {
         this.weightKG = weightKG;
     }
 
-    //----METODOS----
+    //Metodos
 
     // Sobrescritura: el precio final es el precio base menos el descuento
     @Override

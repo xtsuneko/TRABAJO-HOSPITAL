@@ -8,7 +8,7 @@ public abstract class Product {
     private int stock;
     private boolean active = true;   // baja lógica: false = dado de baja
 
-    //----CONSTRUCTORES----
+    //Constructores
 
     // Constructor para productos nuevos
     public Product(String name, double price, int stock) {
@@ -17,7 +17,7 @@ public abstract class Product {
         this.stock = stock;
     }
 
-    // Constructor de producto desde la base de datos
+    //Constructor con info de la base de datos
     public Product(int id, String name, double price, int stock, boolean active) {
         this.id = id;
         this.name = name;
@@ -26,7 +26,6 @@ public abstract class Product {
         this.active = active;
     }
 
-    //----GETTER Y SETTER----
     public int getId() {
         return id;
     }
@@ -67,11 +66,11 @@ public abstract class Product {
         this.active = active;
     }
 
-    //----METODOS----
+    //Metodos
 
     public abstract double calculateFinalPrice();
 
-    // Chequeo de Ids
+    // Chequeo de Ids y Override de metodos
 
     @Override
     public boolean equals(Object o) {
