@@ -35,9 +35,10 @@ public class LogearUI extends MenuAbstracto {
 
             ClienteService serviceC = new ClienteService();
 
-            c1 = serviceC.findClienteByIDUsuario(u1.getIdUsuario());
+            c1 = serviceC.findClienteByIDUsuario(u1.getId());
 
             if(c1 !=null){
+                this.setDatos(c1);
                 return TipoInterfaz.MENU_CLIENTE;
             }
 
@@ -47,6 +48,7 @@ public class LogearUI extends MenuAbstracto {
 
             pl1 = servicePl.findPersonalByIDUsuario(u1.getIdUsuario());
 
+            this.setDatos(pl1);
             switch (pl1.getRol()){
                 case Roles.ADMINISTRADOR:
                     return TipoInterfaz.MENU_ADMINISTRADOR;

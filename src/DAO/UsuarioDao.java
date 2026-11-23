@@ -90,8 +90,8 @@ public class UsuarioDao {
 
                             resultSet.getInt("id"),
                             resultSet.getString("email"),
-                            resultSet.getString("password"),
-                            resultSet.getString("dni"));
+                            resultSet.getString("pass"),
+                            resultSet.getString("dni_persona"));
 
                 } else {
                     return null;
@@ -122,8 +122,8 @@ public class UsuarioDao {
 
                             resultSet.getInt("id"),
                             resultSet.getString("email"),
-                            resultSet.getString("password"),
-                            resultSet.getString("dni"));
+                            resultSet.getString("pass"),
+                            resultSet.getString("dni_persona"));
 
                 } else {
                     return null;
@@ -153,8 +153,8 @@ public class UsuarioDao {
 
                             resultSet.getInt("id"),
                             resultSet.getString("email"),
-                            resultSet.getString("password"),
-                            resultSet.getString("dni"));
+                            resultSet.getString("pass"),
+                            resultSet.getString("dni_persona"));
 
                     ArrayList<Usuario> listaUsuarios = new ArrayList<>();
                     listaUsuarios.add(u);

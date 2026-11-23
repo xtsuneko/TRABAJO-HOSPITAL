@@ -1,5 +1,7 @@
 package UI.Veterinario;
 import ENUM.TipoInterfaz;
+import POJO.Persona;
+import POJO.Personal;
 import UI.MenuAbstracto;
 import java.util.Scanner;
 
@@ -7,6 +9,8 @@ public class MenuVeterinarioUI extends MenuAbstracto {
 
     @Override
     public TipoInterfaz mostrarInterfaz() {
+
+        Personal veterinario = (Personal) this.getDatos();
 
         Scanner scanner = new Scanner(System.in);
 

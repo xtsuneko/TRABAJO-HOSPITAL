@@ -69,6 +69,26 @@ public class TurnoService {
         return dao.findBYID(id);
     }
 
+    public Turno findTurnoByIDVeterinario(Integer id){
+
+        if(id == null){
+            throw new ParametroNullException("El ID es NULO");
+        }
+
+
+        return dao.findBYIDVeterinario(id);
+    }
+
+    public Turno findTurnoByIDCliente(Integer id){
+
+        if(id == null){
+            throw new ParametroNullException("El ID es NULO");
+        }
+
+
+        return dao.findBYIDCliente(id);
+    }
+
     public void listarTurnos() {
 
         ArrayList<Turno> t = dao.listarTurnos();

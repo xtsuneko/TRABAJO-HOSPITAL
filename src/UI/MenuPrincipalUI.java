@@ -19,12 +19,12 @@ public class MenuPrincipalUI extends MenuAbstracto {
 
         String opcion= scanner.nextLine();
 
-        if(opcion=="1"){
-            return TipoInterfaz.REGISTRAR;
-        }
-        if(opcion=="2"){
-            return TipoInterfaz.INICIAR_SESION;
-        }
+       switch (opcion){
+           case "1":
+               return TipoInterfaz.REGISTRAR;
+           case "2":
+               return TipoInterfaz.INICIAR_SESION;
+       }
 
         System.out.println("Opcion invalida");
         System.out.println("Presione cualquier tecla para continuar...");
