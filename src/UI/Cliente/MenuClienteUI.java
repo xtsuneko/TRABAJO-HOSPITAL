@@ -30,6 +30,8 @@ public class MenuClienteUI extends MenuAbstracto {
             case "4":
                 return TipoInterfaz.MENU_VER_TURNOS_CLIENTE;
             case "5":
+                return TipoInterfaz.MENU_VER_FICHAS_MEDICAS;
+            case "6":
                 return TipoInterfaz.MENU_PRINCIPAL;
         }
 

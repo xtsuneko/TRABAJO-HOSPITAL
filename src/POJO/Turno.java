@@ -92,7 +92,7 @@ public class Turno extends ClaseBaseBddGenerica<Integer> {
 
     @Override
     public String toString() {
-        return "Turno:" +
+        return "\nTurno:" +
                 "\n\tidCliente=" + idCliente +
                 "\n\tidPersonal=" + idPersonal +
                 "\n\tcliente=" + cliente +

@@ -33,6 +33,7 @@ public class MenuModificarTurnoUI extends MenuAbstracto {
             scanner.nextLine();
 
             Turno t1 = new Turno();
+
             TurnoService serviceT = new TurnoService();
 
             t1=serviceT.findTurnoByIDYIDCliente(id, cliente.getIdCliente());
@@ -42,6 +43,7 @@ public class MenuModificarTurnoUI extends MenuAbstracto {
                 scanner.nextLine();
                 return TipoInterfaz.MENU_CLIENTE;
             }
+            t1.setId(id);
 
             System.out.println("Ingrese el id del veterinario a modificar: ");
             int idVeterinario;

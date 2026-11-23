@@ -77,6 +77,16 @@ public class RevisionService {
         return dao.findBYIDPorVeterinario(id);
     }
 
+    public void listarFichasPorCliente(int id) {
+
+        ArrayList<Revision> r = dao.listarFichasPorCliente(id);
+        if(r ==null || r.isEmpty()){
+            System.out.println("No se encontraron fichas en el sistema");
+        }
+
+        System.out.println(r);
+    }
+
     public void listarRevisiones() {
 
         ArrayList<Revision> r = dao.listarRevisiones();

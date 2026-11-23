@@ -41,6 +41,7 @@ public class MenuModificarTurnoRecepcionistaUI extends MenuAbstracto {
                 scanner.nextLine();
                 return TipoInterfaz.MENU_RECEPCIONISTA;
             }
+            t1.setId(id);
 
             System.out.println("Ingrese el id del cliente: ");
             int idCliente;

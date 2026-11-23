@@ -106,6 +106,14 @@ public class Personal extends ClaseBaseBddGenerica<Integer> {
 
     @Override
     public String toString() {
+        String nombre=" ";
+        String apellido= " ";
+        String telefono= " ";
+        if(persona!=null){
+            nombre= persona.getNombre();
+            apellido= persona.getApellido();
+            telefono= persona.getTelefono();
+        }
         String horario;
         switch (horarioLaboral){
             case DIURNO:
@@ -137,10 +145,10 @@ public class Personal extends ClaseBaseBddGenerica<Integer> {
                 rol="Sin rol";
                 break;
         }
-        return "Personal: " +
-                "\n\tNombre=" + persona.getNombre() +
-                "\n\tApellido=" + persona.getApellido() +
-                "\n\tTelefono=" + persona.getTelefono() +
+        return "\nPersonal: " +
+                "\n\tNombre=" + nombre +
+                "\n\tApellido=" + apellido +
+                "\n\tTelefono=" + telefono +
                 "\n\tRol=" + rol +
                 "\n\tSueldo=" + sueldo +
                 "\n\tHorarioLaboral=" + horario;

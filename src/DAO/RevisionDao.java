@@ -11,7 +11,7 @@ public class RevisionDao {
 
     public int insertarRevision(Revision r) {
 
-        String sqlInsert = "INSERT INTO turno (id_turno, diagnostico, tratamiento) VALUES (?, ?, ?)";
+        String sqlInsert = "INSERT INTO revision (id_turno, diagnostico, tratamiento) VALUES (?, ?, ?)";
         String sqlGetId = "SELECT LAST_INSERT_ID()";
 
         try (Connection con = ConexionDB.connect()) {
@@ -114,7 +114,7 @@ public class RevisionDao {
         String sql = "SELECT id_turno, diagnostico, tratamiento \n" +
                 "FROM revision r\n" +
                 "inner join turnos t  ON r.id_turno = t.id_turno \n" +
-                "WHERE id_personal = ? AND activo = TRUE";
+                "WHERE id_personal = ? AND r.activo = TRUE";
 
         try (Connection con = ConexionDB.connect()) {
             PreparedStatement preparedStatement = con.prepareStatement(sql);
@@ -143,8 +143,44 @@ public class RevisionDao {
         return null;
     }
 
+    public ArrayList<Revision> listarFichasPorCliente(int id) {
+
+        ArrayList<Revision> listaRevision = new ArrayList<>();
+        String sql = "SELECT id_turno, diagnostico, tratamiento \n" +
+                "FROM revision r\n" +
+                "inner join turno t  ON r.id_turno = t.id \n" +
+                "WHERE id_cliente = ? AND r.activo = TRUE";
+
+        try (Connection con = ConexionDB.connect()) {
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                while (resultSet.next()) {
+                    Revision revision = new Revision(
+
+                            resultSet.getInt("id_turno"),
+                            resultSet.getString("diagnostico"),
+                            resultSet.getString("tratamiento"));
+
+                    listaRevision.add(revision);
+                }
+                return listaRevision;
+            }catch(SQLException e) {
+                System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } catch(SQLException e) {
+            System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
     public ArrayList<Revision> listarRevisiones() {
 
+        ArrayList<Revision> listaRevision = new ArrayList<>();
         String sql = "SELECT id_turno, diagnostico, tratamiento FROM revision AND activo = TRUE";
         try (Connection con = ConexionDB.connect()) {
             PreparedStatement preparedStatement = con.prepareStatement(sql);
@@ -156,10 +192,10 @@ public class RevisionDao {
                             resultSet.getString("diagnostico"),
                             resultSet.getString("tratamiento"));
 
-                    ArrayList<Revision> listaRevision = new ArrayList<>();
                     listaRevision.add(r);
                     return listaRevision;
                 }
+                return listaRevision;
             }catch(SQLException e) {
                 System.out.println("Error al conectar a la base de datos: " + e.getMessage());
                 e.printStackTrace();

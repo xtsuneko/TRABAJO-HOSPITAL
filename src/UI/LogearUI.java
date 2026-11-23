@@ -32,20 +32,28 @@ public class LogearUI extends MenuAbstracto {
             UsuarioService serviceU = new UsuarioService();
 
             u1 = serviceU.findUsuarioByEmailPassword(u1.getEmail(), u1.getPassword());
-
+            if(u1==null){
+                System.out.println("No se pudo iniciar sesion");
+                return TipoInterfaz.INICIAR_SESION;
+            }
             Persona p1 =new Persona();
             PersonaService serviceP = new PersonaService();
             p1 = serviceP.findPersonaByIDUsuario(u1.getId());
+
+            if(p1==null){
+                System.out.println("No se pudo iniciar sesion");
+                return TipoInterfaz.INICIAR_SESION;
+            }
 
             Cliente c1 = new Cliente();
 
             ClienteService serviceC = new ClienteService();
 
             c1 = serviceC.findClienteByIDUsuario(u1.getId());
-            c1.setPersona(p1);
-            c1.setUsuario(u1);
 
             if(c1 !=null){
+                c1.setPersona(p1);
+                c1.setUsuario(u1);
                 this.setDatos(c1);
                 return TipoInterfaz.MENU_CLIENTE;
             }
@@ -55,10 +63,15 @@ public class LogearUI extends MenuAbstracto {
             PersonalService servicePl = new PersonalService();
 
             pl1 = servicePl.findPersonalByIDUsuario(u1.getIdUsuario());
-            pl1.setUsuario(u1);
-            pl1.setPersona(p1);
+            if(pl1 != null) {
+                pl1.setUsuario(u1);
+                pl1.setPersona(p1);
+                this.setDatos(pl1);
+            }else{
+                System.out.println("No se pudo iniciar sesion");
+                return TipoInterfaz.INICIAR_SESION;
+            }
 
-            this.setDatos(pl1);
             switch (pl1.getRol()){
                 case Roles.ADMINISTRADOR:
                     return TipoInterfaz.MENU_ADMINISTRADOR;

@@ -56,7 +56,7 @@ public class Persona extends ClaseBaseBddGenerica<String> {
     //----METODOS----
     @Override
     public String toString() {
-        return "Persona:" +
+        return "\nPersona:" +
                 "\n\tnombre='" + nombre + '\'' +
                 "\n\tapellido='" + apellido + '\'' +
                 "\n\tdni=" + this.getId() +

@@ -53,7 +53,7 @@ public class Revision extends ClaseBaseBddGenerica<Integer> {
 
     @Override
     public String toString() {
-        return "Ficha medica:" +
+        return "\nFicha medica:" +
                 "\n\tidTurno=" + idTurno +
                 "\n\tdiagnostico='" + diagnostico + '\'' +
                 "\n\ttratamiento='" + tratamiento + '\'' +

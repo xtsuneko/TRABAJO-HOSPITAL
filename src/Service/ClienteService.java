@@ -110,6 +110,7 @@ public class ClienteService {
         for (Cliente cc : c) {
                 coleccionC.agregarClientes(cc.getIdUsuario(), cc);
         }
+        System.out.println(c);
 
     }
 

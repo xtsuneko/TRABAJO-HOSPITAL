@@ -11,7 +11,7 @@ public class PersonalDao {
 
     public int insertar(Personal p) {
 
-        String sqlInsert = "INSERT INTO personal (sueldo, horario_laboral, id_usuario, id_rol) VALUES (?, ?, ?, ?)";
+        String sqlInsert = "INSERT INTO personal (sueldo, horario_laboral_id, id_usuario, id_rol) VALUES (?, ?, ?, ?)";
         String sqlGetId = "SELECT LAST_INSERT_ID()";
 
         try (Connection con = ConexionDB.connect();) {
@@ -60,7 +60,7 @@ public class PersonalDao {
 
     public Boolean modificar(Personal p) {
 
-        String sql = "UPDATE personal SET  sueldo = ?, horario_laboral = ?, id_usuario = ?, id_rol = ? WHERE id = ?";
+        String sql = "UPDATE personal SET  sueldo = ?, horario_laboral_id = ?, id_usuario = ?, id_rol = ? WHERE id = ?";
 
         try (Connection con = ConexionDB.connect();) {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -145,7 +145,8 @@ public class PersonalDao {
 
     public ArrayList<Personal> listarPersonal() {
 
-        String sql = "SELECT id, sueldo, horario_laboral_id, id_usuario, id_rol FROM personal AND activo = TRUE";
+        ArrayList<Personal> listaPersonal = new ArrayList<>();
+        String sql = "SELECT id, sueldo, horario_laboral_id, id_usuario, id_rol FROM personal WHERE activo = TRUE";
         try (Connection con = ConexionDB.connect()) {
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             try (ResultSet resultSet = preparedStatement.executeQuery()){
@@ -158,10 +159,10 @@ public class PersonalDao {
                             resultSet.getInt("id_usuario"),
                             resultSet.getInt("id_rol"));
 
-                    ArrayList<Personal> listaPersonal = new ArrayList<>();
                     listaPersonal.add(p);
-                    return listaPersonal;
+
                 }
+                return listaPersonal;
             }catch(SQLException e) {
                 System.out.println("Error al conectar a la base de datos: " + e.getMessage());
                 e.printStackTrace();

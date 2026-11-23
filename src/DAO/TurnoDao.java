@@ -147,15 +147,16 @@ public class TurnoDao {
         return null;
     }
 
-    public Turno findBYIDVeterinario(int id) {
+    public ArrayList<Turno> findBYIDVeterinario(int id) {
 
+        ArrayList<Turno> listaTurnos=new ArrayList<>();
         String sql = "SELECT id_cliente, id_personal, fecha, horario, motivo_consulta FROM turno WHERE id_personal = ? AND activo = TRUE";
         try (Connection con = ConexionDB.connect()) {
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setInt(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()){
-                if (resultSet.next()) {
-                    return new Turno(
+                while (resultSet.next()) {
+                    Turno t = new Turno(
 
                             resultSet.getInt("id_cliente"),
                             resultSet.getInt("id_personal"),
@@ -163,9 +164,9 @@ public class TurnoDao {
                             resultSet.getTime("horario").toLocalTime(),
                             resultSet.getString("motivo_consulta"));
 
-                } else {
-                    return null;
+                    listaTurnos.add(t);
                 }
+                return listaTurnos;
             }catch(SQLException e) {
                 System.out.println("Error al conectar a la base de datos: " + e.getMessage());
                 e.printStackTrace();
@@ -211,6 +212,7 @@ public class TurnoDao {
 
     public ArrayList<Turno> listarTurnosPorCliente(Integer idCliente) {
 
+        ArrayList<Turno> listaTurnos = new ArrayList<>();
         String sql = "SELECT id_cliente, id_personal, fecha, horario, motivo_consulta FROM turno WHERE id_cliente = ? AND activo = TRUE";
         try (Connection con = ConexionDB.connect()) {
             PreparedStatement preparedStatement = con.prepareStatement(sql);
@@ -225,10 +227,10 @@ public class TurnoDao {
                             resultSet.getTime("horario").toLocalTime(),
                             resultSet.getString("motivo_consulta"));
 
-                    ArrayList<Turno> listaTurnos = new ArrayList<>();
                     listaTurnos.add(t);
-                    return listaTurnos;
+
                 }
+                return listaTurnos;
             }catch(SQLException e) {
                 System.out.println("Error al conectar a la base de datos: " + e.getMessage());
                 e.printStackTrace();
@@ -243,6 +245,7 @@ public class TurnoDao {
 
     public ArrayList<Turno> listarTurnos() {
 
+        ArrayList<Turno> listaTurnos = new ArrayList<>();
         String sql = "SELECT id_cliente, id_personal, fecha, horario, motivo_consulta FROM turno WHERE activo = TRUE";
         try (Connection con = ConexionDB.connect()) {
             PreparedStatement preparedStatement = con.prepareStatement(sql);
@@ -256,7 +259,6 @@ public class TurnoDao {
                             resultSet.getTime("horario").toLocalTime(),
                             resultSet.getString("motivo_consulta"));
 
-                    ArrayList<Turno> listaTurnos = new ArrayList<>();
                     listaTurnos.add(t);
                     return listaTurnos;
                 }

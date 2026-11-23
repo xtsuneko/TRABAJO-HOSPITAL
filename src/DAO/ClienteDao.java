@@ -139,7 +139,8 @@ public class ClienteDao {
 
     public ArrayList<Cliente> listarClientes() {
 
-        String sql = "SELECT id, direccion, id_usuario FROM cliente AND activo = TRUE";
+        ArrayList<Cliente> listaClientes = new ArrayList<>();
+        String sql = "SELECT id, direccion, id_usuario FROM cliente WHERE activo = TRUE";
         try (Connection con = ConexionDB.connect()) {
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             try (ResultSet resultSet = preparedStatement.executeQuery()){
@@ -150,10 +151,9 @@ public class ClienteDao {
                             resultSet.getInt("id"),
                             resultSet.getInt("id_usuario"));
 
-                    ArrayList<Cliente> listaClientes = new ArrayList<>();
                     listaClientes.add(c);
-                    return listaClientes;
                 }
+                return listaClientes; //TODO llenar la informacion de PERSONA
             }catch(SQLException e) {
                 System.out.println("Error al conectar a la base de datos: " + e.getMessage());
                 e.printStackTrace();

@@ -76,10 +76,18 @@ public class Cliente extends ClaseBaseBddGenerica<Integer> {
     //----METODOS----
     @Override
     public String toString() {
-        return "Cliente:" +
-                "\n\tNombre=" + persona.getNombre() +
-                "\n\tApellido=" + persona.getApellido() +
-                "\n\tTelefono=" + persona.getTelefono() +
+        String nombre=" ";
+        String apellido= " ";
+        String telefono= " ";
+        if(persona!=null){
+            nombre= persona.getNombre();
+            apellido= persona.getApellido();
+            telefono= persona.getTelefono();
+        }
+        return "\nCliente:" +
+                "\n\tNombre=" + nombre +
+                "\n\tApellido=" + apellido +
+                "\n\tTelefono=" + telefono +
                 "\n\tdireccion='" + direccion;
     }
 }
