@@ -37,6 +37,22 @@ CREATE TABLE rol (
   descripcion VARCHAR(100) NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS products (
+    id                  INT AUTO_INCREMENT PRIMARY KEY,
+    name                VARCHAR(100) NOT NULL,
+    price               DECIMAL(10,2) NOT NULL,
+    stock               INT NOT NULL DEFAULT 0,
+    active              BOOLEAN NOT NULL DEFAULT TRUE,
+    type                VARCHAR(20) NOT NULL,   -- 'PET_FOOD' o 'ACCESSORY'
+    -- columnas de PetFood
+    pet_type            VARCHAR(20) NULL,
+    weight_kg           DOUBLE NULL,
+    discount_percentage DOUBLE NULL,
+    -- columnas de Accessory
+    material            VARCHAR(50) NULL,
+    size                VARCHAR(20) NULL
+);
+
 INSERT INTO rol (descripcion) VALUES ('Administrador');
 INSERT INTO rol (descripcion) VALUES ('Veterinario');
 INSERT INTO rol (descripcion) VALUES ('Recepcionista');
@@ -99,6 +115,24 @@ INSERT INTO persona(dni, nombre, apellido, telefono) VALUES('41629947', 'Victori
 INSERT INTO persona(dni, nombre, apellido, telefono) VALUES('44655947', 'Marcos', 'Monje', 2233123456);
 INSERT INTO persona(dni, nombre, apellido, telefono) VALUES('42664467', 'Geronimo', 'Zampini', 2233030484);
 
+INSERT INTO products (name, price, stock, type, pet_type, weight_kg, discount_percentage, material, size) VALUES
+('Alimento Balanceado Adulto Perro 15kg',   48000, 20, 'PET_FOOD', 'PERRO',  15,  0,  NULL, NULL),
+('Alimento Cachorro Razas Pequeñas 3kg',    18500, 25, 'PET_FOOD', 'PERRO',  3,   10, NULL, NULL),
+('Alimento Gato Adulto Pescado 7.5kg',      32000, 18, 'PET_FOOD', 'GATO',   7.5, 0,  NULL, NULL),
+('Alimento Gatito Pollo 1.5kg',             11500, 30, 'PET_FOOD', 'GATO',   1.5, 5,  NULL, NULL),
+('Mezcla de Semillas para Canarios 1kg',     4200, 40, 'PET_FOOD', 'AVE',    1,   0,  NULL, NULL),
+('Alimento Hámster y Cobayo 800g',           3800, 35, 'PET_FOOD', 'ROEDOR', 0.8, 0,  NULL, NULL),
+('Pellets para Tortugas 500g',               5600, 22, 'PET_FOOD', 'REPTIL', 0.5, 15, NULL, NULL),
+('Snack Dental Perro 500g',                  7900, 50, 'PET_FOOD', 'PERRO',  0.5, 0,  NULL, NULL),
+
+('Correa Retráctil 5m',                     12500, 15, 'ACCESSORY', NULL, NULL, NULL, 'Nylon',            'M'),
+('Collar Ajustable Reflectivo',              6800, 40, 'ACCESSORY', NULL, NULL, NULL, 'Nylon',            'L'),
+('Cama Ortopédica',                         38000,  8, 'ACCESSORY', NULL, NULL, NULL, 'Espuma',           'XL'),
+('Plato Doble Acero Inoxidable',             9500, 25, 'ACCESSORY', NULL, NULL, NULL, 'Acero inoxidable', 'M'),
+('Rascador para Gatos 60cm',                21000, 12, 'ACCESSORY', NULL, NULL, NULL, 'Sisal',            'M'),
+('Transportadora Rígida',                   27500, 10, 'ACCESSORY', NULL, NULL, NULL, 'Plástico',         'L'),
+('Pelota de Goma con Sonido',                3200, 60, 'ACCESSORY', NULL, NULL, NULL, 'Goma',             'S'),
+('Jaula para Aves con Comedero',            45000,  6, 'ACCESSORY', NULL, NULL, NULL, 'Metal',            'L');
 
 select * from persona;
 select * from usuario;
