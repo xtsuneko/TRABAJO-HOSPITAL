@@ -9,6 +9,7 @@ public enum TipoInterfaz {
     MENU_CLIENTE,
     MENU_RECEPCIONISTA,
     MENU_VETERINARIO,
+    //Menu Administrador
     MENU_ADMINISTRADOR,
     MENU_GESTION_PERSONAL,
     MENU_GESTION_CLIENTES,
@@ -17,7 +18,6 @@ public enum TipoInterfaz {
     MENU_AGREGAR_PERSONAL,
     MENU_MODIFICAR_PERSONAL,
     MENU_DAR_DE_BAJA_PERSONAL,
-    //Menu Administrador
     MENU_LISTAR_CLIENTE,
     MENU_VER_CLIENTE,
     MENU_AGREGAR_CLIENTE,
