@@ -76,7 +76,7 @@ public class Usuario extends ClaseBaseBddGenerica<Integer> {
     //----METODOS----
     @Override
     public String toString() {
-        return "POJO.Usuario{" +
+        return "Usuario{" +
                 "email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';

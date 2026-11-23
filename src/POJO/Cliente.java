@@ -6,6 +6,7 @@ public class Cliente extends ClaseBaseBddGenerica<Integer> {
     private String direccion;
     private Usuario usuario;
     private int idUsuario;
+    private Persona persona;
 
     //----CONSTRUCTORES----
     public Cliente(int idCliente, String direccion, int idUsuario) {
@@ -28,6 +29,7 @@ public class Cliente extends ClaseBaseBddGenerica<Integer> {
 
     public Cliente() {
         this.usuario = new Usuario();
+        this.persona = new Persona();
     }
 
     //----GETTER Y SETTER----
@@ -63,11 +65,21 @@ public class Cliente extends ClaseBaseBddGenerica<Integer> {
         this.idUsuario = idUsuario;
     }
 
+    public Persona getPersona() {
+        return persona;
+    }
+
+    public void setPersona(Persona persona) {
+        this.persona = persona;
+    }
+
     //----METODOS----
     @Override
     public String toString() {
-        return "Cliente{" +
-                "direccion='" + direccion + '\'' +
-                '}';
+        return "Cliente:" +
+                "\n\tNombre=" + persona.getNombre() +
+                "\n\tApellido=" + persona.getApellido() +
+                "\n\tTelefono=" + persona.getTelefono() +
+                "\n\tdireccion='" + direccion;
     }
 }

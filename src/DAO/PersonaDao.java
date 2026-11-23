@@ -99,6 +99,39 @@ public class PersonaDao {
         return null;
     }
 
+    public Persona findBYIDUsuario(int idUsuario) {
+
+        String sql = "SELECT dni, nombre, apellido, telefono \n" +
+                "FROM persona p\n" +
+                "inner join usuario u ON p.dni = u.dni_persona\n" +
+                "WHERE u.id = ? AND activo = TRUE";
+        try (Connection con = ConexionDB.connect()) {
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setInt(1, idUsuario);
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                if (resultSet.next()) {
+                    return new Persona(
+
+                            resultSet.getString("nombre"),
+                            resultSet.getString("apellido"),
+                            resultSet.getString("dni"),
+                            resultSet.getString("telefono"));
+
+                } else {
+                    return null;
+                }
+            }catch(SQLException e) {
+                System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } catch(SQLException e) {
+            System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public ArrayList<Persona> listarPersonas() {
 
         String sql = "SELECT dni, nombre, apellido, telefono FROM persona AND activo = TRUE";

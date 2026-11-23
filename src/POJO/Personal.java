@@ -10,6 +10,7 @@ public class Personal extends ClaseBaseBddGenerica<Integer> {
     private Usuario usuario;
     private int idUsuario;
     private Roles rol;
+    private Persona persona;
 
     //----CONSTRUCTORES----
     public Personal(int idPersonal, Double sueldo, HorarioLaboral horarioLaboral, int idUsuario, Roles rol) {
@@ -32,6 +33,7 @@ public class Personal extends ClaseBaseBddGenerica<Integer> {
 
     public Personal() {
         this.usuario = new Usuario();
+        this.persona = new Persona();
     }
 
     public Personal(Double sueldo, HorarioLaboral horario, int idUsuario, Roles rol) {
@@ -91,14 +93,56 @@ public class Personal extends ClaseBaseBddGenerica<Integer> {
         this.rol = rol;
     }
 
+    public Persona getPersona() {
+        return persona;
+    }
+
+    public void setPersona(Persona persona) {
+        this.persona = persona;
+    }
+
     //----METODOS----
     //TODO arreglar los TO STRING DE TODOOOOOOS
 
     @Override
     public String toString() {
-        return "Personal{" +
-                "sueldo=" + sueldo +
-                ", horarioLaboral=" + horarioLaboral +
-                '}';
+        String horario;
+        switch (horarioLaboral){
+            case DIURNO:
+                horario="Diurno";
+                break;
+            case VESPERTINO:
+                horario="Vespertino";
+                break;
+            case NOCTURNO:
+                horario="Nocturno";
+                break;
+            default:
+                horario="Sin horario";
+                break;
+        }
+
+        String rol;
+        switch (this.rol){
+            case VETERINARIO:
+               rol="Veterinario";
+               break;
+            case RECEPCIONISTA:
+                rol="Recepcionista";
+                break;
+            case ADMINISTRADOR:
+                rol="Administrador";
+                break;
+            default:
+                rol="Sin rol";
+                break;
+        }
+        return "Personal: " +
+                "\n\tNombre=" + persona.getNombre() +
+                "\n\tApellido=" + persona.getApellido() +
+                "\n\tTelefono=" + persona.getTelefono() +
+                "\n\tRol=" + rol +
+                "\n\tSueldo=" + sueldo +
+                "\n\tHorarioLaboral=" + horario;
     }
 }

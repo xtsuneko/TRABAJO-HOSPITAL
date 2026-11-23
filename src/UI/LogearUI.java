@@ -4,9 +4,11 @@ import ENUM.TipoInterfaz;
 import EXCEPCIONES.ParametroInvalidoException;
 import EXCEPCIONES.ParametroNullException;
 import POJO.Cliente;
+import POJO.Persona;
 import POJO.Personal;
 import POJO.Usuario;
 import Service.ClienteService;
+import Service.PersonaService;
 import Service.PersonalService;
 import Service.UsuarioService;
 
@@ -31,11 +33,17 @@ public class LogearUI extends MenuAbstracto {
 
             u1 = serviceU.findUsuarioByEmailPassword(u1.getEmail(), u1.getPassword());
 
+            Persona p1 =new Persona();
+            PersonaService serviceP = new PersonaService();
+            p1 = serviceP.findPersonaByIDUsuario(u1.getId());
+
             Cliente c1 = new Cliente();
 
             ClienteService serviceC = new ClienteService();
 
             c1 = serviceC.findClienteByIDUsuario(u1.getId());
+            c1.setPersona(p1);
+            c1.setUsuario(u1);
 
             if(c1 !=null){
                 this.setDatos(c1);
@@ -47,6 +55,8 @@ public class LogearUI extends MenuAbstracto {
             PersonalService servicePl = new PersonalService();
 
             pl1 = servicePl.findPersonalByIDUsuario(u1.getIdUsuario());
+            pl1.setUsuario(u1);
+            pl1.setPersona(p1);
 
             this.setDatos(pl1);
             switch (pl1.getRol()){
