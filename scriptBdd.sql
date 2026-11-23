@@ -114,6 +114,50 @@ INSERT INTO persona(dni, nombre, apellido, telefono) VALUES('43629947', 'Lucia',
 INSERT INTO persona(dni, nombre, apellido, telefono) VALUES('41629947', 'Victoria', 'Gutierrez', 2233078995);
 INSERT INTO persona(dni, nombre, apellido, telefono) VALUES('44655947', 'Marcos', 'Monje', 2233123456);
 INSERT INTO persona(dni, nombre, apellido, telefono) VALUES('42664467', 'Geronimo', 'Zampini', 2233030484);
+INSERT INTO persona(dni, nombre, apellido, telefono) VALUES('38111011', 'Franco', 'Ruiz', '2235100011'),
+INSERT INTO persona(dni, nombre, apellido, telefono) VALUES('46876345', 'Camila', 'Gonzalez', '2235100011'),
+INSERT INTO persona(dni, nombre, apellido, telefono) VALUES('45432578', 'Matias', 'Escarso', '2235100011'),
+INSERT INTO persona(dni, nombre, apellido, telefono) VALUES('48345123', 'Claudio', 'Rodriguez', '2235100011'),
+INSERT INTO persona(dni, nombre, apellido, telefono) VALUES('46277456', 'Franco', 'Calli', '2235100011'),
+INSERT INTO persona(dni, nombre, apellido, telefono) VALUES('36345789', 'Nicolas', 'Paz', '2235100011'),
+INSERT INTO persona(dni, nombre, apellido, telefono) VALUES('40234890', 'Leonel', 'Flores', '2235100011');
+
+NSERT INTO usuario(email, pass, dni_persona) VALUES
+('claudia.ferreyra@gmail.com', 'cli12345', '42629947'),
+('juan.perez@gmail.com', 'cli12345', '42649956'),
+('pedro.gomez@gmail.com', 'cli12345', '42629247'),
+('nicolas.fernanez@gmail.com', 'cli12345', '42229947'),
+('maria.lopez@gmail.com', 'cli12345', '42629957'),
+('franco.ruiz@gmail.com', 'cli12345', '38111011'),
+('camila.gonzalez@gmail.com', 'cli12345', '46876345'),
+('claudio.rodriguez@gmail.com', 'cli12345', '48345123'),
+('nicolas.paz@gmail.com', 'cli12345', '36345789'),
+('valentina.sosa@gmail.com', 'cli12345', '39111001'),
+('mateo.romero@gmail.com', 'cli12345', '39111002'),
+('sofia.diaz@gmail.com', 'cli12345', '39111003'),
+('tomas.acosta@gmail.com', 'cli12345', '39111004'),
+('julieta.torres@gmail.com', 'cli12345', '39111005'),
+('agustina.castro@gmail.com', 'cli12345', '39111006'),
+('lucia.gallo@gmail.com', 'vet12345', '43629947'),
+('victoria.gutierrez@gmail.com', 'rec12345', '41629947'),
+('marcos.monje@gmail.com', 'vet12345', '44655947'),
+('geronimo.zampini@gmail.com', 'adm12345', '42664467'),
+('matias.escarso@gmail.com', 'vet12345', '45432578'),
+('franco.calli@gmail.com', 'rec12345', '46277456'),
+('leonel.flores@gmail.com', 'vet12345', '40234890'),
+('laura.gimenez@gmail.com', 'rec12345', '35222001'),
+('pablo.navarro@gmail.com', 'rec12345', '35222002'),
+('mariana.suarez@gmail.com', 'vet12345', '35333001'),
+('federico.ramos@gmail.com', 'vet12345', '35333002'),
+('daniela.aguirre@gmail.com', 'vet12345', '35333003'),
+('sebastian.vega@gmail.com', 'vet12345', '35333004'),
+('paula.cabrera@gmail.com', 'vet12345', '35333005'),
+('diego.mendoza@gmail.com', 'vet12345', '35333006');
+
+
+
+
+
 
 INSERT INTO products (name, price, stock, type, pet_type, weight_kg, discount_percentage, material, size) VALUES
 ('Alimento Balanceado Adulto Perro 15kg',   48000, 20, 'PET_FOOD', 'PERRO',  15,  0,  NULL, NULL),
