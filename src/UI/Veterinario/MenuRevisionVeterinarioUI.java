@@ -11,9 +11,6 @@ public class MenuRevisionVeterinarioUI extends MenuAbstracto {
     @Override
     public TipoInterfaz mostrarInterfaz() {
 
-        Personal veterinario = (Personal) this.getDatos();
-        TurnoService serviceT = new TurnoService();
-
         System.out.println("Elija una opcion: ");
         System.out.println("1.Agregar ficha medica");
         System.out.println("2.Ver fichas medicas");

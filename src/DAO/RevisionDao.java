@@ -109,6 +109,40 @@ public class RevisionDao {
         return null;
     }
 
+    public Revision findBYIDPorVeterinario(int id) {
+
+        String sql = "SELECT id_turno, diagnostico, tratamiento \n" +
+                "FROM revision r\n" +
+                "inner join turnos t  ON r.id_turno = t.id_turno \n" +
+                "WHERE id_personal = ? AND activo = TRUE";
+
+        try (Connection con = ConexionDB.connect()) {
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                if (resultSet.next()) {
+                    return new Revision(
+
+                            resultSet.getInt("id_turno"),
+                            resultSet.getString("diagnostico"),
+                            resultSet.getString("tratamiento"));
+
+
+                } else {
+                    return null;
+                }
+            }catch(SQLException e) {
+                System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } catch(SQLException e) {
+            System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public ArrayList<Revision> listarRevisiones() {
 
         String sql = "SELECT id_turno, diagnostico, tratamiento FROM revision AND activo = TRUE";

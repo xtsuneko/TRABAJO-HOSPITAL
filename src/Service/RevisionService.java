@@ -68,6 +68,15 @@ public class RevisionService {
         return dao.findBYID(id);
     }
 
+    public Revision findRevisionByIDPorVeterinario(Integer id){
+
+        if(id == null){
+            throw new ParametroNullException("El ID es NULO");
+        }
+
+        return dao.findBYIDPorVeterinario(id);
+    }
+
     public void listarRevisiones() {
 
         ArrayList<Revision> r = dao.listarRevisiones();

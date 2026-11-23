@@ -89,6 +89,29 @@ public class TurnoService {
         return dao.findBYIDCliente(id);
     }
 
+    public Turno findTurnoByIDYIDCliente(Integer id, Integer idCliente){
+
+        if(id == null){
+            throw new ParametroNullException("El ID es NULO");
+        }
+        if(idCliente == null){
+            throw new ParametroNullException("El ID del cliente es NULO");
+        }
+
+
+        return dao.findBYIDYIDCliente(id, idCliente);
+    }
+
+    public void listarTurnosPorCliente(Integer idCliente) {
+
+        ArrayList<Turno> t = dao.listarTurnosPorCliente(idCliente);
+        if(t ==null || t.isEmpty()){
+            System.out.println("No se encontro cliente en el sistema");
+        }
+
+        System.out.println(t);
+    }
+
     public void listarTurnos() {
 
         ArrayList<Turno> t = dao.listarTurnos();
