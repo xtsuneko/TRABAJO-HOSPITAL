@@ -1,4 +1,4 @@
-package UI.Cliente;
+package UI.Administrador.Cliente;
 import ENUM.TipoInterfaz;
 import EXCEPCIONES.ParametroInvalidoException;
 import EXCEPCIONES.ParametroNullException;

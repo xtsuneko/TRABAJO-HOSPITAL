@@ -1,4 +1,4 @@
-package UI.Personal;
+package UI.Administrador.Personal;
 import ENUM.TipoInterfaz;
 import POJO.Personal;
 import Service.PersonalService;

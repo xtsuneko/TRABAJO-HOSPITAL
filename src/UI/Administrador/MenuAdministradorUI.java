@@ -1,8 +1,10 @@
-package UI;
+package UI.Administrador;
 import ENUM.TipoInterfaz;
+import UI.MenuAbstracto;
+
 import java.util.Scanner;
 
-public class MenuAdministradorUI extends MenuAbstracto{
+public class MenuAdministradorUI extends MenuAbstracto {
 
     @Override
     public TipoInterfaz mostrarInterfaz() {
@@ -28,7 +30,6 @@ public class MenuAdministradorUI extends MenuAbstracto{
         scanner.nextLine();
 
         return TipoInterfaz.MENU_ADMINISTRADOR;
-
 
     }
 }
