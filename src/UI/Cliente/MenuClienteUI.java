@@ -27,7 +27,7 @@ public class MenuClienteUI extends MenuAbstracto {
             case "3":
                 return TipoInterfaz.MENU_CANCELAR_TURNO;
             case "4":
-                return TipoInterfaz.MENU_VER_TURNO;
+                return TipoInterfaz.MENU_VER_TURNOS_CLIENTE;
             case "5":
                 return TipoInterfaz.MENU_REVISION;
         }
