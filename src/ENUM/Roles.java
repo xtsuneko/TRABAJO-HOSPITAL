@@ -2,9 +2,11 @@ package ENUM;
 
 public enum Roles {
 
+    VACIO(0),
     ADMINISTRADOR(1),
     VETERINARIO(2),
     RECEPCIONISTA(3);
+
 
     private final int codigo;
 

@@ -92,9 +92,11 @@ public class Personal extends ClaseBaseBddGenerica<Integer> {
     }
 
     //----METODOS----
+    //TODO arreglar los TO STRING DE TODOOOOOOS
+
     @Override
     public String toString() {
-        return "POJO.Personal{" +
+        return "Personal{" +
                 "sueldo=" + sueldo +
                 ", horarioLaboral=" + horarioLaboral +
                 '}';

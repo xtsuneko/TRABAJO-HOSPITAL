@@ -115,9 +115,135 @@ public class TurnoDao {
         return null;
     }
 
+    public Turno findBYIDYIDCliente(int id, int idCliente) {
+
+        String sql = "SELECT id_cliente, id_personal, fecha, horario, motivo_consulta FROM turno WHERE id = ? AND id_cliente = ? AND activo = TRUE";
+        try (Connection con = ConexionDB.connect()) {
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            preparedStatement.setInt(2, idCliente);
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                if (resultSet.next()) {
+                    return new Turno(
+
+                            resultSet.getInt("id_cliente"),
+                            resultSet.getInt("id_personal"),
+                            resultSet.getDate("fecha").toLocalDate(),
+                            resultSet.getTime("horario").toLocalTime(),
+                            resultSet.getString("motivo_consulta"));
+
+                } else {
+                    return null;
+                }
+            }catch(SQLException e) {
+                System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } catch(SQLException e) {
+            System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public Turno findBYIDVeterinario(int id) {
+
+        String sql = "SELECT id_cliente, id_personal, fecha, horario, motivo_consulta FROM turno WHERE id_personal = ? AND activo = TRUE";
+        try (Connection con = ConexionDB.connect()) {
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                if (resultSet.next()) {
+                    return new Turno(
+
+                            resultSet.getInt("id_cliente"),
+                            resultSet.getInt("id_personal"),
+                            resultSet.getDate("fecha").toLocalDate(),
+                            resultSet.getTime("horario").toLocalTime(),
+                            resultSet.getString("motivo_consulta"));
+
+                } else {
+                    return null;
+                }
+            }catch(SQLException e) {
+                System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } catch(SQLException e) {
+            System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public Turno findBYIDCliente(int id) {
+
+        String sql = "SELECT id_cliente, id_personal, fecha, horario, motivo_consulta FROM turno WHERE id_cliente = ? AND activo = TRUE";
+        try (Connection con = ConexionDB.connect()) {
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                if (resultSet.next()) {
+                    return new Turno(
+
+                            resultSet.getInt("id_cliente"),
+                            resultSet.getInt("id_personal"),
+                            resultSet.getDate("fecha").toLocalDate(),
+                            resultSet.getTime("horario").toLocalTime(),
+                            resultSet.getString("motivo_consulta"));
+
+                } else {
+                    return null;
+                }
+            }catch(SQLException e) {
+                System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } catch(SQLException e) {
+            System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public ArrayList<Turno> listarTurnosPorCliente(Integer idCliente) {
+
+        String sql = "SELECT id_cliente, id_personal, fecha, horario, motivo_consulta FROM turno WHERE id_cliente = ? AND activo = TRUE";
+        try (Connection con = ConexionDB.connect()) {
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setInt(1, idCliente);
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                while (resultSet.next()) {
+                    Turno t = new Turno(
+
+                            resultSet.getInt("id_cliente"),
+                            resultSet.getInt("id_personal"),
+                            resultSet.getDate("fecha").toLocalDate(),
+                            resultSet.getTime("horario").toLocalTime(),
+                            resultSet.getString("motivo_consulta"));
+
+                    ArrayList<Turno> listaTurnos = new ArrayList<>();
+                    listaTurnos.add(t);
+                    return listaTurnos;
+                }
+            }catch(SQLException e) {
+                System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } catch(SQLException e) {
+            System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public ArrayList<Turno> listarTurnos() {
 
-        String sql = "SELECT id_cliente, id_personal, fecha, horario, motivo_consulta FROM turno AND activo = TRUE";
+        String sql = "SELECT id_cliente, id_personal, fecha, horario, motivo_consulta FROM turno WHERE activo = TRUE";
         try (Connection con = ConexionDB.connect()) {
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             try (ResultSet resultSet = preparedStatement.executeQuery()){

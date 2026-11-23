@@ -1,6 +1,7 @@
 package ENUM;
 public enum HorarioLaboral {
 
+    VACIO(0),
     DIURNO(1),
     VESPERTINO(2),
     NOCTURNO(3);

@@ -15,7 +15,7 @@ public class MenuClienteUI extends MenuAbstracto {
         System.out.println("2.Reagendar turno");
         System.out.println("3.Cancelar turno");
         System.out.println("4.Ver turnos");
-        System.out.println("5.Ver ficha medica"); //revision
+        System.out.println("5.Ver ficha medica");
 
         String opcion=scanner.nextLine();
 
