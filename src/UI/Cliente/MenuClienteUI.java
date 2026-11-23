@@ -16,6 +16,7 @@ public class MenuClienteUI extends MenuAbstracto {
         System.out.println("3.Cancelar turno");
         System.out.println("4.Ver turnos");
         System.out.println("5.Ver ficha medica");
+        System.out.println("6.Cerrar sesion");
 
         String opcion=scanner.nextLine();
 
@@ -29,7 +30,7 @@ public class MenuClienteUI extends MenuAbstracto {
             case "4":
                 return TipoInterfaz.MENU_VER_TURNOS_CLIENTE;
             case "5":
-                return TipoInterfaz.MENU_REVISION;
+                return TipoInterfaz.MENU_PRINCIPAL;
         }
 
         System.out.println("Opcion invalida");
