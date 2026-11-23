@@ -22,8 +22,8 @@ public class Turno extends ClaseBaseBddGenerica<Integer> {
     public Turno(int idCliente, int idPersonal, LocalDate fechaTurno, LocalTime horaTurno, String motivoConsulta) {
         this.idCliente = idCliente;
         this.idPersonal = idPersonal;
-        this.fechaTurno = LocalDate.now();
-        this.horaTurno = LocalTime.now();
+        this.fechaTurno = fechaTurno;
+        this.horaTurno = horaTurno;
         this.motivoConsulta = motivoConsulta;
     }
 

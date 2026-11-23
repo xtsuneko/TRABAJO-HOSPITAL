@@ -89,7 +89,7 @@ public class RevisionDao {
                 if (resultSet.next()) {
                     return new Revision(
 
-                            resultSet.getInt("idTurno"),
+                            resultSet.getInt("id_turno"),
                             resultSet.getString("diagnostico"),
                             resultSet.getString("tratamiento"));
 
@@ -111,14 +111,14 @@ public class RevisionDao {
 
     public ArrayList<Revision> listarRevisiones() {
 
-        String sql = "SELECT SELECT id_turno, diagnostico, tratamiento FROM revision AND activo = TRUE";
+        String sql = "SELECT id_turno, diagnostico, tratamiento FROM revision AND activo = TRUE";
         try (Connection con = ConexionDB.connect()) {
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             try (ResultSet resultSet = preparedStatement.executeQuery()){
                 while (resultSet.next()) {
                     Revision r = new Revision(
 
-                            resultSet.getInt("idTurno"),
+                            resultSet.getInt("id_turno"),
                             resultSet.getString("diagnostico"),
                             resultSet.getString("tratamiento"));
 

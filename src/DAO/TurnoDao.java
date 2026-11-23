@@ -94,11 +94,11 @@ public class TurnoDao {
                 if (resultSet.next()) {
                     return new Turno(
 
-                            resultSet.getInt("idCliente"),
-                            resultSet.getInt("idPersonal"),
-                            resultSet.getDate("fechaTurno").toLocalDate(),
-                            resultSet.getTime("horaTurno").toLocalTime(),
-                            resultSet.getString("motivoConsulta"));
+                            resultSet.getInt("id_cliente"),
+                            resultSet.getInt("id_personal"),
+                            resultSet.getDate("fecha").toLocalDate(),
+                            resultSet.getTime("horario").toLocalTime(),
+                            resultSet.getString("motivo_consulta"));
 
                 } else {
                     return null;
@@ -117,18 +117,18 @@ public class TurnoDao {
 
     public ArrayList<Turno> listarTurnos() {
 
-        String sql = "SELECT SELECT id_cliente, id_personal, fecha, horario, motivo_consulta FROM turno AND activo = TRUE";
+        String sql = "SELECT id_cliente, id_personal, fecha, horario, motivo_consulta FROM turno AND activo = TRUE";
         try (Connection con = ConexionDB.connect()) {
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             try (ResultSet resultSet = preparedStatement.executeQuery()){
                 while (resultSet.next()) {
                     Turno t = new Turno(
 
-                            resultSet.getInt("idCliente"),
-                            resultSet.getInt("idPersonal"),
-                            resultSet.getDate("fechaTurno").toLocalDate(),
-                            resultSet.getTime("horaTurno").toLocalTime(),
-                            resultSet.getString("motivoConsulta"));
+                            resultSet.getInt("id_cliente"),
+                            resultSet.getInt("id_personal"),
+                            resultSet.getDate("fecha").toLocalDate(),
+                            resultSet.getTime("horario").toLocalTime(),
+                            resultSet.getString("motivo_consulta"));
 
                     ArrayList<Turno> listaTurnos = new ArrayList<>();
                     listaTurnos.add(t);
