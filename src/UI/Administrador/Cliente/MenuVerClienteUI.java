@@ -1,4 +1,4 @@
-package UI.Cliente;
+package UI.Administrador.Cliente;
 import ENUM.TipoInterfaz;
 import POJO.Cliente;
 import Service.ClienteService;
