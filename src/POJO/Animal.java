@@ -41,7 +41,7 @@ public abstract class Animal {
         this.color = color;
     }
 
-    public int getEdad() {
+    public int getAge() {
         return age;
     }
 
