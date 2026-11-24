@@ -56,7 +56,6 @@ public class Revision extends ClaseBaseBddGenerica<Integer> {
         return "\nFicha medica:" +
                 "\n\tidTurno=" + idTurno +
                 "\n\tdiagnostico='" + diagnostico + '\'' +
-                "\n\ttratamiento='" + tratamiento + '\'' +
-                "\n\tturno=" + turno;
+                "\n\ttratamiento='" + tratamiento;
     }
 }

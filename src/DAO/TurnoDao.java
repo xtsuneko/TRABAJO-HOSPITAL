@@ -1,5 +1,8 @@
 package DAO;
 import CONEXION.ConexionDB;
+import POJO.Cliente;
+import POJO.Persona;
+import POJO.Personal;
 import POJO.Turno;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -86,13 +89,25 @@ public class TurnoDao {
 
     public Turno findBYID(int id) {
 
-        String sql = "SELECT id_cliente, id_personal, fecha, horario, motivo_consulta FROM turno WHERE id = ? AND activo = TRUE";
+        String sql = "SELECT t.id_cliente, t.id_personal, t.fecha, t.horario, t.motivo_consulta,  \n" +
+                "c.direccion, c.id_usuario AS id_usuario_cliente, \n" +
+                "pl.sueldo, pl.horario_laboral_id, pl.id_rol, pl.id_usuario AS id_usuario_personal,\n" +
+                "pc.nombre AS nombre_cliente, pc.apellido AS apellido_cliente, pc.telefono AS telefono_cliente,\n" +
+                "ppl.nombre AS nombre_personal, ppl.apellido AS apellido_personal, ppl.telefono AS telefono_personal\n" +
+                "FROM turno t\n" +
+                "inner join cliente c ON t.id_cliente = c.id\n" +
+                "inner join usuario uc ON uc.id = c.id_usuario\n" +
+                "inner join persona pc ON pc.dni = uc.dni_persona\n" +
+                "inner join personal pl ON t.id_personal = pl.id\n" +
+                "inner join usuario upl ON upl.id = pl.id_usuario\n" +
+                "inner join persona ppl ON ppl.dni = upl.dni_persona\n" +
+                "WHERE t.id = ? AND t.activo = TRUE";
         try (Connection con = ConexionDB.connect()) {
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setInt(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()){
                 if (resultSet.next()) {
-                    return new Turno(
+                    Turno t = new Turno(
 
                             resultSet.getInt("id_cliente"),
                             resultSet.getInt("id_personal"),
@@ -100,6 +115,41 @@ public class TurnoDao {
                             resultSet.getTime("horario").toLocalTime(),
                             resultSet.getString("motivo_consulta"));
 
+                    Personal pl = new Personal(
+
+                            resultSet.getDouble("sueldo"),
+                            resultSet.getInt("horario_laboral_id"),
+                            resultSet.getInt("id"),
+                            resultSet.getInt("id_usuario_personal"),
+                            resultSet.getInt("id_rol"));
+
+                    Persona p1 = new Persona(
+
+                            resultSet.getString("nombre_personal"),
+                            resultSet.getString("apellido_personal"),
+                            resultSet.getString("dni_personal"),
+                            resultSet.getString("telefono_personal"));
+
+                    pl.setPersona(p1);
+
+                    Cliente c1 = new Cliente(
+
+                            resultSet.getString("direccion"),
+                            resultSet.getInt("id"),
+                            resultSet.getInt("id_usuario_cliente"));
+
+                    Persona p2 = new Persona(
+
+                            resultSet.getString("nombre_cliente"),
+                            resultSet.getString("apellido_cliente"),
+                            resultSet.getString("dni_cliente"),
+                            resultSet.getString("telefono_cliente"));
+
+                    c1.setPersona(p2);
+                    t.setCliente(c1);
+                    t.setVeterinario(pl);
+
+                    return t;
                 } else {
                     return null;
                 }
@@ -117,14 +167,26 @@ public class TurnoDao {
 
     public Turno findBYIDYIDCliente(int id, int idCliente) {
 
-        String sql = "SELECT id_cliente, id_personal, fecha, horario, motivo_consulta FROM turno WHERE id = ? AND id_cliente = ? AND activo = TRUE";
+        String sql = "SELECT t.id_cliente, t.id_personal, t.fecha, t.horario, t.motivo_consulta,  \n" +
+                "c.direccion, c.id_usuario AS id_usuario_cliente, \n" +
+                "pl.sueldo, pl.horario_laboral_id, pl.id_rol, pl.id_usuario AS id_usuario_personal,\n" +
+                "pc.nombre AS nombre_cliente, pc.apellido AS apellido_cliente, pc.telefono AS telefono_cliente,\n" +
+                "ppl.nombre AS nombre_personal, ppl.apellido AS apellido_personal, ppl.telefono AS telefono_personal\n" +
+                "FROM turno t\n" +
+                "inner join cliente c ON t.id_cliente = c.id\n" +
+                "inner join usuario uc ON uc.id = c.id_usuario\n" +
+                "inner join persona pc ON pc.dni = uc.dni_persona\n" +
+                "inner join personal pl ON t.id_personal = pl.id\n" +
+                "inner join usuario upl ON upl.id = pl.id_usuario\n" +
+                "inner join persona ppl ON ppl.dni = upl.dni_persona\n" +
+                "WHERE t.id = ? AND t.id_cliente = ? AND t.activo = TRUE";
         try (Connection con = ConexionDB.connect()) {
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setInt(1, id);
             preparedStatement.setInt(2, idCliente);
             try (ResultSet resultSet = preparedStatement.executeQuery()){
                 if (resultSet.next()) {
-                    return new Turno(
+                    Turno t = new Turno(
 
                             resultSet.getInt("id_cliente"),
                             resultSet.getInt("id_personal"),
@@ -132,6 +194,41 @@ public class TurnoDao {
                             resultSet.getTime("horario").toLocalTime(),
                             resultSet.getString("motivo_consulta"));
 
+                    Personal pl = new Personal(
+
+                            resultSet.getDouble("sueldo"),
+                            resultSet.getInt("horario_laboral_id"),
+                            resultSet.getInt("id"),
+                            resultSet.getInt("id_usuario_personal"),
+                            resultSet.getInt("id_rol"));
+
+                    Persona p1 = new Persona(
+
+                            resultSet.getString("nombre_personal"),
+                            resultSet.getString("apellido_personal"),
+                            resultSet.getString("dni_personal"),
+                            resultSet.getString("telefono_personal"));
+
+                    pl.setPersona(p1);
+
+                    Cliente c1 = new Cliente(
+
+                            resultSet.getString("direccion"),
+                            resultSet.getInt("id"),
+                            resultSet.getInt("id_usuario_cliente"));
+
+                    Persona p2 = new Persona(
+
+                            resultSet.getString("nombre_cliente"),
+                            resultSet.getString("apellido_cliente"),
+                            resultSet.getString("dni_cliente"),
+                            resultSet.getString("telefono_cliente"));
+
+                    c1.setPersona(p2);
+                    t.setCliente(c1);
+                    t.setVeterinario(pl);
+
+                    return t;
                 } else {
                     return null;
                 }
@@ -150,7 +247,19 @@ public class TurnoDao {
     public ArrayList<Turno> findBYIDVeterinario(int id) {
 
         ArrayList<Turno> listaTurnos=new ArrayList<>();
-        String sql = "SELECT id_cliente, id_personal, fecha, horario, motivo_consulta FROM turno WHERE id_personal = ? AND activo = TRUE";
+        String sql = "SELECT t.id_cliente, t.id_personal, t.fecha, t.horario, t.motivo_consulta,  \n" +
+                "c.direccion, c.id_usuario AS id_usuario_cliente, \n" +
+                "pl.sueldo, pl.horario_laboral_id, pl.id_rol, pl.id_usuario AS id_usuario_personal,\n" +
+                "pc.nombre AS nombre_cliente, pc.apellido AS apellido_cliente, pc.telefono AS telefono_cliente,\n" +
+                "ppl.nombre AS nombre_personal, ppl.apellido AS apellido_personal, ppl.telefono AS telefono_personal\n" +
+                "FROM turno t\n" +
+                "inner join cliente c ON t.id_cliente = c.id\n" +
+                "inner join usuario uc ON uc.id = c.id_usuario\n" +
+                "inner join persona pc ON pc.dni = uc.dni_persona\n" +
+                "inner join personal pl ON t.id_personal = pl.id\n" +
+                "inner join usuario upl ON upl.id = pl.id_usuario\n" +
+                "inner join persona ppl ON ppl.dni = upl.dni_persona\n" +
+                "WHERE t.id_personal = ? AND t.activo = TRUE";
         try (Connection con = ConexionDB.connect()) {
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setInt(1, id);
@@ -164,7 +273,42 @@ public class TurnoDao {
                             resultSet.getTime("horario").toLocalTime(),
                             resultSet.getString("motivo_consulta"));
 
+                    Personal pl = new Personal(
+
+                            resultSet.getDouble("sueldo"),
+                            resultSet.getInt("horario_laboral_id"),
+                            resultSet.getInt("id"),
+                            resultSet.getInt("id_usuario_personal"),
+                            resultSet.getInt("id_rol"));
+
+                    Persona p1 = new Persona(
+
+                            resultSet.getString("nombre_personal"),
+                            resultSet.getString("apellido_personal"),
+                            resultSet.getString("dni_personal"),
+                            resultSet.getString("telefono_personal"));
+
+                    pl.setPersona(p1);
+
+                    Cliente c1 = new Cliente(
+
+                            resultSet.getString("direccion"),
+                            resultSet.getInt("id"),
+                            resultSet.getInt("id_usuario_cliente"));
+
+                    Persona p2 = new Persona(
+
+                            resultSet.getString("nombre_cliente"),
+                            resultSet.getString("apellido_cliente"),
+                            resultSet.getString("dni_cliente"),
+                            resultSet.getString("telefono_cliente"));
+
+                    c1.setPersona(p2);
+                    t.setCliente(c1);
+                    t.setVeterinario(pl);
+
                     listaTurnos.add(t);
+                    return listaTurnos;
                 }
                 return listaTurnos;
             }catch(SQLException e) {
@@ -181,13 +325,25 @@ public class TurnoDao {
 
     public Turno findBYIDCliente(int id) {
 
-        String sql = "SELECT id_cliente, id_personal, fecha, horario, motivo_consulta FROM turno WHERE id_cliente = ? AND activo = TRUE";
+        String sql = "SELECT t.id_cliente, t.id_personal, t.fecha, t.horario, t.motivo_consulta,  \n" +
+                "c.direccion, c.id_usuario AS id_usuario_cliente, \n" +
+                "pl.sueldo, pl.horario_laboral_id, pl.id_rol, pl.id_usuario AS id_usuario_personal,\n" +
+                "pc.nombre AS nombre_cliente, pc.apellido AS apellido_cliente, pc.telefono AS telefono_cliente,\n" +
+                "ppl.nombre AS nombre_personal, ppl.apellido AS apellido_personal, ppl.telefono AS telefono_personal\n" +
+                "FROM turno t\n" +
+                "inner join cliente c ON t.id_cliente = c.id\n" +
+                "inner join usuario uc ON uc.id = c.id_usuario\n" +
+                "inner join persona pc ON pc.dni = uc.dni_persona\n" +
+                "inner join personal pl ON t.id_personal = pl.id\n" +
+                "inner join usuario upl ON upl.id = pl.id_usuario\n" +
+                "inner join persona ppl ON ppl.dni = upl.dni_persona\n" +
+                "WHERE t.id_cliente = ? AND t.activo = TRUE";
         try (Connection con = ConexionDB.connect()) {
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setInt(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()){
                 if (resultSet.next()) {
-                    return new Turno(
+                    Turno t = new Turno(
 
                             resultSet.getInt("id_cliente"),
                             resultSet.getInt("id_personal"),
@@ -195,6 +351,41 @@ public class TurnoDao {
                             resultSet.getTime("horario").toLocalTime(),
                             resultSet.getString("motivo_consulta"));
 
+                    Personal pl = new Personal(
+
+                            resultSet.getDouble("sueldo"),
+                            resultSet.getInt("horario_laboral_id"),
+                            resultSet.getInt("id"),
+                            resultSet.getInt("id_usuario_personal"),
+                            resultSet.getInt("id_rol"));
+
+                    Persona p1 = new Persona(
+
+                            resultSet.getString("nombre_personal"),
+                            resultSet.getString("apellido_personal"),
+                            resultSet.getString("dni_personal"),
+                            resultSet.getString("telefono_personal"));
+
+                    pl.setPersona(p1);
+
+                    Cliente c1 = new Cliente(
+
+                            resultSet.getString("direccion"),
+                            resultSet.getInt("id"),
+                            resultSet.getInt("id_usuario_cliente"));
+
+                    Persona p2 = new Persona(
+
+                            resultSet.getString("nombre_cliente"),
+                            resultSet.getString("apellido_cliente"),
+                            resultSet.getString("dni_cliente"),
+                            resultSet.getString("telefono_cliente"));
+
+                    c1.setPersona(p2);
+                    t.setCliente(c1);
+                    t.setVeterinario(pl);
+
+                    return t;
                 } else {
                     return null;
                 }
@@ -213,7 +404,19 @@ public class TurnoDao {
     public ArrayList<Turno> listarTurnosPorCliente(Integer idCliente) {
 
         ArrayList<Turno> listaTurnos = new ArrayList<>();
-        String sql = "SELECT id_cliente, id_personal, fecha, horario, motivo_consulta FROM turno WHERE id_cliente = ? AND activo = TRUE";
+        String sql = "SELECT t.id_cliente, t.id_personal, t.fecha, t.horario, t.motivo_consulta,  \n" +
+                "c.direccion, c.id_usuario AS id_usuario_cliente, \n" +
+                "pl.sueldo, pl.horario_laboral_id, pl.id_rol, pl.id_usuario AS id_usuario_personal,\n" +
+                "pc.nombre AS nombre_cliente, pc.apellido AS apellido_cliente, pc.telefono AS telefono_cliente,\n" +
+                "ppl.nombre AS nombre_personal, ppl.apellido AS apellido_personal, ppl.telefono AS telefono_personal\n" +
+                "FROM turno t\n" +
+                "inner join cliente c ON t.id_cliente = c.id\n" +
+                "inner join usuario uc ON uc.id = c.id_usuario\n" +
+                "inner join persona pc ON pc.dni = uc.dni_persona\n" +
+                "inner join personal pl ON t.id_personal = pl.id\n" +
+                "inner join usuario upl ON upl.id = pl.id_usuario\n" +
+                "inner join persona ppl ON ppl.dni = upl.dni_persona\n" +
+                "WHERE t.id_cliente = ? AND t.activo = TRUE";
         try (Connection con = ConexionDB.connect()) {
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setInt(1, idCliente);
@@ -227,8 +430,42 @@ public class TurnoDao {
                             resultSet.getTime("horario").toLocalTime(),
                             resultSet.getString("motivo_consulta"));
 
-                    listaTurnos.add(t);
+                    Personal pl = new Personal(
 
+                            resultSet.getDouble("sueldo"),
+                            resultSet.getInt("horario_laboral_id"),
+                            resultSet.getInt("id"),
+                            resultSet.getInt("id_usuario_personal"),
+                            resultSet.getInt("id_rol"));
+
+                    Persona p1 = new Persona(
+
+                            resultSet.getString("nombre_personal"),
+                            resultSet.getString("apellido_personal"),
+                            resultSet.getString("dni_personal"),
+                            resultSet.getString("telefono_personal"));
+
+                    pl.setPersona(p1);
+
+                    Cliente c1 = new Cliente(
+
+                            resultSet.getString("direccion"),
+                            resultSet.getInt("id"),
+                            resultSet.getInt("id_usuario_cliente"));
+
+                    Persona p2 = new Persona(
+
+                            resultSet.getString("nombre_cliente"),
+                            resultSet.getString("apellido_cliente"),
+                            resultSet.getString("dni_cliente"),
+                            resultSet.getString("telefono_cliente"));
+
+                    c1.setPersona(p2);
+                    t.setCliente(c1);
+                    t.setVeterinario(pl);
+
+                    listaTurnos.add(t);
+                    return listaTurnos;
                 }
                 return listaTurnos;
             }catch(SQLException e) {
@@ -246,7 +483,19 @@ public class TurnoDao {
     public ArrayList<Turno> listarTurnos() {
 
         ArrayList<Turno> listaTurnos = new ArrayList<>();
-        String sql = "SELECT id_cliente, id_personal, fecha, horario, motivo_consulta FROM turno WHERE activo = TRUE";
+        String sql = "SELECT t.id_cliente, t.id_personal, t.fecha, t.horario, t.motivo_consulta, \n" +
+                "c.direccion, c.id_usuario AS id_usuario_cliente, \n" +
+                "pl.sueldo, pl.horario_laboral_id, pl.id_rol, pl.id_usuario AS id_usuario_personal,\n" +
+                "pc.nombre AS nombre_cliente, pc.apellido AS apellido_cliente, pc.telefono AS telefono_cliente,\n" +
+                "ppl.nombre AS nombre_personal, ppl.apellido AS apellido_personal, ppl.telefono AS telefono_personal\n" +
+                "FROM turno t\n" +
+                "inner join cliente c ON t.id_cliente = c.id\n" +
+                "inner join usuario uc ON uc.id = c.id_usuario\n" +
+                "inner join persona pc ON pc.dni = uc.dni_persona\n" +
+                "inner join personal pl ON t.id_personal = pl.id\n" +
+                "inner join usuario upl ON upl.id = pl.id_usuario\n" +
+                "inner join persona ppl ON ppl.dni = upl.dni_persona\n" +
+                "WHERE t.activo = TRUE";
         try (Connection con = ConexionDB.connect()) {
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             try (ResultSet resultSet = preparedStatement.executeQuery()){
@@ -258,6 +507,40 @@ public class TurnoDao {
                             resultSet.getDate("fecha").toLocalDate(),
                             resultSet.getTime("horario").toLocalTime(),
                             resultSet.getString("motivo_consulta"));
+
+                    Personal pl = new Personal(
+
+                            resultSet.getDouble("sueldo"),
+                            resultSet.getInt("horario_laboral_id"),
+                            resultSet.getInt("id"),
+                            resultSet.getInt("id_usuario_personal"),
+                            resultSet.getInt("id_rol"));
+
+                    Persona p1 = new Persona(
+
+                            resultSet.getString("nombre_personal"),
+                            resultSet.getString("apellido_personal"),
+                            resultSet.getString("dni_personal"),
+                            resultSet.getString("telefono_personal"));
+
+                    pl.setPersona(p1);
+
+                    Cliente c1 = new Cliente(
+
+                            resultSet.getString("direccion"),
+                            resultSet.getInt("id"),
+                            resultSet.getInt("id_usuario_cliente"));
+
+                    Persona p2 = new Persona(
+
+                            resultSet.getString("nombre_cliente"),
+                            resultSet.getString("apellido_cliente"),
+                            resultSet.getString("dni_cliente"),
+                            resultSet.getString("telefono_cliente"));
+
+                    c1.setPersona(p2);
+                    t.setCliente(c1);
+                    t.setVeterinario(pl);
 
                     listaTurnos.add(t);
                     return listaTurnos;

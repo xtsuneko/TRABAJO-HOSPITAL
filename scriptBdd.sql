@@ -99,13 +99,80 @@ INSERT INTO persona(dni, nombre, apellido, telefono) VALUES('41629947', 'Victori
 INSERT INTO persona(dni, nombre, apellido, telefono) VALUES('44655947', 'Marcos', 'Monje', 2233123456);
 INSERT INTO persona(dni, nombre, apellido, telefono) VALUES('42664467', 'Geronimo', 'Zampini', 2233030484);
 
+INSERT INTO usuario(email, pass, dni_persona) VALUES('canmonje1@gmail.com', 'cande123', '43629947');
+INSERT INTO personal(sueldo, horario_laboral_id, id_usuario, id_rol) VALUES(20000.0, 1, 1, 2);
+
+INSERT INTO usuario(email, pass, dni_persona) VALUES('admin@gmail.com', 'admin', '42664467');
+INSERT INTO personal(sueldo, horario_laboral_id, id_usuario, id_rol) VALUES(80000.0, 1, 3, 1);
+
+SELECT c.id, c.direccion, c.id_usuario, p.nombre, p.apellido, p.telefono, p.dni
+FROM cliente c
+inner join usuario u ON c.id_usuario = u.id
+inner join persona p ON p.dni = u.dni_persona
+WHERE c.id_usuario = ? AND c.activo = TRUE;
+
+SELECT c.id, c.direccion, c.id_usuario, p.nombre, p.apellido, p.telefono, p.dni
+FROM cliente c
+inner join usuario u ON c.id_usuario = u.id
+inner join persona p ON p.dni = u.dni_persona 
+WHERE c.id = ? AND c.activo = TRUE;
+
+SELECT c.id, c.direccion, c.id_usuario, p.nombre, p.apellido, p.telefono, p.dni
+FROM cliente c
+inner join usuario u ON c.id_usuario = u.id
+inner join persona p ON p.dni = u.dni_persona 
+WHERE c.activo = TRUE;
+
+SELECT pl.id, pl.sueldo, pl.horario_laboral_id, pl.id_usuario, pl.id_rol, p.nombre, p.apellido, p.telefono, p.dni
+FROM personal pl
+inner join usuario u ON pl.id_usuario = u.id
+inner join persona p ON p.dni = u.dni_persona 
+WHERE pl.activo = TRUE;
+
+SELECT pl.id, pl.sueldo, pl.horario_laboral_id, pl.id_usuario, pl.id_rol, p.nombre, p.apellido, p.telefono, p.dni
+FROM personal pl
+inner join usuario u ON pl.id_usuario = u.id
+inner join persona p ON p.dni = u.dni_persona
+WHERE pl.id_usuario = ? AND pl.activo = TRUE;
+
+SELECT pl.id, pl.sueldo, pl.horario_laboral_id, pl.id_usuario, pl.id_rol, p.nombre, p.apellido, p.telefono, p.dni
+FROM personal pl
+inner join usuario u ON pl.id_usuario = u.id
+inner join persona p ON p.dni = u.dni_persona
+WHERE pl.id = ? AND pl.activo = TRUE;
+
+SELECT t.id_cliente, t.id_personal, t.fecha, t.horario, t.motivo_consulta, 
+c.direccion, c.id_usuario AS id_usuario_cliente, 
+pl.sueldo, pl.horario_laboral_id, pl.id_rol, pl.id_usuario AS id_usuario_personal
+FROM turno t
+inner join cliente c ON t.id_cliente = c.id
+inner join usuario uc ON uc.id = c.id_usuario
+inner join persona pc ON pc.dni = uc.dni_persona
+inner join personal pl ON t.id_personal = pl.id
+inner join usuario upl ON upl.id = pl.id_usuario
+inner join persona ppl ON ppl.dni = upl.dni_persona
+WHERE t.activo = TRUE;
 
 select * from persona;
+select * from personal;
 select * from usuario;
 select * from cliente;
+SELECT id, direccion, id_usuario FROM cliente WHERE activo = TRUE;
+DELETE from usuario WHERE id=5; 
+SELECT id, direccion, id_usuario FROM personal WHERE id_usuario = 1 AND activo = TRUE;
+UPDATE personal set activo = TRUE WHERE id= 3;
+UPDATE turno set activo = TRUE WHERE id>0;
+Select * from rol;
 
+SELECT id_turno, diagnostico, tratamiento 
+FROM revision r
+inner join turnos t  ON r.id_turno = t.id_turno 
+WHERE id_personal = ? AND activo = TRUE;
 
+SELECT dni, nombre, apellido, telefono 
+FROM persona p
+inner join usuario u ON p.dni = u.dni_persona
+WHERE u.id = ? AND activo = TRUE;
 
-
-
+select * from turno;
 
