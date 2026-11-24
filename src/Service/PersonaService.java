@@ -63,8 +63,10 @@ public class PersonaService {
                 throw new ParametroInvalidoException("El apellido solo puede contener letras");
             }
         }
-        //TODO AGREGAR VALIDACION DE Q NO SE REPITA EL DNI
 
+        if (dao.findBYDNI(p.getDni()) != null) {
+            throw new ParametroInvalidoException("Ya existe una persona con ese DNI");
+        }
 
         dao.insertar(p);
         coleccionP.agregarPersonas(p.getDni(), p);
@@ -112,7 +114,12 @@ public class PersonaService {
                 throw new ParametroInvalidoException("El apellido solo puede contener letras");
             }
         }
-        //TODO AGREGAR VALIDACION DE Q NO SE REPITA EL DNI
+        Persona existente = dao.findBYDNI(p.getDni());
+        if (existente != null && existente.getDni() != p.getDni()) {
+            throw new ParametroInvalidoException("Ese DNI ya pertenece a otra persona");
+        }
+
+
         Boolean daoBool= dao.modificar(p);
         if(daoBool==true){
             coleccionP.actualizarPersona(p.getDni(), p);
@@ -124,7 +131,16 @@ public class PersonaService {
 
     public boolean eliminar(Persona p) throws SQLException {
 
-        //TODO no tiene que ser NULL, TIENE Q EXISTIR
+        if (p == null) {
+            throw new ParametroNullException("La persona es NULA");
+        }
+        if (p.getDni() == null) {
+            throw new ParametroNullException("El DNI es NULO");
+        }
+
+        if (dao.findBYDNI(p.getDni()) == null) {
+            throw new ParametroInvalidoException("La persona no existe");
+        }
 
         boolean daoBool= dao.eliminar(p);
         if(daoBool){
