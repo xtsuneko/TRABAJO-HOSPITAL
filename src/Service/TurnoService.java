@@ -1,12 +1,13 @@
 package Service;
 import COLECCION.TurnoColeccion;
 import DAO.TurnoDao;
-import EXCEPCIONES.ParametroNullException;
-import POJO.Cliente;
+import EXCEPCIONES.ParametroInvalidoException;
 import POJO.Turno;
-import POJO.Usuario;
+import UTIL.Validador;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class TurnoService {
@@ -20,24 +21,34 @@ public class TurnoService {
     }
 
     public int crearTurno(Turno t) {
-        if (t == null) {
-            throw new ParametroNullException("El turno es NULO");
-        }
-        if (t.getFechaTurno() == null) {
-            throw new ParametroNullException("La fecha es NULA");
-        }
-        if (t.getHoraTurno() == null) {
-            throw new ParametroNullException("El horario es NULO");
-        }
-        if (t.getMotivoConsulta() == null) {
-            throw new ParametroNullException("El motivo es NULO");
+
+
+        Validador.noNulo(t, "El turno es NULO");
+        Validador.idValido(t.getIdCliente(), "El ID del cliente es invalido");
+        Validador.idValido(t.getIdPersonal(), "El ID del medico/personal es invalido");
+        Validador.noNulo(t.getFechaTurno(), "La fecha es NULA");
+        Validador.noNulo(t.getHoraTurno(), "No se puede crear un turno en un horario NULO");
+        Validador.noNulo(t.getMotivoConsulta(), "El motivo del turno no puede ser NULO");
+
+        if (t.getMotivoConsulta().trim().isEmpty()) {
+            throw new ParametroInvalidoException("El motivo de la consulta no puede estar vacio");
         }
 
-        //TODO hacer validaciones con la fecha y el horario
-        //No puede tener mas de un cliente asociado al turno
+        LocalDate hoy = LocalDate.now();
+        LocalTime ahora = LocalTime.now();
+
+        if (t.getFechaTurno().isBefore(hoy)) {
+            throw new ParametroInvalidoException("No se puede crear un turno en una fecha pasada");
+        }
+        if (t.getFechaTurno().isEqual(hoy) && t.getHoraTurno().isBefore(ahora)) {
+            throw new ParametroInvalidoException("No se puede crear un turno en un horario ya pasado");
+        }
+
+        t.setActivo(true);
 
         int idAux = dao.insertarTurno(t);
         if (idAux != -1) {
+            t.setId(idAux);
             coleccionT.agregarTurno(t);
         }
 
@@ -45,19 +56,36 @@ public class TurnoService {
     }
 
     public Boolean modificarTurno(Turno t) {
-        if (t == null) {
-            throw new ParametroNullException("El turno es NULO");
+
+        Validador.noNulo(t, "El turno es NULO");
+        Validador.idValido(t.getId(),"El ID del turno es invalido");
+        Validador.idValido(t.getIdCliente(), "El ID del cliente es invalido");
+        Validador.idValido(t.getIdPersonal(), "El ID del medico/personal es invalido");
+        Validador.noNulo(t.getFechaTurno(), "La fecha es NULA");
+        Validador.noNulo(t.getHoraTurno(), "No se puede crear un turno en un horario NULO");
+        Validador.noNulo(t.getMotivoConsulta(), "El motivo del turno no puede ser NULO");
+
+        if (t.getMotivoConsulta().trim().isEmpty()) {
+            throw new ParametroInvalidoException("El motivo de consulta no puede estar vacio");
         }
-        if (t.getFechaTurno() == null) {
-            throw new ParametroNullException("La fecha es NULA");
+
+        // Verifica que el turno exista en la BD y no este dado de baja logica
+        Turno existente = dao.findBYID(t.getId());
+        if (!existente.isActivo()) {
+            throw new ParametroInvalidoException("No se puede modificar un turno dado de baja");
         }
-        if (t.getHoraTurno() == null) {
-            throw new ParametroNullException("El horario es NULO");
+
+        // Validacion de fecha y horario al reprogramar/modificar
+        LocalDate hoy = LocalDate.now();
+        LocalTime ahora = LocalTime.now();
+
+        if (t.getFechaTurno().isBefore(hoy)) {
+            throw new ParametroInvalidoException("No se puede mover el turno a una fecha pasada");
         }
-        if (t.getMotivoConsulta() == null) {
-            throw new ParametroNullException("El motivo es NULO");
+        if (t.getFechaTurno().isEqual(hoy) && t.getHoraTurno().isBefore(ahora)) {
+            throw new ParametroInvalidoException("No se puede mover el turno a un horario ya pasado");
         }
-        //TODO hacer validaciones con la fecha y el horario
+
 
         Boolean daoBool = dao.modificar(t);
         if (daoBool == true) {
@@ -69,11 +97,22 @@ public class TurnoService {
 
     public Boolean eliminar(Turno t) throws SQLException {
 
-        //TODO no tiene que ser NULL, TIENE Q EXISTIR
+        Validador.noNulo(t, "El turno es NULO");
+        Validador.noNulo(t.getId(), "El ID del turno es NULO");
+        Validador.idValido(t.getId(), "El ID del turno es invalido");
 
-        boolean daoBool = dao.eliminar(t);
+        // Verifica existencia y estado activo real en base de datos antes de la baja logica
+        Turno turnoEnBD = dao.findBYID(t.getId());
+        if (turnoEnBD == null) {
+            throw new ParametroInvalidoException("No existe un turno con el ID: " + t.getId());
+        }
+        if (!turnoEnBD.isActivo()) {
+            throw new ParametroInvalidoException("El turno ya se encuentra dado de baja");
+        }
+
+        boolean daoBool = dao.eliminar(turnoEnBD);
         if (daoBool) {
-            coleccionT.eliminarTurno(t);
+            coleccionT.eliminarTurno(turnoEnBD);
         }
 
         return daoBool;
@@ -81,82 +120,81 @@ public class TurnoService {
 
     public Turno findTurnoByID(Integer id) {
 
-        if (id == null) {
-            throw new ParametroNullException("El ID es NULO");
-        }
+        Validador.noNulo(id, "El ID es NULO");
+        Validador.idValido(id, "El ID del turno es invalido");
 
-        boolean coleccionBool = coleccionT.buscarTurno(id);
-        if (!coleccionBool) {
-            Turno t = dao.findBYID(id);
-            return t;
-        }
-
-        return null;
+        Turno t = dao.findBYID(id);
+        Validador.noNulo(t, "No se encontro un turno con el ID: " + id);
+        return t;
     }
-        public void findTurnoByIDMedico (Integer id){
 
-            ArrayList<Turno> t = dao.findBYIDMedico(id);
-            if (t == null || t.isEmpty()) {
-                System.out.println("No se encontro turno en el sistema");
-            }else {
-                for (Turno tt : t) {
-                    coleccionT.buscarTurnoPorIDMedico(id);
-                }
+
+    public void findTurnoByIDMedico(Integer id) {
+
+        Validador.noNulo(id, "El ID del medico es NULO");
+        Validador.idValido(id, "El ID del medico es invalido");
+
+        ArrayList<Turno> t = dao.findBYIDMedico(id);
+        if (t == null || t.isEmpty()) {
+            System.out.println("No se encontraron turnos con el medico con ID: "+id);
+        } else {
+            for (Turno turno : t) {
+                System.out.println(turno);
+            }
+        }
+    }
+
+    public Turno findTurnoByIDCliente(Integer id) {
+
+        Validador.noNulo(id, "El ID del cliente es NULO");
+        Validador.idValido(id, "El ID del cliente es invalido");
+
+        Turno t = dao.findBYIDCliente(id);
+        Validador.noNulo(t, "No se encontro un turno para el cliente con ID: " + id);
+        return t;
+    }
+
+    public Turno findTurnoByIDYIDCliente(Integer id, Integer idCliente) {
+
+        Validador.noNulo(id, "El ID del turno es NULO");
+        Validador.idValido(id, "El ID del turno es invalido");
+        Validador.noNulo(idCliente, "El ID del cliente es NULO");
+        Validador.idValido(idCliente, "El ID del cliente es invalido");
+
+        Turno t = dao.findBYIDYIDCliente(id, idCliente);
+        Validador.noNulo(
+                t,
+                "No se encontro el turno con ID " + id + " para el cliente con ID " + idCliente
+        );
+        return t;
+    }
+
+    public void listarTurnosPorCliente(Integer idCliente) {
+
+        Validador.noNulo(idCliente, "El ID del cliente es NULO");
+        Validador.idValido(idCliente, "El ID del cliente es invalido");
+
+        ArrayList<Turno> t = dao.listarTurnosPorCliente(idCliente);
+        if (t == null || t.isEmpty()) {
+            System.out.println("No se encontro al cliente en el sistema");
+        } else {
+            for (Turno tt : t) {
+                coleccionT.agregarTurno(tt);
             }
             System.out.println(t);
         }
+    }
 
-        public Turno findTurnoByIDCliente (Integer id){
+    public void listarTurnos() {
 
-            if (id == null) {
-                throw new ParametroNullException("El ID es NULO");
-            }
-
-            boolean coleccionBool= coleccionT.buscarTurnoPorIDCliente(id);
-            if(!coleccionBool){
-                return dao.findBYIDCliente(id);
-            }
-            return null;
-
-        }
-
-        public Turno findTurnoByIDYIDCliente (Integer id, Integer idCliente){
-
-            if (id == null) {
-                throw new ParametroNullException("El ID es NULO");
-            }
-            if (idCliente == null) {
-                throw new ParametroNullException("El ID del cliente es NULO");
-            }
-
-            return dao.findBYIDYIDCliente(id, idCliente);
-        }
-
-        public void listarTurnosPorCliente (Integer idCliente){
-
-            ArrayList<Turno> t = dao.listarTurnosPorCliente(idCliente);
-            if (t == null || t.isEmpty()) {
-                System.out.println("No se encontro cliente en el sistema");
-            }else {
-                for (Turno tt : t) {
-                    coleccionT.agregarTurno(tt);
-                }
+        ArrayList<Turno> t = dao.listarTurnos();
+        if (t == null || t.isEmpty()) {
+            System.out.println("No se encontraron turnos en el sistema");
+        } else {
+            for (Turno tt : t) {
+                coleccionT.agregarTurno(tt);
             }
             System.out.println(t);
         }
-
-        public void listarTurnos () {
-
-            ArrayList<Turno> t = dao.listarTurnos();
-            if (t == null || t.isEmpty()) {
-                System.out.println("No se encontraron turnos en el sistema");
-            }else {
-                for (Turno tt : t) {
-                    coleccionT.agregarTurno(tt);
-                }
-            }
-            System.out.println(t);
-        }
-
-
+    }
 }
