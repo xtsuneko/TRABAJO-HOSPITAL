@@ -56,11 +56,10 @@ public class Persona extends ClaseBaseBddGenerica<String> {
     //----METODOS----
     @Override
     public String toString() {
-        return "POJO.Persona{" +
-                "nombre='" + nombre + '\'' +
-                ", apellido='" + apellido + '\'' +
-                ", dni=" + this.getId() +
-                ", telefono='" + telefono + '\'' +
-                '}';
+        return "\nPersona:" +
+                "\n\tnombre='" + nombre + '\'' +
+                "\n\tapellido='" + apellido + '\'' +
+                "\n\tdni=" + this.getId() +
+                "\n\ttelefono='" + telefono + '\'';
     }
 }

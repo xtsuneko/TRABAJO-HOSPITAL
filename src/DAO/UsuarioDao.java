@@ -144,6 +144,7 @@ public class UsuarioDao {
 
     public ArrayList<Usuario> listarUsuarios() {
 
+        ArrayList<Usuario> listaUsuarios = new ArrayList<>();
         String sql = "SELECT id, email, pass, dni_persona FROM usuario AND activo = TRUE";
         try (Connection con = ConexionDB.connect()) {
             PreparedStatement preparedStatement = con.prepareStatement(sql);
@@ -156,10 +157,10 @@ public class UsuarioDao {
                             resultSet.getString("pass"),
                             resultSet.getString("dni_persona"));
 
-                    ArrayList<Usuario> listaUsuarios = new ArrayList<>();
                     listaUsuarios.add(u);
-                    return listarUsuarios();
+
                 }
+                return listarUsuarios();
             }catch(SQLException e) {
                 System.out.println("Error al conectar a la base de datos: " + e.getMessage());
                 e.printStackTrace();

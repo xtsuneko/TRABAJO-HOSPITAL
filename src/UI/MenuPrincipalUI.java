@@ -16,6 +16,7 @@ public class MenuPrincipalUI extends MenuAbstracto {
         System.out.println("Elija una opcion:");
         System.out.println("1.Registrarse");
         System.out.println("2.Iniciar Sesion");
+        System.out.println("3.Salir");
 
         String opcion= scanner.nextLine();
 
@@ -24,6 +25,8 @@ public class MenuPrincipalUI extends MenuAbstracto {
                return TipoInterfaz.REGISTRAR;
            case "2":
                return TipoInterfaz.INICIAR_SESION;
+           case "3":
+               return TipoInterfaz.INVALIDO;
        }
 
         System.out.println("Opcion invalida");

@@ -18,6 +18,7 @@ public class MenuGestionClientesUI extends MenuAbstracto {
         System.out.println("3.Agregar cliente");
         System.out.println("4.Modificar cliente");
         System.out.println("5.Dar de baja cliente");
+        System.out.println("6.Volver atras");
 
         String opcion=scanner.nextLine();
 
@@ -32,6 +33,8 @@ public class MenuGestionClientesUI extends MenuAbstracto {
                 return TipoInterfaz.MENU_MODIFICAR_CLIENTE;
             case "5":
                 return TipoInterfaz.MENU_DAR_DE_BAJA_CLIENTE;
+            case "6":
+                return TipoInterfaz.MENU_ADMINISTRADOR;
         }
 
         System.out.println("Opcion invalida");

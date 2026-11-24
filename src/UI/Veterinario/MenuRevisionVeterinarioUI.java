@@ -14,7 +14,7 @@ public class MenuRevisionVeterinarioUI extends MenuAbstracto {
         System.out.println("Elija una opcion: ");
         System.out.println("1.Agregar ficha medica");
         System.out.println("2.Ver fichas medicas");
-        System.out.println("0.Volver atras");
+        System.out.println("3.Volver atras");
 
         Scanner scanner = new Scanner(System.in);
         String opcion = scanner.nextLine();
@@ -24,7 +24,7 @@ public class MenuRevisionVeterinarioUI extends MenuAbstracto {
                 return TipoInterfaz.MENU_AGREGAR_FICHAS_MEDICAS;
             case "2":
                 return TipoInterfaz.MENU_MODIFICAR_FICHAS_MEDICAS;
-            case "0":
+            case "3":
                 return TipoInterfaz.MENU_VETERINARIO;
         }
 

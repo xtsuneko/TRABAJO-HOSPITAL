@@ -146,6 +146,14 @@ public class PersonaService {
         return null;
     }
 
+    public Persona findPersonaByIDUsuario(int idUsuario){
+        if(idUsuario <= 0){
+            throw new ParametroInvalidoException("El id es invalido");
+        }
+
+        return dao.findBYIDUsuario(idUsuario);
+    }
+
     public void listarPersona() {
 
         ArrayList<Persona> p = dao.listarPersonas();

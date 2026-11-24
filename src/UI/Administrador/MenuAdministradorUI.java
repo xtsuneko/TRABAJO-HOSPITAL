@@ -15,14 +15,17 @@ public class MenuAdministradorUI extends MenuAbstracto {
 
         System.out.println("1.Gestionar personal");
         System.out.println("2.Gestionar clientes");
+        System.out.println("3.Cerrar sesion");
 
         String opcion=scanner.nextLine();
 
-        if(opcion=="1"){
-            return TipoInterfaz.MENU_GESTION_PERSONAL;
-        }
-        if(opcion=="2"){
-            return TipoInterfaz.MENU_GESTION_CLIENTES;
+        switch (opcion){
+            case "1":
+                return TipoInterfaz.MENU_GESTION_PERSONAL;
+            case "2":
+                return TipoInterfaz.MENU_GESTION_CLIENTES;
+            case "3":
+                return TipoInterfaz.MENU_PRINCIPAL;
         }
 
         System.out.println("Opcion invalida");

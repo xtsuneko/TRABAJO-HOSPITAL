@@ -125,6 +125,8 @@ public class PersonalService {
             coleccionPl.agregarPersonal(ppl.getIdUsuario(), ppl);
         }
         coleccionPl.mostrarColeccion();
+
+        //TODO llenar la informacion de personal (persona)
     }
 
 

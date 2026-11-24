@@ -88,4 +88,17 @@ public class Turno extends ClaseBaseBddGenerica<Integer> {
     public void setVeterinario(Personal veterinario) {
         this.veterinario = veterinario;
     }
+
+
+    @Override
+    public String toString() {
+        return "\nTurno:" +
+                "\n\tidCliente=" + idCliente +
+                "\n\tidPersonal=" + idPersonal +
+                "\n\tcliente=" + cliente +
+                "\n\tveterinario=" + veterinario +
+                "\n\tfechaTurno=" + fechaTurno +
+                "\n\thoraTurno=" + horaTurno +
+                "\n\tmotivoConsulta='" + motivoConsulta;
+    }
 }

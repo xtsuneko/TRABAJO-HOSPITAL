@@ -37,6 +37,7 @@ public class MenuCancelarTurnoUI extends MenuAbstracto {
                 scanner.nextLine();
                 return TipoInterfaz.MENU_CLIENTE;
             }
+            t1.setId(id);
 
             if(serviceT.eliminar(t1)){
                 System.out.println("Turno cancelado con exito");

@@ -69,14 +69,14 @@ public class TurnoService {
         return dao.findBYID(id);
     }
 
-    public Turno findTurnoByIDVeterinario(Integer id){
+    public void findTurnoByIDVeterinario(Integer id){
 
-        if(id == null){
-            throw new ParametroNullException("El ID es NULO");
+        ArrayList<Turno> t = dao.findBYIDVeterinario(id);
+        if(t ==null || t.isEmpty()){
+            System.out.println("No se encontro turno en el sistema");
         }
 
-
-        return dao.findBYIDVeterinario(id);
+        System.out.println(t);
     }
 
     public Turno findTurnoByIDCliente(Integer id){

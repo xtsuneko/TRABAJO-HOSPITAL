@@ -19,6 +19,7 @@ public class MenuGestionPersonalUI extends MenuAbstracto {
         System.out.println("3.Agregar personal");
         System.out.println("4.Modificar personal");
         System.out.println("5.Dar de baja personal");
+        System.out.println("6.Volver atras");
 
         String opcion=scanner.nextLine();
 
@@ -33,6 +34,8 @@ public class MenuGestionPersonalUI extends MenuAbstracto {
                 return TipoInterfaz.MENU_MODIFICAR_PERSONAL;
             case "5":
                 return TipoInterfaz.MENU_DAR_DE_BAJA_PERSONAL;
+            case "6":
+                return TipoInterfaz.MENU_ADMINISTRADOR;
         }
 
         System.out.println("Opcion invalida");

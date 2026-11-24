@@ -40,6 +40,7 @@ public class MenuAgregarFichasMedicasVeterinarioUI extends MenuAbstracto {
                 scanner.nextLine();
                 return TipoInterfaz.MENU_AGREGAR_FICHAS_MEDICAS;
             }
+            t1.setId(id);
 
             System.out.println("Ingrese el diagnostico: ");
             String diagnostico = scanner.nextLine();

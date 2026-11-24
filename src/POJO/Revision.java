@@ -51,4 +51,11 @@ public class Revision extends ClaseBaseBddGenerica<Integer> {
         this.turno = turno;
     }
 
+    @Override
+    public String toString() {
+        return "\nFicha medica:" +
+                "\n\tidTurno=" + idTurno +
+                "\n\tdiagnostico='" + diagnostico + '\'' +
+                "\n\ttratamiento='" + tratamiento;
+    }
 }
