@@ -45,6 +45,9 @@ public class MenuModificarTurnoUI extends MenuAbstracto {
             }
             t1.setId(id);
 
+            PersonalService servicePl = new PersonalService();
+            servicePl.listarVeterinarios();
+
             System.out.println("Ingrese el id del veterinario a modificar: ");
             int idVeterinario;
             while (!scanner.hasNextInt()) {
@@ -55,7 +58,6 @@ public class MenuModificarTurnoUI extends MenuAbstracto {
             scanner.nextLine();
 
             Personal pl1 = new Personal();
-            PersonalService servicePl = new PersonalService();
 
             pl1=servicePl.findPersonalByID(idVeterinario);
             if (pl1 == null) {
