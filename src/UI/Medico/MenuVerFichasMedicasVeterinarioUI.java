@@ -1,7 +1,6 @@
-package UI.Veterinario;
+package UI.Medico;
 import ENUM.TipoInterfaz;
 import POJO.Cliente;
-import POJO.Personal;
 import Service.RevisionService;
 import UI.MenuAbstracto;
 

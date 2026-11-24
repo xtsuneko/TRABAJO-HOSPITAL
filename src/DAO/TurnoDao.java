@@ -147,7 +147,7 @@ public class TurnoDao {
 
                     c1.setPersona(p2);
                     t.setCliente(c1);
-                    t.setVeterinario(pl);
+                    t.setMedico(pl);
 
                     return t;
                 } else {
@@ -226,7 +226,7 @@ public class TurnoDao {
 
                     c1.setPersona(p2);
                     t.setCliente(c1);
-                    t.setVeterinario(pl);
+                    t.setMedico(pl);
 
                     return t;
                 } else {
@@ -244,7 +244,7 @@ public class TurnoDao {
         return null;
     }
 
-    public ArrayList<Turno> findBYIDVeterinario(int id) {
+    public ArrayList<Turno> findBYIDMedico(int id) {
 
         ArrayList<Turno> listaTurnos=new ArrayList<>();
         String sql = "SELECT t.id_cliente, t.id_personal, t.fecha, t.horario, t.motivo_consulta,  \n" +
@@ -305,7 +305,7 @@ public class TurnoDao {
 
                     c1.setPersona(p2);
                     t.setCliente(c1);
-                    t.setVeterinario(pl);
+                    t.setMedico(pl);
 
                     listaTurnos.add(t);
                     return listaTurnos;
@@ -383,7 +383,7 @@ public class TurnoDao {
 
                     c1.setPersona(p2);
                     t.setCliente(c1);
-                    t.setVeterinario(pl);
+                    t.setMedico(pl);
 
                     return t;
                 } else {
@@ -462,7 +462,7 @@ public class TurnoDao {
 
                     c1.setPersona(p2);
                     t.setCliente(c1);
-                    t.setVeterinario(pl);
+                    t.setMedico(pl);
 
                     listaTurnos.add(t);
                     return listaTurnos;
@@ -540,7 +540,7 @@ public class TurnoDao {
 
                     c1.setPersona(p2);
                     t.setCliente(c1);
-                    t.setVeterinario(pl);
+                    t.setMedico(pl);
 
                     listaTurnos.add(t);
                     return listaTurnos;

@@ -70,27 +70,27 @@ public class MenuModificarTurnoRecepcionistaUI extends MenuAbstracto {
             t1.setIdCliente(idCliente);
 
             PersonalService servicePl = new PersonalService();
-            servicePl.listarVeterinarios();
+            servicePl.listarMedicos();
 
-            System.out.println("Ingrese el id del veterinario a modificar: ");
-            int idVeterinario;
+            System.out.println("Ingrese el id del medico a modificar: ");
+            int idMedico;
             while (!scanner.hasNextInt()) {
                 System.out.println("Error: debe ingresar un ID valido");
                 scanner.next();
             }
-            idVeterinario = scanner.nextInt();
+            idMedico = scanner.nextInt();
             scanner.nextLine();
 
             Personal pl1 = new Personal();
 
-            pl1=servicePl.findPersonalByID(idVeterinario);
+            pl1=servicePl.findPersonalByID(idMedico);
             if (pl1 == null) {
-                System.out.println("No se encontro el veterinario en el sistema");
+                System.out.println("No se encontro el medico en el sistema");
                 System.out.println("Presione cualquier tecla para regresar atras...");
                 scanner.nextLine();
                 return TipoInterfaz.MENU_AGENDAR_TURNO_RECEPCIONISTA;
             }
-            t1.setIdPersonal(idVeterinario);
+            t1.setIdPersonal(idMedico);
 
             System.out.println("Ingrese la fecha: (AAAA-MM-DD) ");
             LocalDate fecha = LocalDate.parse(scanner.nextLine());

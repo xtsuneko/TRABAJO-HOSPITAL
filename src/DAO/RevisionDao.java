@@ -109,7 +109,7 @@ public class RevisionDao {
         return null;
     }
 
-    public Revision findBYIDPorVeterinario(int id) {
+    public Revision findBYIDPorMedico(int id) {
 
         String sql = "SELECT id_turno, diagnostico, tratamiento \n" +
                 "FROM revision r\n" +

@@ -114,12 +114,12 @@ public class RevisionService {
     }
 
 
-    public Revision findRevisionByIDPorVeterinario(Integer id){
+    public Revision findRevisionByIDPorMedico(Integer id){
 
         Validador.noNulo(id, "El ID es NULO");
         Validador.idValido(id,"El ID es invalido");
 
-        return dao.findBYIDPorVeterinario(id);
+        return dao.findBYIDPorMedico(id);
     }
 
     public void listarFichasPorCliente(int id) {

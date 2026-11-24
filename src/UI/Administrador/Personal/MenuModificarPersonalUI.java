@@ -125,14 +125,14 @@ public class MenuModificarPersonalUI extends MenuAbstracto {
             Roles rol = null;
             System.out.println("Seleccione  un rol o presione Enter para mantener: ");
             System.out.println("1.Recepcionista");
-            System.out.println("2.Veterinario");
+            System.out.println("2.Medico");
             opcion = scanner.nextLine();
             switch (opcion) {
                 case "1":
                     rol = Roles.RECEPCIONISTA;
                     break;
                 case "2":
-                    rol = Roles.VETERINARIO;
+                    rol = Roles.MEDICO;
                     break;
                 default:
                     rol = pl1.getRol();

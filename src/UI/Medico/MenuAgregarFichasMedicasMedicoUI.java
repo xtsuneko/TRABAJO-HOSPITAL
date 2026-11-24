@@ -1,4 +1,4 @@
-package UI.Veterinario;
+package UI.Medico;
 import ENUM.TipoInterfaz;
 import EXCEPCIONES.ParametroInvalidoException;
 import EXCEPCIONES.ParametroNullException;
@@ -10,12 +10,12 @@ import Service.TurnoService;
 import UI.MenuAbstracto;
 import java.util.Scanner;
 
-public class MenuAgregarFichasMedicasVeterinarioUI extends MenuAbstracto {
+public class MenuAgregarFichasMedicasMedicoUI extends MenuAbstracto {
 
     @Override
     public TipoInterfaz mostrarInterfaz() {
 
-        Personal veterinario = (Personal) this.getDatos();
+        Personal medico = (Personal) this.getDatos();
         RevisionService serviceR = new RevisionService();
 
         Scanner scanner = new Scanner(System.in);
@@ -59,7 +59,7 @@ public class MenuAgregarFichasMedicasVeterinarioUI extends MenuAbstracto {
             System.out.println("Presione cualquier tecla para regresar atras...");
             scanner.nextLine();
 
-            return TipoInterfaz.MENU_VETERINARIO;
+            return TipoInterfaz.MENU_MEDICO;
 
         } catch (ParametroNullException | ParametroInvalidoException e) {
             System.out.println(e.getMessage());

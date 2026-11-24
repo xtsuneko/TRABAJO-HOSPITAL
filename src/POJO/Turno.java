@@ -11,7 +11,7 @@ public class Turno extends ClaseBaseBddGenerica<Integer> {
     private int idCliente;
     private int idPersonal;
     private Cliente cliente;
-    private Personal veterinario;
+    private Personal medico;
     private LocalDate fechaTurno;
     private LocalTime horaTurno;
     private String motivoConsulta;
@@ -29,7 +29,7 @@ public class Turno extends ClaseBaseBddGenerica<Integer> {
 
     public Turno() {
         this.cliente= new Cliente();
-        this.veterinario=new Personal();
+        this.medico=new Personal();
     }
 
     //----GETTER Y SETTER----
@@ -81,12 +81,12 @@ public class Turno extends ClaseBaseBddGenerica<Integer> {
         this.cliente = cliente;
     }
 
-    public Personal getVeterinario() {
-        return veterinario;
+    public Personal getMedico() {
+        return medico;
     }
 
-    public void setVeterinario(Personal veterinario) {
-        this.veterinario = veterinario;
+    public void setMedico(Personal medico) {
+        this.medico = medico;
     }
 
 
@@ -96,7 +96,7 @@ public class Turno extends ClaseBaseBddGenerica<Integer> {
                 "\n\tidCliente=" + idCliente +
                 "\n\tidPersonal=" + idPersonal +
                 "\n\tcliente=" + cliente +
-                "\n\tveterinario=" + veterinario +
+                "\n\tmedico=" + medico +
                 "\n\tfechaTurno=" + fechaTurno +
                 "\n\thoraTurno=" + horaTurno +
                 "\n\tmotivoConsulta='" + motivoConsulta;

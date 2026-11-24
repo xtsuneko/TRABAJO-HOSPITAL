@@ -93,14 +93,14 @@ public class TurnoService {
 
         return null;
     }
-        public void findTurnoByIDVeterinario (Integer id){
+        public void findTurnoByIDMedico (Integer id){
 
-            ArrayList<Turno> t = dao.findBYIDVeterinario(id);
+            ArrayList<Turno> t = dao.findBYIDMedico(id);
             if (t == null || t.isEmpty()) {
                 System.out.println("No se encontro turno en el sistema");
             }else {
                 for (Turno tt : t) {
-                    coleccionT.buscarTurnoPorIDVeterinario(id);
+                    coleccionT.buscarTurnoPorIDMedico(id);
                 }
             }
             System.out.println(t);

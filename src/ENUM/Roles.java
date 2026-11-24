@@ -4,7 +4,7 @@ public enum Roles {
 
     VACIO(0),
     ADMINISTRADOR(1),
-    VETERINARIO(2),
+    MEDICO(2),
     RECEPCIONISTA(3);
 
 

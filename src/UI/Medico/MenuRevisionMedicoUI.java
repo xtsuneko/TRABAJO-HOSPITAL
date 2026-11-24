@@ -1,12 +1,10 @@
-package UI.Veterinario;
+package UI.Medico;
 import ENUM.TipoInterfaz;
-import POJO.Personal;
-import Service.TurnoService;
 import UI.MenuAbstracto;
 
 import java.util.Scanner;
 
-public class MenuRevisionVeterinarioUI extends MenuAbstracto {
+public class MenuRevisionMedicoUI extends MenuAbstracto {
 
     @Override
     public TipoInterfaz mostrarInterfaz() {
@@ -25,7 +23,7 @@ public class MenuRevisionVeterinarioUI extends MenuAbstracto {
             case "2":
                 return TipoInterfaz.MENU_MODIFICAR_FICHAS_MEDICAS;
             case "3":
-                return TipoInterfaz.MENU_VETERINARIO;
+                return TipoInterfaz.MENU_MEDICO;
         }
 
         System.out.println("Opcion invalida");

@@ -9,7 +9,7 @@ import UI.MenuPrincipalUI;
 import UI.Recepcionista.*;
 import UI.RegistrarUI;
 import UI.MenuAbstracto;
-import UI.Veterinario.*;
+import UI.Medico.*;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 void main() {
@@ -32,13 +32,13 @@ void main() {
                 interfaz = ui.mostrarInterfaz();
                 datos= ui.getDatos();
                 break;
-            case TipoInterfaz.MENU_VETERINARIO:
-                ui = new MenuVeterinarioUI();
+            case TipoInterfaz.MENU_MEDICO:
+                ui = new MenuMedicoUI();
                 ui.setDatos(datos);
                 interfaz = ui.mostrarInterfaz();
                 break;
-            case TipoInterfaz.MENU_VER_TURNOS_VETERINARIO:
-                ui = new MenuVerTurnosVeterinarioUI();
+            case TipoInterfaz.MENU_VER_TURNOS_MEDICOS:
+                ui = new MenuVerTurnosMedicosUI();
                 ui.setDatos(datos);
                 interfaz = ui.mostrarInterfaz();
                 break;
@@ -138,12 +138,12 @@ void main() {
                 interfaz = ui.mostrarInterfaz();
                 break;
             case TipoInterfaz.MENU_REVISION:
-                ui = new MenuRevisionVeterinarioUI();
+                ui = new MenuRevisionMedicoUI();
                 ui.setDatos(datos);
                 interfaz = ui.mostrarInterfaz();
                 break;
             case TipoInterfaz.MENU_AGREGAR_FICHAS_MEDICAS:
-                ui = new MenuAgregarFichasMedicasVeterinarioUI();
+                ui = new MenuAgregarFichasMedicasMedicoUI();
                 ui.setDatos(datos);
                 interfaz = ui.mostrarInterfaz();
                 break;
@@ -153,7 +153,7 @@ void main() {
                 interfaz = ui.mostrarInterfaz();
                 break;
             case TipoInterfaz.MENU_MODIFICAR_FICHAS_MEDICAS:
-                ui = new MenuVerTurnosVeterinarioUI();
+                ui = new MenuVerTurnosMedicoUI();
                 ui.setDatos(datos);
                 interfaz = ui.mostrarInterfaz();
                 break;

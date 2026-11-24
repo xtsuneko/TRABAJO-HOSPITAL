@@ -1,16 +1,15 @@
-package UI.Veterinario;
+package UI.Medico;
 import ENUM.TipoInterfaz;
-import POJO.Persona;
 import POJO.Personal;
 import UI.MenuAbstracto;
 import java.util.Scanner;
 
-public class MenuVeterinarioUI extends MenuAbstracto {
+public class MenuMedicoUI extends MenuAbstracto {
 
     @Override
     public TipoInterfaz mostrarInterfaz() {
 
-        Personal veterinario = (Personal) this.getDatos();
+        Personal medico = (Personal) this.getDatos();
 
         Scanner scanner = new Scanner(System.in);
 
@@ -24,7 +23,7 @@ public class MenuVeterinarioUI extends MenuAbstracto {
 
         switch (opcion) {
             case "1":
-                return TipoInterfaz.MENU_VER_TURNOS_VETERINARIO;
+                return TipoInterfaz.MENU_VER_TURNOS_MEDICOS;
             case "2":
                 return TipoInterfaz.MENU_REVISION;
             case "3":
@@ -36,7 +35,7 @@ public class MenuVeterinarioUI extends MenuAbstracto {
         scanner.nextLine();
 
 
-        return TipoInterfaz.MENU_VETERINARIO;
+        return TipoInterfaz.MENU_MEDICO;
     }
 
 }

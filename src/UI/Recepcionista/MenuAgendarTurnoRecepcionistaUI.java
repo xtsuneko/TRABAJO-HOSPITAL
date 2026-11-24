@@ -48,9 +48,9 @@ public class MenuAgendarTurnoRecepcionistaUI extends MenuAbstracto {
             }
 
             PersonalService servicePl = new PersonalService();
-            servicePl.listarVeterinarios();
+            servicePl.listarMedicos();
 
-            System.out.println("Ingrese el id del veterinario: ");
+            System.out.println("Ingrese el id del medico: ");
             int id;
             while (!scanner.hasNextInt()) {
                 System.out.println("Error: debe ingresar un ID valido");
@@ -63,7 +63,7 @@ public class MenuAgendarTurnoRecepcionistaUI extends MenuAbstracto {
 
             pl1=servicePl.findPersonalByID(id);
             if (pl1 == null) {
-                System.out.println("No se encontro el veterinario en el sistema");
+                System.out.println("No se encontro el medico en el sistema");
                 System.out.println("Presione cualquier tecla para regresar atras...");
                 scanner.nextLine();
                 return TipoInterfaz.MENU_AGENDAR_TURNO_RECEPCIONISTA;

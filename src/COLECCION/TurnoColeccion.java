@@ -71,7 +71,7 @@ public class TurnoColeccion {
 
     }
 
-    public boolean buscarTurnoPorIDVeterinario(Integer id){
+    public boolean buscarTurnoPorIDMedico(Integer id){
 
         for(Turno t : listaTurno){
             if(t.getIdPersonal()==id){

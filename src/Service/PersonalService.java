@@ -134,11 +134,11 @@ public class PersonalService {
         coleccionPl.mostrarColeccion();
     }
 
-    public void listarVeterinarios() {
+    public void listarMedicos() {
 
         ArrayList<Personal> pl = dao.listarPersonal();
         if(pl==null || pl.isEmpty()){
-            System.out.println("No se encontraron veterinarios en el sistema");
+            System.out.println("No se encontraron medicos en el sistema");
         }
         System.out.println(pl);
 

@@ -132,8 +132,8 @@ public class Personal extends ClaseBaseBddGenerica<Integer> {
 
         String rol;
         switch (this.rol){
-            case VETERINARIO:
-               rol="Veterinario";
+            case MEDICO:
+               rol="Medico";
                break;
             case RECEPCIONISTA:
                 rol="Recepcionista";

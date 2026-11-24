@@ -75,8 +75,8 @@ public class LogearUI extends MenuAbstracto {
             switch (pl1.getRol()){
                 case Roles.ADMINISTRADOR:
                     return TipoInterfaz.MENU_ADMINISTRADOR;
-                case Roles.VETERINARIO:
-                    return TipoInterfaz.MENU_VETERINARIO;
+                case Roles.MEDICO:
+                    return TipoInterfaz.MENU_MEDICO;
                 case Roles.RECEPCIONISTA:
                     return TipoInterfaz.MENU_RECEPCIONISTA;
             }

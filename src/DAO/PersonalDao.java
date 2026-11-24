@@ -213,9 +213,9 @@ public class PersonalDao {
         return null;
     }
 
-    public ArrayList<Personal> listarVeterinarios() {
+    public ArrayList<Personal> listarMedico() {
 
-        ArrayList<Personal> listaVeterinarios = new ArrayList<>();
+        ArrayList<Personal> listaMedico = new ArrayList<>();
         String sql = "SELECT pl.id, pl.sueldo, pl.horario_laboral_id, pl.id_usuario, pl.id_rol, p.nombre, p.apellido, p.telefono, p.dni\n" +
                 "FROM personal pl\n" +
                 "inner join usuario u ON pl.id_usuario = u.id\n" +
@@ -241,10 +241,10 @@ public class PersonalDao {
                             resultSet.getString("telefono"));
 
                     pl.setPersona(p1);
-                    listaVeterinarios.add(pl);
+                    listaMedico.add(pl);
 
                 }
-                return listaVeterinarios;
+                return listaMedico;
             }catch(SQLException e) {
                 System.out.println("Error al conectar a la base de datos: " + e.getMessage());
                 e.printStackTrace();
