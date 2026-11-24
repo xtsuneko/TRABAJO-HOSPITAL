@@ -1,6 +1,7 @@
 package DAO;
 import CONEXION.ConexionDB;
 import POJO.Cliente;
+import POJO.Persona;
 import POJO.Personal;
 import POJO.Usuario;
 
@@ -40,14 +41,14 @@ public class ClienteDao {
 
     public boolean eliminar(Cliente c) throws SQLException {
 
-        String sql = "DELETE FROM cliente WHERE id = ?";
+        String sql = "UPDATE cliente SET activo = FALSE  WHERE id = ?";
 
-        try (Connection con = ConexionDB.connect()) {
+        try (Connection con = ConexionDB .connect()) {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, c.getIdCliente());
 
-            int filasEliminadas = ps.executeUpdate();
-            return filasEliminadas > 0;
+            int filasModificadas= ps.executeUpdate();
+            return filasModificadas > 0;
         } catch (
                 SQLException e) {
             System.out.println("Error al conectar a la base de datos: " + e.getMessage());
@@ -81,17 +82,72 @@ public class ClienteDao {
 
     public Cliente findBYID(int id) {
 
-        String sql = "SELECT id, direccion, id_usuario FROM cliente WHERE id = ?";
+        String sql = "SELECT c.id, c.direccion, c.id_usuario, p.nombre, p.apellido, p.telefono, p.dni\n" +
+                "FROM cliente c\n" +
+                "inner join usuario u ON c.id_usuario = u.id\n" +
+                "inner join persona p ON p.dni = u.dni_persona \n" +
+                "WHERE c.id = ? AND c.activo = TRUE;";
         try (Connection con = ConexionDB.connect()) {
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setInt(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()){
                 if (resultSet.next()) {
-                    return new Cliente(
+                    Cliente c1= new Cliente(
 
                             resultSet.getString("direccion"),
                             resultSet.getInt("id"),
                             resultSet.getInt("id_usuario"));
+
+                    Persona p1 = new Persona(
+
+                            resultSet.getString("nombre"),
+                            resultSet.getString("apellido"),
+                            resultSet.getString("dni"),
+                            resultSet.getString("telefono"));
+
+                    c1.setPersona(p1);
+                    return c1;
+                } else {
+                    return null;
+                }
+            }catch(SQLException e) {
+                System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } catch(SQLException e) {
+            System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public Cliente findBYIDUsuario(int idU) {
+
+        String sql = "SELECT c.id, c.direccion, c.id_usuario, p.nombre, p.apellido, p.telefono, p.dni\n" +
+                "FROM cliente c\n" +
+                "inner join usuario u ON c.id_usuario = u.id\n" +
+                "inner join persona p ON p.dni = u.dni_persona\n" +
+                "WHERE c.id_usuario = ? AND c.activo = TRUE ";
+        try (Connection con = ConexionDB.connect()) {
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setInt(1, idU);
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                if (resultSet.next()) {
+                    Cliente c1 = new Cliente(
+
+                            resultSet.getString("direccion"),
+                            resultSet.getInt("id"),
+                            resultSet.getInt("id_usuario"));
+                    Persona p1 = new Persona(
+
+                            resultSet.getString("nombre"),
+                            resultSet.getString("apellido"),
+                            resultSet.getString("dni"),
+                            resultSet.getString("telefono"));
+
+                    c1.setPersona(p1);
+                    return c1;
 
                 } else {
                     return null;
@@ -110,21 +166,33 @@ public class ClienteDao {
 
     public ArrayList<Cliente> listarClientes() {
 
-        String sql = "SELECT id, direccion, id_usuario FROM cliente";
+        ArrayList<Cliente> listaClientes = new ArrayList<>();
+        String sql = "SELECT c.id, c.direccion, c.id_usuario, p.nombre, p.apellido, p.telefono, p.dni\n" +
+                "FROM cliente c\n" +
+                "inner join usuario u ON c.id_usuario = u.id\n" +
+                "inner join persona p ON p.dni = u.dni_persona \n" +
+                "WHERE c.activo = TRUE";
         try (Connection con = ConexionDB.connect()) {
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             try (ResultSet resultSet = preparedStatement.executeQuery()){
                 while (resultSet.next()) {
-                    Cliente c = new Cliente(
+                    Cliente c1 = new Cliente(
 
                             resultSet.getString("direccion"),
                             resultSet.getInt("id"),
                             resultSet.getInt("id_usuario"));
 
-                    ArrayList<Cliente> listaClientes = new ArrayList<>();
-                    listaClientes.add(c);
-                    return listaClientes;
+                    Persona p1 = new Persona(
+
+                            resultSet.getString("nombre"),
+                            resultSet.getString("apellido"),
+                            resultSet.getString("dni"),
+                            resultSet.getString("telefono"));
+
+                    c1.setPersona(p1);
+                    listaClientes.add(c1);
                 }
+                return listaClientes;
             }catch(SQLException e) {
                 System.out.println("Error al conectar a la base de datos: " + e.getMessage());
                 e.printStackTrace();

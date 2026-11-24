@@ -1,17 +1,17 @@
 package POJO;
+import GENERICS.ClaseBaseBddGenerica;
 
-public class Persona {
+public class Persona extends ClaseBaseBddGenerica<String> {
 
     private String nombre;
     private String apellido;
-    private String dni;
     private String telefono;
 
     //----CONSTRUCTORES----
     public Persona(String nombre, String apellido, String dni, String telefono) {
         this.nombre = nombre;
         this.apellido = apellido;
-        this.dni = dni;
+        this.setId(dni);
         this.telefono = telefono;
     }
 
@@ -37,11 +37,11 @@ public class Persona {
     }
 
     public String getDni() {
-        return dni;
+        return this.getId();
     }
 
     public void setDni(String dni) {
-        this.dni = dni;
+        this.setId(dni);
     }
 
     public String getTelefono() {
@@ -56,11 +56,10 @@ public class Persona {
     //----METODOS----
     @Override
     public String toString() {
-        return "POJO.Persona{" +
-                "nombre='" + nombre + '\'' +
-                ", apellido='" + apellido + '\'' +
-                ", dni=" + dni +
-                ", telefono='" + telefono + '\'' +
-                '}';
+        return "\nPersona:" +
+                "\n\tnombre='" + nombre + '\'' +
+                "\n\tapellido='" + apellido + '\'' +
+                "\n\tdni=" + this.getId() +
+                "\n\ttelefono='" + telefono + '\'';
     }
 }

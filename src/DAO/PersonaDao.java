@@ -29,14 +29,14 @@ public class PersonaDao {
 
     public boolean eliminar(Persona p) throws SQLException {
 
-        String sql = "DELETE FROM persona WHERE dni = ?";
+        String sql = "UPDATE persona SET  activo = FALSE WHERE dni = ?";
 
         try (Connection con = ConexionDB.connect()) {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, p.getDni());
 
-            int filasEliminadas = ps.executeUpdate();
-            return filasEliminadas > 0;
+            int filasModificadas= ps.executeUpdate();
+            return filasModificadas > 0;
         } catch (
                 SQLException e) {
             System.out.println("Error al conectar a la base de datos: " + e.getMessage());
@@ -71,7 +71,7 @@ public class PersonaDao {
 
     public Persona findBYDNI(String dni) {
 
-        String sql = "SELECT dni, nombre, apellido, telefono FROM persona WHERE dni = ?";
+        String sql = "SELECT dni, nombre, apellido, telefono FROM persona WHERE dni = ? AND activo = TRUE";
         try (Connection con = ConexionDB.connect()) {
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setString(1, dni);
@@ -99,9 +99,43 @@ public class PersonaDao {
         return null;
     }
 
+    public Persona findBYIDUsuario(int idUsuario) {
+
+        String sql = "SELECT dni, nombre, apellido, telefono \n" +
+                "FROM persona p\n" +
+                "inner join usuario u ON p.dni = u.dni_persona\n" +
+                "WHERE u.id = ? AND p.activo = TRUE";
+        try (Connection con = ConexionDB.connect()) {
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setInt(1, idUsuario);
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                if (resultSet.next()) {
+                    return new Persona(
+
+                            resultSet.getString("nombre"),
+                            resultSet.getString("apellido"),
+                            resultSet.getString("dni"),
+                            resultSet.getString("telefono"));
+
+                } else {
+                    return null;
+                }
+            }catch(SQLException e) {
+                System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } catch(SQLException e) {
+            System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public ArrayList<Persona> listarPersonas() {
 
-        String sql = "SELECT dni, nombre, apellido, telefono FROM persona";
+        ArrayList<Persona> listaPersonas = new ArrayList<>();
+        String sql = "SELECT dni, nombre, apellido, telefono FROM persona AND activo = TRUE";
         try (Connection con = ConexionDB.connect()) {
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             try (ResultSet resultSet = preparedStatement.executeQuery()){
@@ -113,10 +147,10 @@ public class PersonaDao {
                             resultSet.getString("dni"),
                             resultSet.getString("telefono"));
 
-                    ArrayList<Persona> listaPersonas = new ArrayList<>();
                     listaPersonas.add(p);
-                return listaPersonas;
+
                 }
+                return listaPersonas;
             }catch(SQLException e) {
                 System.out.println("Error al conectar a la base de datos: " + e.getMessage());
                 e.printStackTrace();
