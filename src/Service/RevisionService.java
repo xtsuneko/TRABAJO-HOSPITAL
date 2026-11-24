@@ -5,6 +5,7 @@ import EXCEPCIONES.ParametroInvalidoException;
 import EXCEPCIONES.ParametroNullException;
 import POJO.Revision;
 import POJO.Turno;
+import UTIL.Validador;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -20,21 +21,17 @@ public class RevisionService {
     }
 
     public int crearRevision(Revision r) {
-        if (r == null) {
-            throw new ParametroNullException("La revision es NULA");
-        }
-        if (r.getIdTurno() <= 0) {
-            throw new ParametroInvalidoException("El id de la revision es invalido");
-        }
-        if (r.getDiagnostico() == null) {
-            throw new ParametroNullException("El diagnostico es NULO");
-        }
+
+        Validador.noNulo(r,"La revision es NULA ");
+
+        Validador.idValido(r.getIdTurno(),"El ID de la revision es invalido");
+
+        Validador.noNulo(r.getDiagnostico(),"El diagnostico es NULO");
         if(r.getDiagnostico().trim().isEmpty()){
             throw new ParametroInvalidoException("El diagnostico no puede estar vacio");
         }
-        if(r.getTratamiento() == null){
-            throw new ParametroNullException("El tratamiento es NULO");
-        }
+
+        Validador.noNulo(r.getTratamiento(),"El tratamiento es NULO");
         if(r.getTratamiento().trim().isEmpty()){
             throw new ParametroInvalidoException("El tratamiento no puede estar vacio");
         }
@@ -43,6 +40,7 @@ public class RevisionService {
 
         int idAux = dao.insertarRevision(r);
         if (idAux != -1) {
+            r.setId(idAux);
             coleccionR.agregarRevisiones(r);
         }
 
@@ -50,17 +48,18 @@ public class RevisionService {
     }
 
     public Boolean modificarRevision(Revision r) {
-        if (r == null) {
-            throw new ParametroNullException("La ficha medicca es NULA");
+        Validador.noNulo(r,"La ficha medica es NULA");
+        Validador.idValido(r.getId(),"EL ID de la revision es invalido");
+        Validador.idValido(r.getIdTurno(),"EL ID de la ficha medica es invalido");
+
+        Validador.noNulo(r.getDiagnostico(),"El diagnostico es NULO");
+        if(r.getDiagnostico().trim().isEmpty()){
+            throw new ParametroInvalidoException("El diagnostico no puede estar vacio");
         }
-        if (r.getIdTurno() <= 0) {
-            throw new ParametroInvalidoException("El id de la ficha medica es invalido");
-        }
-        if (r.getDiagnostico() == null) {
-            throw new ParametroNullException("El diagnostico es NULO");
-        }
-        if (r.getTratamiento() == null) {
-            throw new ParametroNullException("El tratamiento es NULO");
+
+        Validador.noNulo(r.getTratamiento(),"El tratamiento es NULO");
+        if(r.getTratamiento().trim().isEmpty()){
+            throw new ParametroInvalidoException("El tratamiento no puede estar vacio");
         }
         //TODO fijarse si hay mas validaciones
 
@@ -74,59 +73,74 @@ public class RevisionService {
 
     public Boolean eliminar(Revision r) throws SQLException {
 
-        //TODO no tiene que ser NULL, TIENE Q EXISTIR
+        Validador.noNulo(r,"La revision no existe");
 
+        Validador.idValido(r.getId(),"El ID es invalido");
 
-        boolean daoBool = dao.eliminar(r);
-        if (daoBool) {
-            coleccionR.eliminarRevision(r);
+        Revision revisionEnBD = dao.findBYID(r.getId());
+        if (revisionEnBD == null) {
+            throw new ParametroInvalidoException("No existe una revision con el ID: " + r.getId());
+        }
+        if (!revisionEnBD.isActivo()) {
+            throw new ParametroInvalidoException("La revision ya se encuentra dada de baja");
         }
 
+        boolean daoBool = dao.eliminar(revisionEnBD);
+        if (daoBool) {
+            coleccionR.eliminarRevision(revisionEnBD);
+        }
         return daoBool;
     }
 
     public Revision findRevisionByID(Integer id) {
-
-        if (id == null) {
-            throw new ParametroNullException("El ID es NULO");
-        }
+        Validador.noNulo(id, "El ID es NULO");
+        Validador.idValido(id, "El ID es invalido");
 
         boolean coleccionBool = coleccionR.buscarRevision(id);
         if (!coleccionBool) {
             Revision r = dao.findBYID(id);
+            if (r == null) {
+                throw new ParametroInvalidoException("No se encontro una revision con el ID: " + id);
+            }
             return r;
         }
-        return null;
+        // Si coleccionR.buscarRevision(id) devuelve true pero no devuelve el objeto,
+        // se recupera desde el DAO para no perder el resultado.
+        Revision r = dao.findBYID(id);
+        if (r == null) {
+            throw new ParametroInvalidoException("No se encontro una revision con el ID: " + id);
+        }
+        return r;
     }
 
 
     public Revision findRevisionByIDPorVeterinario(Integer id){
 
-        if(id == null){
-            throw new ParametroNullException("El ID es NULO");
-        }
+        Validador.noNulo(id, "El ID es NULO");
+        Validador.idValido(id,"El ID es invalido");
 
         return dao.findBYIDPorVeterinario(id);
     }
 
     public void listarFichasPorCliente(int id) {
 
-        ArrayList<Revision> r = dao.listarFichasPorCliente(id);
-        if(r ==null || r.isEmpty()){
-            System.out.println("No se encontraron fichas en el sistema");
-        }
+        Validador.idValido(id, "El ID "+id+" es invalido");
 
-        System.out.println(r);
+        ArrayList<Revision> r = dao.listarFichasPorCliente(id);
+
+        if (r == null || r.isEmpty()) {
+            System.out.println("No se encontraron fichas en el sistema");
+        } else
+            System.out.println(r);
     }
 
     public void listarRevisiones() {
 
         ArrayList<Revision> r = dao.listarRevisiones();
-        if(r ==null || r.isEmpty()){
+        if (r == null || r.isEmpty()) {
             System.out.println("No se encontro revisiones en el sistema");
+        } else {
+            System.out.println(r);
         }
-
-        System.out.println(r);
     }
-
 }
