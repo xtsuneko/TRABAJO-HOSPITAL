@@ -33,7 +33,10 @@ public class ClienteService {
             throw new ParametroInvalidoException("El id es invalido");
         }
 
-        //TODO hacer validaciones de direccion
+        String dir = c.getDireccion().trim();
+        if (dir.isEmpty()) {
+            throw new ParametroInvalidoException("La direccion esta vacia");
+        }
 
         int idAux= dao.insertar(c);
         if(idAux!=-1){
@@ -65,10 +68,19 @@ public class ClienteService {
 
     public Boolean eliminar(Cliente c) throws SQLException {
 
-        //TODO no tiene que ser NULL, TIENE Q EXISTIR
+        if (c == null) {
+            throw new ParametroNullException("El cliente es NULO");
+        }
+        if (c.getIdCliente() <= 0) {
+            throw new ParametroInvalidoException("El id de cliente es invalido");
+        }
 
-        boolean daoBool= dao.eliminar(c);
-        if(daoBool){
+        if (dao.findBYID(c.getIdCliente()) == null) {
+            throw new ParametroInvalidoException("El cliente no existe");
+        }
+
+        boolean daoBool = dao.eliminar(c);
+        if (daoBool) {
             coleccionC.eliminarCliente(c.getIdCliente());
         }
 
@@ -89,19 +101,20 @@ public class ClienteService {
         return null;
     }
 
-    public Cliente findClienteByIDUsuario(Integer idU){
+    public Cliente findClienteByIDUsuario(Integer idU) {
 
-        if(idU == null){
+        if (idU == null) {
             throw new ParametroNullException("El ID es NULO");
         }
+        if (idU <= 0) {
+            throw new ParametroInvalidoException("El id de usuario es invalido");
+        }
 
-        //TODO boolean coleccionBool= coleccionC.buscarCliente(id);
-        /* if(!coleccionBool){
-            Cliente c = dao.findBYID(id);
-            return c;
-        }*/
-
-        return dao.findBYIDUsuario(idU);
+        Cliente c = dao.findBYIDUsuario(idU);
+        if (c != null) {
+            coleccionC.agregarClientes(c.getIdUsuario(), c);
+        }
+        return c;
     }
 
     public void listarCliente() {
