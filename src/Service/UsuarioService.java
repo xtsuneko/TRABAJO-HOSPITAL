@@ -73,7 +73,7 @@ public class UsuarioService {
 
         int idAux= dao.insertar(u);
         if(idAux!=-1){
-            coleccionU.agregarUsuarios(u.getIdUsuario(), u);
+            coleccionU.agregarUsuarios(u);
         }
 
         return idAux;
@@ -123,7 +123,7 @@ public class UsuarioService {
 
         Boolean daoBool= dao.modificar(u);
         if(daoBool==true){
-            coleccionU.actualizarUsuario(u.getIdUsuario(), u);
+            coleccionU.actualizarUsuario(u);
         }
 
         return daoBool;
@@ -135,7 +135,7 @@ public class UsuarioService {
 
         boolean daoBool= dao.eliminar(u);
         if(daoBool){
-            coleccionU.eliminarUsuario(u.getIdUsuario());
+            coleccionU.eliminarUsuario(u);
         }
 
         return daoBool;
@@ -181,7 +181,7 @@ public class UsuarioService {
 
         ArrayList<Usuario> u = dao.listarUsuarios();
         for (Usuario uu : u) {
-            coleccionU.agregarUsuarios(uu.getIdUsuario(), uu);
+            coleccionU.agregarUsuarios(uu);
         }
 
     }

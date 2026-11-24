@@ -1,6 +1,8 @@
 package POJO;
 import GENERICS.ClaseBaseBddGenerica;
 
+import java.util.Objects;
+
 public class Usuario extends ClaseBaseBddGenerica<Integer> {
 
     private String email;
@@ -74,6 +76,19 @@ public class Usuario extends ClaseBaseBddGenerica<Integer> {
     }
 
     //----METODOS----
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Usuario usuario = (Usuario) o;
+        return Objects.equals(email, usuario.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(email);
+    }
+
     @Override
     public String toString() {
         return "Usuario{" +
