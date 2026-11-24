@@ -24,6 +24,8 @@ public class MenuAgendarTurnoClienteUI extends MenuAbstracto {
         Scanner scanner = new Scanner(System.in);
 
         try {
+            PersonalService servicePl = new PersonalService();
+            servicePl.listarVeterinarios();
             System.out.println("Ingrese el id del veterinario: ");
             int id;
             while (!scanner.hasNextInt()) {
@@ -34,7 +36,6 @@ public class MenuAgendarTurnoClienteUI extends MenuAbstracto {
             scanner.nextLine();
 
             Personal pl1 = new Personal();
-            PersonalService servicePl = new PersonalService();
 
             pl1=servicePl.findPersonalByID(id);
             if (pl1 == null) {

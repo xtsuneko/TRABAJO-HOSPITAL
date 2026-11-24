@@ -25,6 +25,9 @@ public class MenuAgendarTurnoRecepcionistaUI extends MenuAbstracto {
         Scanner scanner = new Scanner(System.in);
 
         try {
+            ClienteService serviceC = new ClienteService();
+            serviceC.listarCliente();
+
             System.out.println("Ingrese el id del cliente: ");
             int idCliente;
             while (!scanner.hasNextInt()) {
@@ -35,7 +38,6 @@ public class MenuAgendarTurnoRecepcionistaUI extends MenuAbstracto {
             scanner.nextLine();
 
             Cliente c1 = new Cliente();
-            ClienteService serviceC = new ClienteService();
 
             c1=serviceC.findClienteByID(idCliente);
             if (c1 == null) {
@@ -44,6 +46,9 @@ public class MenuAgendarTurnoRecepcionistaUI extends MenuAbstracto {
                 scanner.nextLine();
                 return TipoInterfaz.MENU_AGENDAR_TURNO_RECEPCIONISTA;
             }
+
+            PersonalService servicePl = new PersonalService();
+            servicePl.listarVeterinarios();
 
             System.out.println("Ingrese el id del veterinario: ");
             int id;
@@ -55,7 +60,6 @@ public class MenuAgendarTurnoRecepcionistaUI extends MenuAbstracto {
             scanner.nextLine();
 
             Personal pl1 = new Personal();
-            PersonalService servicePl = new PersonalService();
 
             pl1=servicePl.findPersonalByID(id);
             if (pl1 == null) {

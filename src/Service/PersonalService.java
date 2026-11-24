@@ -129,5 +129,15 @@ public class PersonalService {
         //TODO llenar la informacion de personal (persona)
     }
 
+    public void listarVeterinarios() {
+
+        ArrayList<Personal> pl = dao.listarPersonal();
+        if(pl==null || pl.isEmpty()){
+            System.out.println("No se encontraron veterinarios en el sistema");
+        }
+        System.out.println(pl);
+
+        //TODO llenar la informacion de personal (persona)
+    }
 
 }

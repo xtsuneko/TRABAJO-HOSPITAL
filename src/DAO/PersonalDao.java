@@ -213,4 +213,49 @@ public class PersonalDao {
         return null;
     }
 
+    public ArrayList<Personal> listarVeterinarios() {
+
+        ArrayList<Personal> listaVeterinarios = new ArrayList<>();
+        String sql = "SELECT pl.id, pl.sueldo, pl.horario_laboral_id, pl.id_usuario, pl.id_rol, p.nombre, p.apellido, p.telefono, p.dni\n" +
+                "FROM personal pl\n" +
+                "inner join usuario u ON pl.id_usuario = u.id\n" +
+                "inner join persona p ON p.dni = u.dni_persona \n" +
+                "WHERE pl.id_rol = 2 AND pl.activo = TRUE";
+        try (Connection con = ConexionDB.connect()) {
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                while (resultSet.next()) {
+                    Personal pl = new Personal(
+
+                            resultSet.getDouble("sueldo"),
+                            resultSet.getInt("horario_laboral_id"),
+                            resultSet.getInt("id"),
+                            resultSet.getInt("id_usuario"),
+                            resultSet.getInt("id_rol"));
+
+                    Persona p1 = new Persona(
+
+                            resultSet.getString("nombre"),
+                            resultSet.getString("apellido"),
+                            resultSet.getString("dni"),
+                            resultSet.getString("telefono"));
+
+                    pl.setPersona(p1);
+                    listaVeterinarios.add(pl);
+
+                }
+                return listaVeterinarios;
+            }catch(SQLException e) {
+                System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } catch(SQLException e) {
+            System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
 }

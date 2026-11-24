@@ -22,6 +22,10 @@ public class MenuModificarTurnoRecepcionistaUI extends MenuAbstracto {
         Scanner scanner = new Scanner(System.in);
 
         try {
+
+            TurnoService serviceT = new TurnoService();
+            serviceT.listarTurnos();
+
             System.out.println("Ingrese el ID del turno que quiere modificar: ");
             int id;
             while (!scanner.hasNextInt()) {
@@ -32,7 +36,6 @@ public class MenuModificarTurnoRecepcionistaUI extends MenuAbstracto {
             scanner.nextLine();
 
             Turno t1 = new Turno();
-            TurnoService serviceT = new TurnoService();
 
             t1=serviceT.findTurnoByID(id);
             if (t1 == null) {
@@ -42,6 +45,9 @@ public class MenuModificarTurnoRecepcionistaUI extends MenuAbstracto {
                 return TipoInterfaz.MENU_RECEPCIONISTA;
             }
             t1.setId(id);
+
+            ClienteService serviceC = new ClienteService();
+            serviceC.listarCliente();
 
             System.out.println("Ingrese el id del cliente: ");
             int idCliente;
@@ -53,7 +59,6 @@ public class MenuModificarTurnoRecepcionistaUI extends MenuAbstracto {
             scanner.nextLine();
 
             Cliente c1 = new Cliente();
-            ClienteService serviceC = new ClienteService();
 
             c1=serviceC.findClienteByID(idCliente);
             if (c1 == null) {
@@ -63,6 +68,9 @@ public class MenuModificarTurnoRecepcionistaUI extends MenuAbstracto {
                 return TipoInterfaz.MENU_AGENDAR_TURNO_RECEPCIONISTA;
             }
             t1.setIdCliente(idCliente);
+
+            PersonalService servicePl = new PersonalService();
+            servicePl.listarVeterinarios();
 
             System.out.println("Ingrese el id del veterinario a modificar: ");
             int idVeterinario;
@@ -74,7 +82,6 @@ public class MenuModificarTurnoRecepcionistaUI extends MenuAbstracto {
             scanner.nextLine();
 
             Personal pl1 = new Personal();
-            PersonalService servicePl = new PersonalService();
 
             pl1=servicePl.findPersonalByID(idVeterinario);
             if (pl1 == null) {
