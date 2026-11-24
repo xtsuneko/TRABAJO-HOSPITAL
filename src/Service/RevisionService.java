@@ -29,8 +29,14 @@ public class RevisionService {
         if (r.getDiagnostico() == null) {
             throw new ParametroNullException("El diagnostico es NULO");
         }
-        if (r.getTratamiento() == null) {
+        if(r.getDiagnostico().trim().isEmpty()){
+            throw new ParametroInvalidoException("El diagnostico no puede estar vacio");
+        }
+        if(r.getTratamiento() == null){
             throw new ParametroNullException("El tratamiento es NULO");
+        }
+        if(r.getTratamiento().trim().isEmpty()){
+            throw new ParametroInvalidoException("El tratamiento no puede estar vacio");
         }
 
         //TODO fijarse si hay mas validaciones

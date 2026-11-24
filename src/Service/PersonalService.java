@@ -75,10 +75,19 @@ public class PersonalService {
 
     public Boolean eliminar(Personal p) throws SQLException {
 
-        //TODO no tiene que ser NULL, TIENE Q EXISTIR
+        if (p == null) {
+            throw new ParametroNullException("El personal es NULO");
+        }
+        if (p.getIdPersonal() <= 0) {
+            throw new ParametroInvalidoException("El id de personal es invalido");
+        }
 
-        boolean daoBool= dao.eliminar(p);
-        if(daoBool){
+        if (dao.findBYID(p.getIdPersonal()) == null) {
+            throw new ParametroInvalidoException("El personal no existe");
+        }
+
+        boolean daoBool = dao.eliminar(p);
+        if (daoBool) {
             coleccionPl.eliminarPersonal(p.getIdPersonal());
         }
 
@@ -100,17 +109,14 @@ public class PersonalService {
         return null;
     }
 
-    public Personal findPersonalByIDUsuario(Integer idU){
+    public Personal findPersonalByIDUsuario(Integer idU) {
 
-        if(idU == null){
+        if (idU == null) {
             throw new ParametroNullException("El ID es NULO");
         }
-
-        //TODO boolean coleccionBool= coleccionPl.buscarPersonal(idU);
-        /* if(!coleccionBool){
-            Personal pl = dao.findBYID(id);
-            return pl;
-        }*/
+        if (idU <= 0) {
+            throw new ParametroInvalidoException("El id de usuario es invalido");
+        }
 
         return dao.findBYIDUsuario(idU);
     }
@@ -118,15 +124,14 @@ public class PersonalService {
     public void listarPersonal() {
 
         ArrayList<Personal> pl = dao.listarPersonal();
-        if(pl==null || pl.isEmpty()){
+        if (pl == null || pl.isEmpty()) {
             System.out.println("No se encontro personal en el sistema");
         }
+
         for (Personal ppl : pl) {
-            coleccionPl.agregarPersonal(ppl.getIdUsuario(), ppl);
+            coleccionPl.agregarPersonal(ppl.getIdPersonal(), ppl);
         }
         coleccionPl.mostrarColeccion();
-
-        //TODO llenar la informacion de personal (persona)
     }
 
     public void listarVeterinarios() {
