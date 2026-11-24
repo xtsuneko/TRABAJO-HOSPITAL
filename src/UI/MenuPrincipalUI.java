@@ -9,7 +9,7 @@ public class MenuPrincipalUI extends MenuAbstracto {
 
     @Override
     public TipoInterfaz mostrarInterfaz() {
-        System.out.println("¡Bienvenido al Hospital Mitre!");
+        System.out.println("¡Bienvenido al Hospital Monje!");
 
         Scanner scanner = new Scanner(System.in);
 
