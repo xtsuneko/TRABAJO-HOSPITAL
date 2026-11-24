@@ -1,8 +1,6 @@
 package COLECCION;
-
 import POJO.Revision;
 import POJO.Turno;
-import POJO.Usuario;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -73,8 +71,6 @@ public class RevisionColeccion {
         return false;
 
     }
-
-
 
 
 

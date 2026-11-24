@@ -23,10 +23,10 @@ public class TurnoColeccion {
         return mensaje="Turno agregado exitosamente al sistema";
     }
 
-    public String eliminarTurno(Usuario u){
+    public String eliminarTurno(Turno t){
         String mensaje=" ";
-        if(listaTurno.contains(u)){
-            listaTurno.remove(u);
+        if(listaTurno.contains(t)){
+            listaTurno.remove(t);
             mensaje="Turno removido exitosamente del sistema";
         }else{
             mensaje="El turno que intenta remover no existe en el sistema";
@@ -69,6 +69,30 @@ public class TurnoColeccion {
 
         return false;
 
+    }
+
+    public boolean buscarTurnoPorIDVeterinario(Integer id){
+
+        for(Turno t : listaTurno){
+            if(t.getIdPersonal()==id){
+                System.out.println("Turno encontrado: ");
+                System.out.println(t);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean buscarTurnoPorIDCliente(Integer id){
+
+        for(Turno t : listaTurno){
+            if(t.getIdCliente()==id){
+                System.out.println("Turno encontrado: ");
+                System.out.println(t);
+                return true;
+            }
+        }
+        return false;
     }
 
 
