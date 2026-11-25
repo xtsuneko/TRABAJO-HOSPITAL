@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS veterinaria;
-CREATE DATABASE veterinaria;
-USE veterinaria;
+DROP DATABASE IF EXISTS hospitalMonje;
+CREATE DATABASE hospitalMonje;
+USE hospitalMonje;
 
 DROP TABLE IF EXISTS horario_laboral;
 CREATE TABLE horario_laboral (
@@ -25,7 +25,7 @@ CREATE TABLE persona (
 DROP TABLE IF EXISTS usuario;
 CREATE TABLE usuario (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  email VARCHAR(100) NOT NULL,
+  email VARCHAR(100) UNIQUE NOT NULL,
   pass VARCHAR(100) NOT NULL,
   dni_persona VARCHAR(10),
   activo BOOLEAN DEFAULT TRUE,
@@ -40,7 +40,7 @@ CREATE TABLE rol (
 
 
 INSERT INTO rol (descripcion) VALUES ('Administrador');
-INSERT INTO rol (descripcion) VALUES ('Veterinario');
+INSERT INTO rol (descripcion) VALUES ('Medico');
 INSERT INTO rol (descripcion) VALUES ('Recepcionista');
 
 DROP TABLE IF EXISTS personal;
@@ -130,18 +130,18 @@ INSERT INTO usuario(email, pass, dni_persona) VALUES
 ('canmonje1@gmail.com',          'cande123', '43629947'),  
 ('admin@gmail.com',              'admin',    '42664467'),  
 ('victoria.gutierrez@gmail.com', 'rec12345', '41629947'),  
-('marcos.monje@gmail.com',       'vet12345', '44655947'),  
-('matias.escarso@gmail.com',     'vet12345', '45432578'),  
+('marcos.monje@gmail.com',       'med12345', '44655947'),  
+('matias.escarso@gmail.com',     'med12345', '45432578'),  
 ('franco.calli@gmail.com',       'rec12345', '46277456'),  
-('leonel.flores@gmail.com',      'vet12345', '40234890'),  
+('leonel.flores@gmail.com',      'med12345', '40234890'),  
 ('laura.gimenez@gmail.com',      'rec12345', '35222001'),  
 ('pablo.navarro@gmail.com',      'rec12345', '35222002'), 
-('mariana.suarez@gmail.com',     'vet12345', '35333001'),  
-('federico.ramos@gmail.com',     'vet12345', '35333002'),  
-('daniela.aguirre@gmail.com',    'vet12345', '35333003'), 
-('sebastian.vega@gmail.com',     'vet12345', '35333004'),  
-('paula.cabrera@gmail.com',      'vet12345', '35333005'),  
-('diego.mendoza@gmail.com',      'vet12345', '35333006');  
+('mariana.suarez@gmail.com',     'med12345', '35333001'),  
+('federico.ramos@gmail.com',     'med12345', '35333002'),  
+('daniela.aguirre@gmail.com',    'med12345', '35333003'), 
+('sebastian.vega@gmail.com',     'med12345', '35333004'),  
+('paula.cabrera@gmail.com',      'med12345', '35333005'),  
+('diego.mendoza@gmail.com',      'med12345', '35333006');  
 
 
 INSERT INTO usuario(email, pass, dni_persona) VALUES
@@ -199,14 +199,7 @@ INSERT INTO cliente(direccion, id_usuario) VALUES
 ('Calle Brown 2980',      30);  
 
 
-select u.email, u.pass, r.descripcion 
-from personal pl
-inner join usuario u ON u.id = pl.id_usuario
-inner join rol r ON r.id = pl.id_rol;
 
-select u.email, u.pass
-from cliente c
-inner join usuario u ON u.id = c.id_usuario;
 
 select * from persona;
 select * from usuario;
