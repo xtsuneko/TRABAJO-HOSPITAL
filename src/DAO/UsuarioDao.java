@@ -249,5 +249,30 @@ public class UsuarioDao {
 
         return null;
     }
+    public Usuario buscarPorEmailYPassword(String email, String password) {
+        String sql = "SELECT id, email, password, dni_persona FROM usuario WHERE email = ? AND password = ?";
 
+        try (Connection con = DriverManager.getConnection(url, user, pass);
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, email);
+            ps.setString(2, password);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Usuario u = new Usuario();
+                    u.setIdUsuario(rs.getInt("id"));
+                    u.setEmail(rs.getString("email"));
+                    u.setPassword(rs.getString("password"));
+                    u.setDniPersona(rs.getString("dni_persona"));
+                    return u;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al buscar usuario por email y contraseña: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

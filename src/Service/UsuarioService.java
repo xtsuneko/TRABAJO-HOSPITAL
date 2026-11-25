@@ -59,7 +59,7 @@ public class UsuarioService {
         return eliminado;
     }
 
-    private void validarDatosUsuario(Usuario u) {
+    public void validarDatosUsuario(Usuario u) {
         Validador.noNulo(u, "El usuario es NULO");
         Validador.noNulo(u.getEmail(), "El email es NULO");
         Validador.noNulo(u.getPassword(), "La contraseña es NULA");
@@ -113,4 +113,15 @@ public class UsuarioService {
             throw new ParametroInvalidoException("La contraseña tiene que tener al menos una letra y un numero");
         }
     }
+
+    public Usuario findUsuarioByEmailPassword(String email, String password) {
+        Validador.noNulo(email, "El email es NULO");
+        Validador.noNulo(password, "La contraseña es NULA");
+        Validador.textoNoVacio(email, "El email no puede estar vacio");
+        Validador.textoNoVacio(password, "La contraseña no puede estar vacia");
+
+        String emailNormalizado = email.trim().toLowerCase();
+        return dao.buscarPorEmailYPassword(emailNormalizado, password);
+    }
+
 }
