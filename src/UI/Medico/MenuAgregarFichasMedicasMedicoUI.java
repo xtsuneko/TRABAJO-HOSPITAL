@@ -26,6 +26,7 @@ public class MenuAgregarFichasMedicasMedicoUI extends MenuAbstracto {
             while (!scanner.hasNextInt()) {
                 System.out.println("Error: debe ingresar un ID valido");
                 scanner.next();
+                return TipoInterfaz.MENU_AGREGAR_FICHAS_MEDICAS;
             }
             id = scanner.nextInt();
             scanner.nextLine();

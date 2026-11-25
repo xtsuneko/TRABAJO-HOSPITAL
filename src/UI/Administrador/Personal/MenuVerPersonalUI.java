@@ -20,6 +20,7 @@ public class MenuVerPersonalUI extends MenuAbstracto {
         while (!scanner.hasNextInt()) {
             System.out.println("Error: debe ingresar un id valido.");
             scanner.next();
+            return TipoInterfaz.MENU_VER_PERSONAL;
         }
         idABuscar= scanner.nextInt();
         scanner.nextLine();
