@@ -6,6 +6,7 @@ import EXCEPCIONES.ParametroNullException;
 import POJO.Cliente;
 import POJO.Personal;
 import POJO.Usuario;
+import UTIL.Validador;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -37,6 +38,8 @@ public class ClienteService {
         if (dir.isEmpty()) {
             throw new ParametroInvalidoException("La direccion esta vacia");
         }
+
+        Validador.direccionValida(c.getDireccion());
 
         int idAux= dao.insertar(c);
         if(idAux!=-1){
