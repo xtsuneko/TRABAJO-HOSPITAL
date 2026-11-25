@@ -134,6 +134,18 @@ public class RevisionService {
             System.out.println(r);
     }
 
+    public void listarFichasPorMedico(int id) {
+
+        Validador.idValido(id, "El ID "+id+" es invalido");
+
+        ArrayList<Revision> r = dao.listarFichasPorMedico(id);
+
+        if (r == null || r.isEmpty()) {
+            System.out.println("No se encontraron fichas en el sistema");
+        } else
+            System.out.println(r);
+    }
+
     public void listarRevisiones() {
 
         ArrayList<Revision> r = dao.listarRevisiones();

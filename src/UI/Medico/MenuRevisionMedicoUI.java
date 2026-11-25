@@ -21,7 +21,7 @@ public class MenuRevisionMedicoUI extends MenuAbstracto {
             case "1":
                 return TipoInterfaz.MENU_AGREGAR_FICHAS_MEDICAS;
             case "2":
-                return TipoInterfaz.MENU_MODIFICAR_FICHAS_MEDICAS;
+                return TipoInterfaz.MENU_VER_FICHAS_MEDICAS_MEDICO;
             case "3":
                 return TipoInterfaz.MENU_MEDICO;
         }

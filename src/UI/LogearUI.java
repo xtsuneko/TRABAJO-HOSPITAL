@@ -91,6 +91,6 @@ public class LogearUI extends MenuAbstracto {
         }
 
 
-        return TipoInterfaz.INVALIDO;
+        return TipoInterfaz.MENU_PRINCIPAL;
     }
 }

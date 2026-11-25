@@ -32,30 +32,38 @@ public class MenuAgregarClienteUI extends MenuAbstracto {
             System.out.println("Ingrese el numero telefonico del cliente: ");
             String numeroTelefonico = scanner.nextLine();
 
-            Persona p1 = new Persona(nombre, apellido, dni, numeroTelefonico);
-
-            PersonaService serviceP = new PersonaService();
-
-            serviceP.crearPersona(p1);
-
             System.out.println("Ingrese el email del cliente: ");
             String email = scanner.nextLine();
 
             System.out.println("Ingrese la contraseña del cliente: ");
             String password = scanner.nextLine();
 
-            Usuario u1 = new Usuario(email, password, p1.getDni());
-
-            UsuarioService serviceU = new UsuarioService();
-
-            int id = serviceU.crearUsuario(u1);
-
             System.out.println("Ingrese la direccion del cliente: ");
             String direccion = scanner.nextLine();
 
-            Cliente c1 = new Cliente(direccion, u1.getIdUsuario());
+            Persona p1 = new Persona(nombre, apellido, dni, numeroTelefonico);
+            Usuario u1 = new Usuario(email, password, p1.getDni());
+            Cliente c1 = new Cliente(direccion, 0);
 
+            PersonaService serviceP = new PersonaService();
+            UsuarioService serviceU = new UsuarioService();
             ClienteService serviceC = new ClienteService();
+
+            serviceP.validarPersonaNueva(p1);
+            serviceU.validarUsuario(u1);
+            serviceC.validarCliente(c1);
+
+            serviceP.crearPersona(p1);
+
+            int id = serviceU.crearUsuario(u1);
+            if (id == -1) {
+                System.out.println("No pudo crearse el usuario del cliente");
+                System.out.println("Presione cualquier tecla para regresar atras...");
+                scanner.nextLine();
+                return TipoInterfaz.MENU_GESTION_CLIENTES;
+            }
+
+            c1.setIdUsuario(id);
 
             if(serviceC.crearCliente(c1) > 0){
                 System.out.println("El cliente fue creado correctamente");

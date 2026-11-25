@@ -45,7 +45,7 @@ public class MenuAgendarTurnoRecepcionistaUI extends MenuAbstracto {
                 System.out.println("No se encontro el cliente en el sistema");
                 System.out.println("Presione cualquier tecla para regresar atras...");
                 scanner.nextLine();
-                return TipoInterfaz.MENU_AGENDAR_TURNO_RECEPCIONISTA;
+                return TipoInterfaz.MENU_RECEPCIONISTA;
             }
 
             PersonalService servicePl = new PersonalService();
@@ -62,12 +62,12 @@ public class MenuAgendarTurnoRecepcionistaUI extends MenuAbstracto {
 
             Personal pl1 = new Personal();
 
-            pl1=servicePl.findPersonalByID(id);
+            pl1=servicePl.findMedicoByID(id);
             if (pl1 == null) {
                 System.out.println("No se encontro el medico en el sistema");
                 System.out.println("Presione cualquier tecla para regresar atras...");
                 scanner.nextLine();
-                return TipoInterfaz.MENU_AGENDAR_TURNO_RECEPCIONISTA;
+                return TipoInterfaz.MENU_RECEPCIONISTA;
             }
 
             boolean fechaCapturada=false;
@@ -90,7 +90,7 @@ public class MenuAgendarTurnoRecepcionistaUI extends MenuAbstracto {
                     horario = LocalTime.parse(scanner.nextLine());
                     horaCapturada = true;
                 }catch (DateTimeParseException e){
-                    System.out.println("La hora ingresada no es valida, el formato deberia ser: AAAA-MM-DD");
+                    System.out.println("La hora ingresada no es valida, el formato deberia ser: HH:MM");
                 }
             }
 
@@ -110,8 +110,10 @@ public class MenuAgendarTurnoRecepcionistaUI extends MenuAbstracto {
             return TipoInterfaz.MENU_RECEPCIONISTA;
         } catch (ParametroNullException | ParametroInvalidoException e) {
             System.out.println(e.getMessage());
+            System.out.println("Presione cualquier tecla para regresar atras...");
+            scanner.nextLine();
         }
-        return TipoInterfaz.MENU_AGENDAR_TURNO_RECEPCIONISTA;
+        return TipoInterfaz.MENU_RECEPCIONISTA;
     }
 
 

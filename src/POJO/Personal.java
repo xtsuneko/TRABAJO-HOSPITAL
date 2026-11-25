@@ -114,38 +114,43 @@ public class Personal extends ClaseBaseBddGenerica<Integer> {
             apellido= persona.getApellido();
             telefono= persona.getTelefono();
         }
-        String horario;
-        switch (horarioLaboral){
-            case DIURNO:
-                horario="Diurno";
-                break;
-            case VESPERTINO:
-                horario="Vespertino";
-                break;
-            case NOCTURNO:
-                horario="Nocturno";
-                break;
-            default:
-                horario="Sin horario";
-                break;
+        String horario = "Sin horario";
+        if (horarioLaboral != null) {
+            switch (horarioLaboral){
+                case DIURNO:
+                    horario="Diurno";
+                    break;
+                case VESPERTINO:
+                    horario="Vespertino";
+                    break;
+                case NOCTURNO:
+                    horario="Nocturno";
+                    break;
+                default:
+                    horario="Sin horario";
+                    break;
+            }
         }
 
-        String rol;
-        switch (this.rol){
-            case MEDICO:
-               rol="Medico";
-               break;
-            case RECEPCIONISTA:
-                rol="Recepcionista";
-                break;
-            case ADMINISTRADOR:
-                rol="Administrador";
-                break;
-            default:
-                rol="Sin rol";
-                break;
+        String rol = "Sin rol";
+        if (this.rol != null) {
+            switch (this.rol){
+                case MEDICO:
+                   rol="Medico";
+                   break;
+                case RECEPCIONISTA:
+                    rol="Recepcionista";
+                    break;
+                case ADMINISTRADOR:
+                    rol="Administrador";
+                    break;
+                default:
+                    rol="Sin rol";
+                    break;
+            }
         }
         return "\nPersonal: " +
+                "\n\tID=" + this.getId() +
                 "\n\tNombre=" + nombre +
                 "\n\tApellido=" + apellido +
                 "\n\tTelefono=" + telefono +

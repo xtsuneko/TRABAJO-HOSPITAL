@@ -23,15 +23,12 @@ public class ClienteService {
         this.coleccionC = new ClienteColeccion();
     }
 
-    public int crearCliente(Cliente c) {
+    public void validarCliente(Cliente c) {
         if (c == null) {
             throw new ParametroNullException("El cliente es NULO");
         }
         if (c.getDireccion() == null) {
             throw new ParametroNullException("La direccion es NULA");
-        }
-        if(c.getIdUsuario()<=0){
-            throw new ParametroInvalidoException("El id es invalido");
         }
 
         String dir = c.getDireccion().trim();
@@ -40,6 +37,14 @@ public class ClienteService {
         }
 
         Validador.direccionValida(c.getDireccion());
+    }
+
+    public int crearCliente(Cliente c) {
+        validarCliente(c);
+
+        if(c.getIdUsuario()<=0){
+            throw new ParametroInvalidoException("El id es invalido");
+        }
 
         int idAux= dao.insertar(c);
         if(idAux!=-1){
@@ -51,12 +56,8 @@ public class ClienteService {
     }
 
     public Boolean modificar(Cliente c){
-        if (c == null) {
-            throw new ParametroNullException("El cliente es NULO");
-        }
-        if (c.getDireccion() == null) {
-            throw new ParametroNullException("La direccion es NULA");
-        }
+        validarCliente(c);
+
         if(c.getIdUsuario()<=0){
             throw new ParametroInvalidoException("El id es invalido");
         }
@@ -96,12 +97,11 @@ public class ClienteService {
             throw new ParametroNullException("El ID es NULO");
         }
 
-        boolean coleccionBool= coleccionC.buscarCliente(id);
-        if(coleccionBool){
-            Cliente c = dao.findBYID(id);
-            return c;
+        Cliente c = dao.findBYID(id);
+        if (c != null) {
+            coleccionC.agregarClientes(c.getId(), c);
         }
-        return null;
+        return c;
     }
 
     public Cliente findClienteByIDUsuario(Integer idU) {
@@ -115,7 +115,7 @@ public class ClienteService {
 
         Cliente c = dao.findBYIDUsuario(idU);
         if (c != null) {
-            coleccionC.agregarClientes(c.getIdUsuario(), c);
+            coleccionC.agregarClientes(c.getId(), c);
         }
         return c;
     }
@@ -123,8 +123,12 @@ public class ClienteService {
     public void listarCliente() {
 
         ArrayList<Cliente> c = dao.listarClientes();
+        if (c == null || c.isEmpty()) {
+            System.out.println("No se encontraron clientes en el sistema");
+            return;
+        }
         for (Cliente cc : c) {
-                coleccionC.agregarClientes(cc.getIdUsuario(), cc);
+                coleccionC.agregarClientes(cc.getId(), cc);
         }
         System.out.println(c);
 

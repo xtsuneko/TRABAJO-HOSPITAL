@@ -34,11 +34,11 @@ public class MenuAgregarFichasMedicasMedicoUI extends MenuAbstracto {
             TurnoService serviceT = new TurnoService();
 
             t1=serviceT.findTurnoByID(id);
-            if (t1 == null) {
+            if (t1 == null || t1.getIdPersonal() != medico.getId()) {
                 System.out.println("No se encontro el turno en el sistema");
                 System.out.println("Presione cualquier tecla para regresar atras...");
                 scanner.nextLine();
-                return TipoInterfaz.MENU_AGREGAR_FICHAS_MEDICAS;
+                return TipoInterfaz.MENU_REVISION;
             }
             t1.setId(id);
 
@@ -63,10 +63,14 @@ public class MenuAgregarFichasMedicasMedicoUI extends MenuAbstracto {
 
         } catch (ParametroNullException | ParametroInvalidoException e) {
             System.out.println(e.getMessage());
+
+            System.out.println("Presione cualquier tecla para regresar atras...");
+
+            scanner.nextLine();
         }
 
 
-        return TipoInterfaz.MENU_AGREGAR_FICHAS_MEDICAS;
+        return TipoInterfaz.MENU_REVISION;
     }
 
 

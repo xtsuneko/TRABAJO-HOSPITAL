@@ -1,6 +1,7 @@
 package Service;
 import COLECCION.PersonalColeccion;
 import DAO.PersonalDao;
+import ENUM.Roles;
 import EXCEPCIONES.ParametroInvalidoException;
 import EXCEPCIONES.ParametroNullException;
 import POJO.Cliente;
@@ -21,7 +22,7 @@ public class PersonalService {
         this.coleccionPl = new PersonalColeccion();
     }
 
-    public int crearPersonal(Personal p) {
+    public void validarPersonal(Personal p) {
         if (p == null) {
             throw new ParametroNullException("El personal es NULO");
         }
@@ -31,14 +32,19 @@ public class PersonalService {
         if(p.getHorarioLaboral() == null){
             throw new ParametroNullException("El horario laboral es NULO");
         }
-        if(p.getIdUsuario() <= 0){
-            throw new ParametroInvalidoException("El id no puede ser menor que 0");
-        }
         if(!(p.getSueldo()>0.0)){
                 throw new ParametroInvalidoException("El sueldo debe ser positivo");
         }
         if(p.getRol()==null){
             throw new ParametroNullException("El rol es NULO");
+        }
+    }
+
+    public int crearPersonal(Personal p) {
+        validarPersonal(p);
+
+        if(p.getIdUsuario() <= 0){
+            throw new ParametroInvalidoException("El id no puede ser menor que 0");
         }
 
         int idAux= dao.insertar(p);
@@ -50,22 +56,11 @@ public class PersonalService {
     }
 
     public Boolean modificar(Personal p){
-        if (p == null) {
-            throw new ParametroNullException("El personal es NULO");
-        }
-        if (p.getSueldo() == null){
-            throw new ParametroNullException("El sueldo es NULO");
-        }
-        if(p.getHorarioLaboral() == null){
-            throw new ParametroNullException("El horario laboral es NULO");
-        }
+        validarPersonal(p);
+
         if(p.getIdUsuario() <= 0){
             throw new ParametroInvalidoException("El id no puede ser menor que 0");
         }
-        if(!(p.getSueldo()>0.0)){
-            throw new ParametroInvalidoException("El sueldo debe ser positivo");
-        }
-
 
         Boolean daoBool= dao.modificar(p);
         if(daoBool==true){
@@ -103,13 +98,20 @@ public class PersonalService {
             throw new ParametroNullException("El ID es NULO");
         }
 
-        boolean coleccionBool= coleccionPl.buscarPersonal(id);
-        if(coleccionBool){
-            Personal pl = dao.findBYID(id);
-            return pl;
+        Personal pl = dao.findBYID(id);
+        if (pl != null) {
+            coleccionPl.agregarPersonal(pl.getId(), pl);
         }
+        return pl;
+    }
 
-        return null;
+    public Personal findMedicoByID(Integer id){
+
+        Personal pl = findPersonalByID(id);
+        if (pl != null && pl.getRol() != Roles.MEDICO) {
+            return null;
+        }
+        return pl;
     }
 
     public Personal findPersonalByIDUsuario(Integer idU) {
@@ -143,10 +145,9 @@ public class PersonalService {
         ArrayList<Personal> pl = dao.listarMedico();
         if(pl==null || pl.isEmpty()){
             System.out.println("No se encontraron medicos en el sistema");
+            return;
         }
         System.out.println(pl);
-
-        //TODO llenar la informacion de personal (persona)
     }
 
 }

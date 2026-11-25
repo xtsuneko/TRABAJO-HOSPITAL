@@ -3,6 +3,7 @@ import POJO.Revision;
 import POJO.Turno;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class RevisionColeccion {
@@ -61,7 +62,7 @@ public class RevisionColeccion {
 
 
         for(Revision r : listaRevision){
-            if(r.getId()==id){
+            if(Objects.equals(r.getId(), id)){
                 System.out.println("Ficha medica encontrada: ");
                 System.out.println(r);
                 return true;

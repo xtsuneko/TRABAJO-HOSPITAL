@@ -46,15 +46,22 @@ public class MenuCancelarTurnoRecepcionistaUI extends MenuAbstracto {
                 System.out.println("No se encontro el turno en el sistema");
             }
 
+            System.out.println("Presione cualquier tecla para regresar atras...");
+            scanner.nextLine();
+
             return TipoInterfaz.MENU_RECEPCIONISTA;
         } catch (ParametroNullException | ParametroInvalidoException e) {
             System.out.println(e.getMessage());
+            System.out.println("Presione cualquier tecla para regresar atras...");
+            scanner.nextLine();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            System.out.println("Presione cualquier tecla para regresar atras...");
+            scanner.nextLine();
         }
 
 
-        return TipoInterfaz.MENU_CANCELAR_TURNO_RECEPCIONISTA;
+        return TipoInterfaz.MENU_RECEPCIONISTA;
     }
 
 

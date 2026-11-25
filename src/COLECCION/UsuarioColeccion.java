@@ -1,6 +1,7 @@
 package COLECCION;
 import POJO.Usuario;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class UsuarioColeccion {
@@ -64,7 +65,7 @@ public class UsuarioColeccion {
 
 
         for(Usuario u : listaUsuario){
-            if(u.getId()==id){
+            if(Objects.equals(u.getId(), id)){
                 System.out.println("Usuario encontrado: ");
                 System.out.println(u);
                 return true;

@@ -21,7 +21,7 @@ public class PersonaService {
         this.coleccionP = new PersonaColeccion();
     }
 
-    public void crearPersona(Persona p){
+    public void validarPersona(Persona p){
         if(p == null){
             throw new ParametroNullException("La persona es NULA");
         }
@@ -53,67 +53,41 @@ public class PersonaService {
                 throw new ParametroInvalidoException("El telefono solo puede contener numeros");
             }
         }
-        for(char letra : p.getNombre().toUpperCase().toCharArray()){
-            if(!(letra >= 'A' && letra <='Z')){
+        if(p.getNombre().trim().isEmpty()){
+            throw new ParametroInvalidoException("El nombre no puede estar vacio");
+        }
+        for(char letra : p.getNombre().toCharArray()){
+            if(!(Character.isLetter(letra) || letra == ' ')){
                 throw new ParametroInvalidoException("El nombre solo puede contener letras");
             }
         }
-        for(char letra : p.getApellido().toUpperCase().toCharArray()){
-            if(!(letra >= 'A' && letra <='Z')){
+        if(p.getApellido().trim().isEmpty()){
+            throw new ParametroInvalidoException("El apellido no puede estar vacio");
+        }
+        for(char letra : p.getApellido().toCharArray()){
+            if(!(Character.isLetter(letra) || letra == ' ')){
                 throw new ParametroInvalidoException("El apellido solo puede contener letras");
             }
         }
+    }
+
+    public void validarPersonaNueva(Persona p){
+        validarPersona(p);
 
         if (dao.findBYDNI(p.getDni()) != null) {
             throw new ParametroInvalidoException("Ya existe una persona con ese DNI");
         }
+    }
+
+    public void crearPersona(Persona p){
+        validarPersonaNueva(p);
 
         dao.insertar(p);
         coleccionP.agregarPersonas(p.getDni(), p);
     }
 
     public boolean modificar(Persona p){
-        if(p == null){
-            throw new ParametroNullException("La persona es NULA");
-        }
-        if(p.getNombre() == null){
-            throw new ParametroNullException("El nombre es NULO");
-        }
-        if(p.getApellido() == null){
-            throw new ParametroNullException("El apellido es NULO");
-        }
-        if(p.getTelefono() == null){
-            throw new ParametroNullException("El telefono es NULO");
-        }
-        if(p.getDni() == null){
-            throw new ParametroNullException("El DNI es NULO");
-        }
-        if(p.getDni().length()>8 || p.getDni().length()<7){
-            throw new ParametroInvalidoException("El dni tiene que tener entre siete u ocho digitos");
-        }
-        for(char letra : p.getDni().toCharArray()){
-            if(!(letra>='0' && letra<='9')){
-                throw new ParametroInvalidoException("El dni solo puede contener numeros");
-            }
-        }
-        if(p.getTelefono().length()!=10){
-            throw new ParametroInvalidoException("El numero de telefono tiene que ser valido (Diez digitos)");
-        }
-        for(char letra : p.getTelefono().toCharArray()){
-            if(!(letra>='0' && letra<='9')){
-                throw new ParametroInvalidoException("El telefono solo puede contener numeros");
-            }
-        }
-        for(char letra : p.getNombre().toUpperCase().toCharArray()){
-            if(!(letra >= 'A' && letra <='Z')){
-                throw new ParametroInvalidoException("El nombre solo puede contener letras");
-            }
-        }
-        for(char letra : p.getApellido().toUpperCase().toCharArray()){
-            if(!(letra >= 'A' && letra <='Z')){
-                throw new ParametroInvalidoException("El apellido solo puede contener letras");
-            }
-        }
+        validarPersona(p);
 
         Boolean daoBool= dao.modificar(p);
         if(daoBool==true){
@@ -149,12 +123,11 @@ public class PersonaService {
             throw new ParametroNullException("El dni es NULO");
         }
 
-        boolean coleccionBool= coleccionP.buscarPersona(dni);
-        if(coleccionBool) {
-            Persona p = dao.findBYDNI(dni);
-            return p;
+        Persona p = dao.findBYDNI(dni);
+        if (p != null) {
+            coleccionP.agregarPersonas(p.getDni(), p);
         }
-        return null;
+        return p;
     }
 
     public Persona findPersonaByIDUsuario(int idUsuario){
@@ -168,6 +141,9 @@ public class PersonaService {
     public void listarPersona() {
 
         ArrayList<Persona> p = dao.listarPersonas();
+        if (p == null) {
+            return;
+        }
         for (Persona pp : p) {
             coleccionP.agregarPersonas(pp.getDni(), pp);
         }

@@ -114,10 +114,10 @@ public class RevisionDao {
 
     public Revision findBYIDPorMedico(int id) {
 
-        String sql = "SELECT id, activo, id_turno, diagnostico, tratamiento \n" +
+        String sql = "SELECT r.id, r.activo, r.id_turno, r.diagnostico, r.tratamiento \n" +
                 "FROM revision r\n" +
                 "inner join turno t  ON r.id_turno = t.id \n" +
-                "WHERE id_personal = ? AND r.activo = TRUE";
+                "WHERE t.id_personal = ? AND r.activo = TRUE";
 
         try (Connection con = ConexionDB.connect()) {
             PreparedStatement preparedStatement = con.prepareStatement(sql);
@@ -148,11 +148,11 @@ public class RevisionDao {
         return null;
     }
 
-    public ArrayList<Revision> listarFichasPorCliente(int id) {
+    private ArrayList<Revision> listarFichas(String columnaFiltro, int id) {
 
         ArrayList<Revision> listaRevision = new ArrayList<>();
         String sql = "SELECT r.id AS id_revision, r.activo, r.id_turno, r.diagnostico, r.tratamiento,\n" +
-                "t.fecha, t.horario, t.motivo_consulta, t.id_personal, t.id_cliente\n" +
+                "t.fecha, t.horario, t.motivo_consulta, t.id_personal, t.id_cliente,\n" +
                 "c.direccion, c.id_usuario AS id_usuario_cliente, \n" +
                 "pl.sueldo, pl.horario_laboral_id, pl.id_rol, pl.id_usuario AS id_usuario_personal,\n" +
                 "pc.nombre AS nombre_cliente, pc.dni AS dni_cliente, pc.apellido AS apellido_cliente, pc.telefono AS telefono_cliente,\n" +
@@ -165,7 +165,7 @@ public class RevisionDao {
                 "inner join personal pl ON t.id_personal = pl.id\n" +
                 "inner join usuario upl ON upl.id = pl.id_usuario\n" +
                 "inner join persona ppl ON ppl.dni = upl.dni_persona\n" +
-                "WHERE t.id_cliente = ? AND r.activo = TRUE;";
+                "WHERE " + columnaFiltro + " = ? AND r.activo = TRUE";
 
         try (Connection con = ConexionDB.connect()) {
             PreparedStatement preparedStatement = con.prepareStatement(sql);
@@ -186,12 +186,13 @@ public class RevisionDao {
                             resultSet.getDate("fecha").toLocalDate(),
                             resultSet.getTime("horario").toLocalTime(),
                             resultSet.getString("motivo_consulta"));
+                    turno.setId(resultSet.getInt("id_turno"));
 
                     Personal pl = new Personal(
 
                             resultSet.getDouble("sueldo"),
                             resultSet.getInt("horario_laboral_id"),
-                            resultSet.getInt("id"),
+                            resultSet.getInt("id_personal"),
                             resultSet.getInt("id_usuario_personal"),
                             resultSet.getInt("id_rol"));
 
@@ -207,7 +208,7 @@ public class RevisionDao {
                     Cliente c1 = new Cliente(
 
                             resultSet.getString("direccion"),
-                            resultSet.getInt("id"),
+                            resultSet.getInt("id_cliente"),
                             resultSet.getInt("id_usuario_cliente"));
 
                     Persona p2 = new Persona(
@@ -236,6 +237,17 @@ public class RevisionDao {
         }
 
         return null;
+    }
+
+
+    public ArrayList<Revision> listarFichasPorCliente(int id) {
+
+        return listarFichas("t.id_cliente", id);
+    }
+
+    public ArrayList<Revision> listarFichasPorMedico(int id) {
+
+        return listarFichas("t.id_personal", id);
     }
 
 

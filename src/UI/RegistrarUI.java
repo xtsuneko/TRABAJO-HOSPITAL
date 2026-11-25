@@ -31,30 +31,38 @@ public class RegistrarUI extends MenuAbstracto {
             System.out.println("Ingrese un numero telefonico: ");
             String numeroTelefonico = scanner.nextLine();
 
-            Persona p1 = new Persona(nombre, apellido, dni, numeroTelefonico);
-
-            PersonaService serviceP = new PersonaService();
-
-            serviceP.crearPersona(p1);
-
             System.out.println("Ingrese un email: ");
             String email = scanner.nextLine();
 
             System.out.println("Ingrese una contraseña: ");
             String password = scanner.nextLine();
 
-            Usuario u1 = new Usuario(email, password, p1.getDni());
-
-            UsuarioService serviceU = new UsuarioService();
-
-            int id = serviceU.crearUsuario(u1);
-
             System.out.println("Ingrese su direccion: ");
             String direccion = scanner.nextLine();
 
-            Cliente c1 = new Cliente(direccion, id);
+            Persona p1 = new Persona(nombre, apellido, dni, numeroTelefonico);
+            Usuario u1 = new Usuario(email, password, p1.getDni());
+            Cliente c1 = new Cliente(direccion, 0);
 
+            PersonaService serviceP = new PersonaService();
+            UsuarioService serviceU = new UsuarioService();
             ClienteService serviceC = new ClienteService();
+
+            serviceP.validarPersonaNueva(p1);
+            serviceU.validarUsuario(u1);
+            serviceC.validarCliente(c1);
+
+            serviceP.crearPersona(p1);
+
+            int id = serviceU.crearUsuario(u1);
+            if (id == -1) {
+                System.out.println("No pudo crearse el usuario");
+                System.out.println("Presione cualquier tecla para regresar al menu principal");
+                scanner.nextLine();
+                return TipoInterfaz.MENU_PRINCIPAL;
+            }
+
+            c1.setIdUsuario(id);
 
             serviceC.crearCliente(c1);
 
@@ -65,9 +73,11 @@ public class RegistrarUI extends MenuAbstracto {
             return TipoInterfaz.MENU_PRINCIPAL;
         } catch (ParametroNullException | ParametroInvalidoException e) {
             System.out.println(e.getMessage());
+            System.out.println("Presione cualquier tecla para regresar al menu principal");
+            scanner.nextLine();
         }
 
-        return TipoInterfaz.INVALIDO;
+        return TipoInterfaz.MENU_PRINCIPAL;
     }
 
 
