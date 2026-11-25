@@ -13,37 +13,41 @@ public class UsuarioColeccion {
     }
 
     public String agregarUsuarios(Usuario u){
-        String mensaje= " ";
 
         if(listaUsuario==null){
             this.listaUsuario = new HashSet<>();
         }
         listaUsuario.add(u);
 
-        return mensaje="Usuario agregado exitosamente al sistema";
+        return "Usuario agregado exitosamente al sistema";
     }
 
     public String eliminarUsuario(Usuario u){
         String mensaje=" ";
-        if(listaUsuario.contains(u)){
+        if (listaUsuario != null && listaUsuario.contains(u)) {
             listaUsuario.remove(u);
             mensaje="Usuario removido exitosamente del sistema";
         }else{
             mensaje="El usuario que intenta remover no existe en el sistema";
         }
-
         return mensaje;
     }
 
     public boolean actualizarUsuario(Usuario u){
 
-        Usuario uAux = new Usuario(u.getId(), u.getEmail(), u.getPassword(), u.getDniPersona());
+        if (listaUsuario == null || u == null) {
+            return false;
+        }
 
-        if(listaUsuario.contains(u)){
+        Usuario uAux = new Usuario();
+        uAux.setIdUsuario(u.getIdUsuario());
+        uAux.setEmail(u.getEmail());
+        uAux.setPassword(u.getPassword());
+        uAux.setDniPersona(u.getDniPersona());
 
+        if (listaUsuario.contains(u)) {
             listaUsuario.remove(u);
             listaUsuario.add(uAux);
-
             return true;
         }
 

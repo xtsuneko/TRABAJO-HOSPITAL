@@ -18,7 +18,6 @@ public class Usuario extends ClaseBaseBddGenerica<Integer> {
         this.password = password;
         this.dniPersona = dniPersona;
     }
-
     public Usuario(String email, String password, String dniPersona) {
         this.email = email;
         this.password = password;
@@ -35,13 +34,9 @@ public class Usuario extends ClaseBaseBddGenerica<Integer> {
     }
 
     //----GETTER Y SETTER----
-    public int getIdUsuario() {
-        return getId();
-    }
+    public int getIdUsuario() { return getId(); }
 
-    public void setIdUsuario(int idUsuario) {
-        this.setId(idUsuario);
-    }
+    public void setIdUsuario(int idUsuario) { this.setId(idUsuario); }
 
     public String getEmail() {
         return email;
