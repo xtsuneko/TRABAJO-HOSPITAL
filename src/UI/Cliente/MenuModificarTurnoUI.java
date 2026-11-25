@@ -29,6 +29,7 @@ public class MenuModificarTurnoUI extends MenuAbstracto {
             while (!scanner.hasNextInt()) {
                 System.out.println("Error: debe ingresar un ID valido");
                 scanner.next();
+                return TipoInterfaz.MENU_MODIFICAR_TURNO;
             }
             id = scanner.nextInt();
             scanner.nextLine();

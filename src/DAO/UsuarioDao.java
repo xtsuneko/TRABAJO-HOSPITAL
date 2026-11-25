@@ -7,15 +7,12 @@ import java.util.ArrayList;
 
 public class UsuarioDao {
 
-    private static final String url = "jdbc:mysql://localhost:3306/veterinaria";
-    private static final String user = "root";
-    private static final String pass = "admin";
 
     public int insertar(Usuario u) {
-        String sqlInsert = "INSERT INTO usuario (email, password, dni_persona) VALUES (?, ?, ?)";
+        String sqlInsert = "INSERT INTO usuario (email, pass, dni_persona) VALUES (?, ?, ?)";
         String sqlGetId = "SELECT LAST_INSERT_ID()";
 
-        try (Connection con = DriverManager.getConnection(url, user, pass);
+        try (Connection con = ConexionDB.connect();
              PreparedStatement ps = con.prepareStatement(sqlInsert)) {
 
             ps.setString(1, u.getEmail());
@@ -42,7 +39,7 @@ public class UsuarioDao {
     public boolean eliminar(Usuario u) throws SQLException {
         String sql = "DELETE FROM usuario WHERE id = ?";
 
-        try (Connection con = DriverManager.getConnection(url, user, pass);
+        try (Connection con = ConexionDB.connect();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setInt(1, u.getIdUsuario());
@@ -57,9 +54,9 @@ public class UsuarioDao {
     }
 
     public Boolean modificar(Usuario u) {
-        String sql = "UPDATE usuario SET email = ?, password = ?, dni_persona = ? WHERE id = ?";
+        String sql = "UPDATE usuario SET email = ?, pass = ?, dni_persona = ? WHERE id = ?";
 
-        try (Connection con = DriverManager.getConnection(url, user, pass);
+        try (Connection con = ConexionDB.connect();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, u.getEmail());
@@ -80,7 +77,7 @@ public class UsuarioDao {
     public boolean existeEmail(String email) {
         String sql = "SELECT 1 FROM usuario WHERE email = ? LIMIT 1";
 
-        try (Connection con = DriverManager.getConnection(url, user, pass);
+        try (Connection con = ConexionDB.connect();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, email);
@@ -98,7 +95,7 @@ public class UsuarioDao {
     public boolean existeDni(String dni) {
         String sql = "SELECT 1 FROM usuario WHERE dni_persona = ? LIMIT 1";
 
-        try (Connection con = DriverManager.getConnection(url, user, pass);
+        try (Connection con = ConexionDB.connect();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, dni);
@@ -116,7 +113,7 @@ public class UsuarioDao {
     public boolean existeId(int idUsuario) {
         String sql = "SELECT 1 FROM usuario WHERE id = ? LIMIT 1";
 
-        try (Connection con = DriverManager.getConnection(url, user, pass);
+        try (Connection con = ConexionDB.connect();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setInt(1, idUsuario);
@@ -224,21 +221,21 @@ public class UsuarioDao {
 
         return null;
     }
-    public Usuario buscarPorEmailYPassword(String email, String password) {
-        String sql = "SELECT id, email, password, dni_persona FROM usuario WHERE email = ? AND password = ?";
+    public Usuario buscarPorEmailYPassword(String email, String pass) {
+        String sql = "SELECT id, email, pass, dni_persona FROM usuario WHERE email = ? AND pass = ?";
 
-        try (Connection con = DriverManager.getConnection(url, user, pass);
+        try (Connection con = ConexionDB.connect();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, email);
-            ps.setString(2, password);
+            ps.setString(2, pass);
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     Usuario u = new Usuario();
                     u.setIdUsuario(rs.getInt("id"));
                     u.setEmail(rs.getString("email"));
-                    u.setPassword(rs.getString("password"));
+                    u.setPassword(rs.getString("pass"));
                     u.setDniPersona(rs.getString("dni_persona"));
                     return u;
                 }
@@ -252,9 +249,9 @@ public class UsuarioDao {
     }
 
     public Usuario buscarPorId(int idUsuario) {
-        String sql = "SELECT id, email, password, dni_persona FROM usuario WHERE id = ?";
+        String sql = "SELECT id, email, pass, dni_persona FROM usuario WHERE id = ?";
 
-        try (Connection con = DriverManager.getConnection(url, user, pass);
+        try (Connection con = ConexionDB.connect();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setInt(1, idUsuario);
@@ -263,7 +260,7 @@ public class UsuarioDao {
                     Usuario u = new Usuario();
                     u.setIdUsuario(rs.getInt("id"));
                     u.setEmail(rs.getString("email"));
-                    u.setPassword(rs.getString("password"));
+                    u.setPassword(rs.getString("pass"));
                     u.setDniPersona(rs.getString("dni_persona"));
                     return u;
                 }
