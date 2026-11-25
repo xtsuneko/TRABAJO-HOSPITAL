@@ -24,7 +24,7 @@ public class UsuarioService {
     }
 
     public int crearUsuario(Usuario u) {
-        validarDatosUsuario(u);
+        validarUsuario(u);
 
         int idGenerado = dao.insertar(u);
         if (idGenerado != -1) {
@@ -37,7 +37,7 @@ public class UsuarioService {
     public boolean modificar(Usuario u) {
         Validador.noNulo(u, "El usuario es NULO");
         Validador.idValido(u.getIdUsuario(), "El ID del usuario es invalido");
-        validarDatosUsuario(u);
+        validarUsuario(u);
 
         boolean modificado = dao.modificar(u);
         if (modificado) {
@@ -59,7 +59,7 @@ public class UsuarioService {
         return eliminado;
     }
 
-    public void validarDatosUsuario(Usuario u) {
+    public void validarUsuario(Usuario u) {
         Validador.noNulo(u, "El usuario es NULO");
         Validador.noNulo(u.getEmail(), "El email es NULO");
         Validador.noNulo(u.getPassword(), "La contraseña es NULA");
@@ -122,6 +122,13 @@ public class UsuarioService {
 
         String emailNormalizado = email.trim().toLowerCase();
         return dao.buscarPorEmailYPassword(emailNormalizado, password);
+    }
+
+    public Usuario findUsuarioByID(Integer idUsuario) {
+        Validador.noNulo(idUsuario, "El ID del usuario es NULO");
+        Validador.idValido(idUsuario, "El ID del usuario es invalido");
+
+        return dao.buscarPorId(idUsuario);
     }
 
 }

@@ -107,7 +107,7 @@ public class MenuAgregarPersonalUI extends MenuAbstracto {
             PersonalService servicePl = new PersonalService();
 
             serviceP.validarPersonaNueva(p1);
-            serviceU.validarDatosUsuario(u1);
+            serviceU.validarUsuario(u1);
             servicePl.validarPersonal(pl1);
 
             serviceP.crearPersona(p1);

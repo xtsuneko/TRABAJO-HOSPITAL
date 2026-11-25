@@ -131,31 +131,6 @@ public class UsuarioDao {
         return false;
     }
 
-    public Usuario buscarPorId(int idUsuario) {
-        String sql = "SELECT id, email, password, dni_persona FROM usuario WHERE id = ?";
-
-        try (Connection con = DriverManager.getConnection(url, user, pass);
-             PreparedStatement ps = con.prepareStatement(sql)) {
-
-            ps.setInt(1, idUsuario);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    Usuario u = new Usuario();
-                    u.setIdUsuario(rs.getInt("id"));
-                    u.setEmail(rs.getString("email"));
-                    u.setPassword(rs.getString("password"));
-                    u.setDniPersona(rs.getString("dni_persona"));
-                    return u;
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println("Error al buscar usuario por ID: " + e.getMessage());
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
     public Usuario findBYEmailPassword(String email, String password) {
 
         String sql = "SELECT id, email, pass, dni_persona FROM usuario WHERE email = ? AND pass = ? AND activo = TRUE";
@@ -270,6 +245,31 @@ public class UsuarioDao {
             }
         } catch (SQLException e) {
             System.out.println("Error al buscar usuario por email y contraseña: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public Usuario buscarPorId(int idUsuario) {
+        String sql = "SELECT id, email, password, dni_persona FROM usuario WHERE id = ?";
+
+        try (Connection con = DriverManager.getConnection(url, user, pass);
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, idUsuario);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Usuario u = new Usuario();
+                    u.setIdUsuario(rs.getInt("id"));
+                    u.setEmail(rs.getString("email"));
+                    u.setPassword(rs.getString("password"));
+                    u.setDniPersona(rs.getString("dni_persona"));
+                    return u;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al buscar usuario por ID: " + e.getMessage());
             e.printStackTrace();
         }
 
