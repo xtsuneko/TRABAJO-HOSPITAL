@@ -1,21 +1,28 @@
 package Service;
+import COLECCION.PersonalColeccion;
 import DAO.PersonalDao;
+import ENUM.Roles;
 import EXCEPCIONES.ParametroInvalidoException;
 import EXCEPCIONES.ParametroNullException;
 import POJO.Cliente;
+import POJO.Persona;
 import POJO.Personal;
+import POJO.Usuario;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class PersonalService {
 
     PersonalDao dao;
+    PersonalColeccion coleccionPl;
 
     public PersonalService() {
         this.dao = new PersonalDao();
+        this.coleccionPl = new PersonalColeccion();
     }
 
-    public int crearPersonal(Personal p) {
+    public void validarPersonal(Personal p) {
         if (p == null) {
             throw new ParametroNullException("El personal es NULO");
         }
@@ -24,44 +31,123 @@ public class PersonalService {
         }
         if(p.getHorarioLaboral() == null){
             throw new ParametroNullException("El horario laboral es NULO");
-        }
-        if(p.getIdUsuario() <= 0){
-            throw new ParametroInvalidoException("El id no puede ser menor que 0");
         }
         if(!(p.getSueldo()>0.0)){
                 throw new ParametroInvalidoException("El sueldo debe ser positivo");
         }
-
-       return dao.insertar(p);
+        if(p.getRol()==null){
+            throw new ParametroNullException("El rol es NULO");
+        }
     }
 
-    public Boolean modificar(Personal p){
-        if (p == null) {
-            throw new ParametroNullException("El personal es NULO");
-        }
-        if (p.getSueldo() == null){
-            throw new ParametroNullException("El sueldo es NULO");
-        }
-        if(p.getHorarioLaboral() == null){
-            throw new ParametroNullException("El horario laboral es NULO");
-        }
+    public int crearPersonal(Personal p) {
+        validarPersonal(p);
+
         if(p.getIdUsuario() <= 0){
             throw new ParametroInvalidoException("El id no puede ser menor que 0");
         }
-        if(!(p.getSueldo()>0.0)){
-            throw new ParametroInvalidoException("El sueldo debe ser positivo");
+
+        int idAux= dao.insertar(p);
+        if(idAux!=-1){
+            coleccionPl.agregarPersonal(p.getId(), p);
         }
 
+        return idAux;
+    }
 
-        return dao.modificar(p);
+    public Boolean modificar(Personal p){
+        validarPersonal(p);
+
+        if(p.getIdUsuario() <= 0){
+            throw new ParametroInvalidoException("El id no puede ser menor que 0");
+        }
+
+        Boolean daoBool= dao.modificar(p);
+        if(daoBool==true){
+            coleccionPl.actualizarPersonal(p.getId(), p);
+        }
+
+        return daoBool;
     }
 
 
     public Boolean eliminar(Personal p) throws SQLException {
 
-        //TODO no tiene que ser NULL, TIENE Q EXISTIR
+        if (p == null) {
+            throw new ParametroNullException("El personal es NULO");
+        }
+        if (p.getIdPersonal() <= 0) {
+            throw new ParametroInvalidoException("El id de personal es invalido");
+        }
 
-        return dao.eliminar(p);
+        if (dao.findBYID(p.getIdPersonal()) == null) {
+            throw new ParametroInvalidoException("El personal no existe");
+        }
+
+        boolean daoBool = dao.eliminar(p);
+        if (daoBool) {
+            coleccionPl.eliminarPersonal(p.getId());
+        }
+
+        return daoBool;
+    }
+
+    public Personal findPersonalByID(Integer id){
+
+        if(id == null){
+            throw new ParametroNullException("El ID es NULO");
+        }
+
+        Personal pl = dao.findBYID(id);
+        if (pl != null) {
+            coleccionPl.agregarPersonal(pl.getId(), pl);
+        }
+        return pl;
+    }
+
+    public Personal findMedicoByID(Integer id){
+
+        Personal pl = findPersonalByID(id);
+        if (pl != null && pl.getRol() != Roles.MEDICO) {
+            return null;
+        }
+        return pl;
+    }
+
+    public Personal findPersonalByIDUsuario(Integer idU) {
+
+        if (idU == null) {
+            throw new ParametroNullException("El ID es NULO");
+        }
+        if (idU <= 0) {
+            throw new ParametroInvalidoException("El id de usuario es invalido");
+        }
+
+        return dao.findBYIDUsuario(idU);
+    }
+
+    public void listarPersonal() {
+
+        ArrayList<Personal> pl = dao.listarPersonal();
+        if (pl == null || pl.isEmpty()) {
+            System.out.println("No se encontro personal en el sistema");
+            return;
+        }
+
+        for (Personal ppl : pl) {
+            coleccionPl.agregarPersonal(ppl.getIdPersonal(), ppl);
+        }
+        coleccionPl.mostrarColeccion();
+    }
+
+    public void listarMedicos() {
+
+        ArrayList<Personal> pl = dao.listarMedico();
+        if(pl==null || pl.isEmpty()){
+            System.out.println("No se encontraron medicos en el sistema");
+            return;
+        }
+        System.out.println(pl);
     }
 
 }
