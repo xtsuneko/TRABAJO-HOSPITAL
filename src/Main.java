@@ -38,7 +38,7 @@ void main() {
                 interfaz = ui.mostrarInterfaz();
                 break;
             case TipoInterfaz.MENU_VER_TURNOS_MEDICOS:
-                ui = new MenuVerTurnosMedicosUI();
+                ui = new MenuVerTurnosMedicoUI();
                 ui.setDatos(datos);
                 interfaz = ui.mostrarInterfaz();
                 break;
