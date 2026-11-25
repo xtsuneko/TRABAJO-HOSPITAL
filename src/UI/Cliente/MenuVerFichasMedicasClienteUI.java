@@ -1,10 +1,10 @@
-package UI.Medico;
+package UI.Cliente;
 import ENUM.TipoInterfaz;
 import POJO.Cliente;
 import Service.RevisionService;
 import UI.MenuAbstracto;
 
-public class MenuVerFichasMedicasVeterinarioUI extends MenuAbstracto {
+public class MenuVerFichasMedicasClienteUI extends MenuAbstracto {
 
     @Override
     public TipoInterfaz mostrarInterfaz() {

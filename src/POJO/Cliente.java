@@ -85,6 +85,7 @@ public class Cliente extends ClaseBaseBddGenerica<Integer> {
             telefono= persona.getTelefono();
         }
         return "\nCliente:" +
+                "\n\tID=" + this.getId() +
                 "\n\tNombre=" + nombre +
                 "\n\tApellido=" + apellido +
                 "\n\tTelefono=" + telefono +

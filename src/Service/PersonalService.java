@@ -37,10 +37,13 @@ public class PersonalService {
         if(!(p.getSueldo()>0.0)){
                 throw new ParametroInvalidoException("El sueldo debe ser positivo");
         }
+        if(p.getRol()==null){
+            throw new ParametroNullException("El rol es NULO");
+        }
 
         int idAux= dao.insertar(p);
         if(idAux!=-1){
-            coleccionPl.agregarPersonal(p.getIdUsuario(), p);
+            coleccionPl.agregarPersonal(p.getId(), p);
         }
 
         return idAux;
@@ -66,7 +69,7 @@ public class PersonalService {
 
         Boolean daoBool= dao.modificar(p);
         if(daoBool==true){
-            coleccionPl.actualizarPersonal(p.getIdPersonal(), p);
+            coleccionPl.actualizarPersonal(p.getId(), p);
         }
 
         return daoBool;
@@ -88,7 +91,7 @@ public class PersonalService {
 
         boolean daoBool = dao.eliminar(p);
         if (daoBool) {
-            coleccionPl.eliminarPersonal(p.getIdPersonal());
+            coleccionPl.eliminarPersonal(p.getId());
         }
 
         return daoBool;
@@ -101,7 +104,7 @@ public class PersonalService {
         }
 
         boolean coleccionBool= coleccionPl.buscarPersonal(id);
-        if(!coleccionBool){
+        if(coleccionBool){
             Personal pl = dao.findBYID(id);
             return pl;
         }
@@ -126,6 +129,7 @@ public class PersonalService {
         ArrayList<Personal> pl = dao.listarPersonal();
         if (pl == null || pl.isEmpty()) {
             System.out.println("No se encontro personal en el sistema");
+            return;
         }
 
         for (Personal ppl : pl) {
@@ -136,7 +140,7 @@ public class PersonalService {
 
     public void listarMedicos() {
 
-        ArrayList<Personal> pl = dao.listarPersonal();
+        ArrayList<Personal> pl = dao.listarMedico();
         if(pl==null || pl.isEmpty()){
             System.out.println("No se encontraron medicos en el sistema");
         }

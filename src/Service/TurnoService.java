@@ -4,7 +4,6 @@ import DAO.TurnoDao;
 import EXCEPCIONES.ParametroInvalidoException;
 import POJO.Turno;
 import UTIL.Validador;
-
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;

@@ -148,7 +148,7 @@ public class UsuarioService {
         }
 
         boolean coleccionBool= coleccionU.buscarUsuario(id);
-        if(!coleccionBool){
+        if(coleccionBool){
             Usuario u = dao.findBYID(id);
            return u;
         }

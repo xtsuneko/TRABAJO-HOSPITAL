@@ -97,7 +97,7 @@ public class RevisionService {
         Validador.idValido(id, "El ID es invalido");
 
         boolean coleccionBool = coleccionR.buscarRevision(id);
-        if (!coleccionBool) {
+        if (coleccionBool) {
             Revision r = dao.findBYID(id);
             if (r == null) {
                 throw new ParametroInvalidoException("No se encontro una revision con el ID: " + id);

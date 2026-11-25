@@ -40,7 +40,7 @@ public class ClienteService {
 
         int idAux= dao.insertar(c);
         if(idAux!=-1){
-            coleccionC.agregarClientes(c.getIdUsuario(), c);
+            coleccionC.agregarClientes(c.getId(), c);
         }
 
         return idAux;
@@ -60,7 +60,7 @@ public class ClienteService {
 
         Boolean daoBool= dao.modificar(c);
         if(daoBool==true){
-            coleccionC.actualizarCliente(c.getIdCliente(), c);
+            coleccionC.actualizarCliente(c.getId(), c);
         }
 
         return daoBool;
@@ -81,7 +81,7 @@ public class ClienteService {
 
         boolean daoBool = dao.eliminar(c);
         if (daoBool) {
-            coleccionC.eliminarCliente(c.getIdCliente());
+            coleccionC.eliminarCliente(c.getId());
         }
 
         return daoBool;
@@ -94,7 +94,7 @@ public class ClienteService {
         }
 
         boolean coleccionBool= coleccionC.buscarCliente(id);
-        if(!coleccionBool){
+        if(coleccionBool){
             Cliente c = dao.findBYID(id);
             return c;
         }

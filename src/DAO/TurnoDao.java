@@ -92,8 +92,8 @@ public class TurnoDao {
         String sql = "SELECT t.id_cliente, t.id_personal, t.fecha, t.horario, t.motivo_consulta,  \n" +
                 "c.direccion, c.id_usuario AS id_usuario_cliente, \n" +
                 "pl.sueldo, pl.horario_laboral_id, pl.id_rol, pl.id_usuario AS id_usuario_personal,\n" +
-                "pc.nombre AS nombre_cliente, pc.apellido AS apellido_cliente, pc.telefono AS telefono_cliente,\n" +
-                "ppl.nombre AS nombre_personal, ppl.apellido AS apellido_personal, ppl.telefono AS telefono_personal\n" +
+                "pc.nombre AS nombre_cliente, pc.dni AS dni_cliente, pc.apellido AS apellido_cliente, pc.telefono AS telefono_cliente,\n" +
+                "ppl.nombre AS nombre_personal, ppl.dni AS dni_personal, ppl.apellido AS apellido_personal, ppl.telefono AS telefono_personal\n" +
                 "FROM turno t\n" +
                 "inner join cliente c ON t.id_cliente = c.id\n" +
                 "inner join usuario uc ON uc.id = c.id_usuario\n" +
@@ -170,8 +170,8 @@ public class TurnoDao {
         String sql = "SELECT t.id_cliente, t.id_personal, t.fecha, t.horario, t.motivo_consulta,  \n" +
                 "c.direccion, c.id_usuario AS id_usuario_cliente, \n" +
                 "pl.sueldo, pl.horario_laboral_id, pl.id_rol, pl.id_usuario AS id_usuario_personal,\n" +
-                "pc.nombre AS nombre_cliente, pc.apellido AS apellido_cliente, pc.telefono AS telefono_cliente,\n" +
-                "ppl.nombre AS nombre_personal, ppl.apellido AS apellido_personal, ppl.telefono AS telefono_personal\n" +
+                "pc.nombre AS nombre_cliente, pc.dni AS dni_cliente, pc.apellido AS apellido_cliente, pc.telefono AS telefono_cliente,\n" +
+                "ppl.nombre AS nombre_personal, ppl.dni AS dni_personal, ppl.apellido AS apellido_personal, ppl.telefono AS telefono_personal\n" +
                 "FROM turno t\n" +
                 "inner join cliente c ON t.id_cliente = c.id\n" +
                 "inner join usuario uc ON uc.id = c.id_usuario\n" +
@@ -250,8 +250,8 @@ public class TurnoDao {
         String sql = "SELECT t.id_cliente, t.id_personal, t.fecha, t.horario, t.motivo_consulta,  \n" +
                 "c.direccion, c.id_usuario AS id_usuario_cliente, \n" +
                 "pl.sueldo, pl.horario_laboral_id, pl.id_rol, pl.id_usuario AS id_usuario_personal,\n" +
-                "pc.nombre AS nombre_cliente, pc.apellido AS apellido_cliente, pc.telefono AS telefono_cliente,\n" +
-                "ppl.nombre AS nombre_personal, ppl.apellido AS apellido_personal, ppl.telefono AS telefono_personal\n" +
+                "pc.nombre AS nombre_cliente, pc.dni AS dni_cliente, pc.apellido AS apellido_cliente, pc.telefono AS telefono_cliente,\n" +
+                "ppl.nombre AS nombre_personal, ppl.dni AS dni_personal, ppl.apellido AS apellido_personal, ppl.telefono AS telefono_personal\n" +
                 "FROM turno t\n" +
                 "inner join cliente c ON t.id_cliente = c.id\n" +
                 "inner join usuario uc ON uc.id = c.id_usuario\n" +
@@ -308,7 +308,6 @@ public class TurnoDao {
                     t.setMedico(pl);
 
                     listaTurnos.add(t);
-                    return listaTurnos;
                 }
                 return listaTurnos;
             }catch(SQLException e) {
@@ -328,8 +327,8 @@ public class TurnoDao {
         String sql = "SELECT t.id_cliente, t.id_personal, t.fecha, t.horario, t.motivo_consulta,  \n" +
                 "c.direccion, c.id_usuario AS id_usuario_cliente, \n" +
                 "pl.sueldo, pl.horario_laboral_id, pl.id_rol, pl.id_usuario AS id_usuario_personal,\n" +
-                "pc.nombre AS nombre_cliente, pc.apellido AS apellido_cliente, pc.telefono AS telefono_cliente,\n" +
-                "ppl.nombre AS nombre_personal, ppl.apellido AS apellido_personal, ppl.telefono AS telefono_personal\n" +
+                "pc.nombre AS nombre_cliente, pc.dni AS dni_cliente, pc.apellido AS apellido_cliente, pc.telefono AS telefono_cliente,\n" +
+                "ppl.nombre AS nombre_personal, ppl.dni AS dni_personal, ppl.apellido AS apellido_personal, ppl.telefono AS telefono_personal\n" +
                 "FROM turno t\n" +
                 "inner join cliente c ON t.id_cliente = c.id\n" +
                 "inner join usuario uc ON uc.id = c.id_usuario\n" +
@@ -407,8 +406,8 @@ public class TurnoDao {
         String sql = "SELECT t.id_cliente, t.id_personal, t.fecha, t.horario, t.motivo_consulta,  \n" +
                 "c.direccion, c.id_usuario AS id_usuario_cliente, \n" +
                 "pl.sueldo, pl.horario_laboral_id, pl.id_rol, pl.id_usuario AS id_usuario_personal,\n" +
-                "pc.nombre AS nombre_cliente, pc.apellido AS apellido_cliente, pc.telefono AS telefono_cliente,\n" +
-                "ppl.nombre AS nombre_personal, ppl.apellido AS apellido_personal, ppl.telefono AS telefono_personal\n" +
+                "pc.nombre AS nombre_cliente, pc.dni AS dni_cliente, pc.apellido AS apellido_cliente, pc.telefono AS telefono_cliente,\n" +
+                "ppl.nombre AS nombre_personal, ppl.dni AS dni_personal, ppl.apellido AS apellido_personal, ppl.telefono AS telefono_personal\n" +
                 "FROM turno t\n" +
                 "inner join cliente c ON t.id_cliente = c.id\n" +
                 "inner join usuario uc ON uc.id = c.id_usuario\n" +
@@ -465,7 +464,6 @@ public class TurnoDao {
                     t.setMedico(pl);
 
                     listaTurnos.add(t);
-                    return listaTurnos;
                 }
                 return listaTurnos;
             }catch(SQLException e) {
@@ -486,8 +484,8 @@ public class TurnoDao {
         String sql = "SELECT t.id_cliente, t.id_personal, t.fecha, t.horario, t.motivo_consulta, \n" +
                 "c.direccion, c.id_usuario AS id_usuario_cliente, \n" +
                 "pl.sueldo, pl.horario_laboral_id, pl.id_rol, pl.id_usuario AS id_usuario_personal,\n" +
-                "pc.nombre AS nombre_cliente, pc.apellido AS apellido_cliente, pc.telefono AS telefono_cliente,\n" +
-                "ppl.nombre AS nombre_personal, ppl.apellido AS apellido_personal, ppl.telefono AS telefono_personal\n" +
+                "pc.nombre AS nombre_cliente, pc.dni AS dni_cliente, pc.apellido AS apellido_cliente, pc.telefono AS telefono_cliente,\n" +
+                "ppl.nombre AS nombre_personal, ppl.dni AS dni_personal, ppl.apellido AS apellido_personal, ppl.telefono AS telefono_personal\n" +
                 "FROM turno t\n" +
                 "inner join cliente c ON t.id_cliente = c.id\n" +
                 "inner join usuario uc ON uc.id = c.id_usuario\n" +
@@ -543,8 +541,8 @@ public class TurnoDao {
                     t.setMedico(pl);
 
                     listaTurnos.add(t);
-                    return listaTurnos;
                 }
+                return listaTurnos;
             }catch(SQLException e) {
                 System.out.println("Error al conectar a la base de datos: " + e.getMessage());
                 e.printStackTrace();
@@ -554,7 +552,7 @@ public class TurnoDao {
             e.printStackTrace();
         }
 
-        return null;
+        return listaTurnos;
     }
 
 }

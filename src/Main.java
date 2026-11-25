@@ -148,7 +148,7 @@ void main() {
                 interfaz = ui.mostrarInterfaz();
                 break;
             case TipoInterfaz.MENU_VER_FICHAS_MEDICAS:
-                ui = new MenuVerFichasMedicasVeterinarioUI();
+                ui = new MenuVerFichasMedicasClienteUI();
                 ui.setDatos(datos);
                 interfaz = ui.mostrarInterfaz();
                 break;

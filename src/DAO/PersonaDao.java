@@ -135,7 +135,7 @@ public class PersonaDao {
     public ArrayList<Persona> listarPersonas() {
 
         ArrayList<Persona> listaPersonas = new ArrayList<>();
-        String sql = "SELECT dni, nombre, apellido, telefono FROM persona AND activo = TRUE";
+        String sql = "SELECT dni, nombre, apellido, telefono FROM persona WHERE activo = TRUE";
         try (Connection con = ConexionDB.connect()) {
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             try (ResultSet resultSet = preparedStatement.executeQuery()){

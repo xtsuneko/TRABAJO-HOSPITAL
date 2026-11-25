@@ -114,11 +114,6 @@ public class PersonaService {
                 throw new ParametroInvalidoException("El apellido solo puede contener letras");
             }
         }
-        Persona existente = dao.findBYDNI(p.getDni());
-        if (existente != null && existente.getDni() != p.getDni()) {
-            throw new ParametroInvalidoException("Ese DNI ya pertenece a otra persona");
-        }
-
 
         Boolean daoBool= dao.modificar(p);
         if(daoBool==true){
@@ -155,7 +150,7 @@ public class PersonaService {
         }
 
         boolean coleccionBool= coleccionP.buscarPersona(dni);
-        if(!coleccionBool) {
+        if(coleccionBool) {
             Persona p = dao.findBYDNI(dni);
             return p;
         }

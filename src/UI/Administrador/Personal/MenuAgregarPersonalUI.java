@@ -60,37 +60,55 @@ public class MenuAgregarPersonalUI extends MenuAbstracto {
             sueldo=scanner.nextDouble();
             scanner.nextLine();
 
+            boolean horarioIngresado=false;
             HorarioLaboral horario = null;
-            System.out.println("Seleccione  un horario laboral: ");
-            System.out.println("1.DIURNO");
-            System.out.println("2.VESPERTINO");
-            System.out.println("3.NOCTURNO");
-            String opcion = scanner.nextLine();
-            switch (opcion) {
-                case "1":
-                    horario = HorarioLaboral.DIURNO;
-                    break;
-                case "2":
-                    horario = HorarioLaboral.VESPERTINO;
-                    break;
-                case "3":
-                    horario = HorarioLaboral.NOCTURNO;
-                    break;
+            String opcion;
+            while (!horarioIngresado){
+                System.out.println("Seleccione  un horario laboral: ");
+                System.out.println("1.DIURNO");
+                System.out.println("2.VESPERTINO");
+                System.out.println("3.NOCTURNO");
+                opcion = scanner.nextLine();
+                switch (opcion) {
+                    case "1":
+                        horario = HorarioLaboral.DIURNO;
+                        horarioIngresado=true;
+                        break;
+                    case "2":
+                        horario = HorarioLaboral.VESPERTINO;
+                        horarioIngresado=true;
+                        break;
+                    case "3":
+                        horario = HorarioLaboral.NOCTURNO;
+                        horarioIngresado=true;
+                        break;
+                    default:
+                        System.out.println("Horario invalido");
+                }
             }
 
+
+            boolean rolIngresado=false;
             Roles rol = null;
-            System.out.println("Seleccione  un rol: ");
-            System.out.println("1.Recepcionista");
-            System.out.println("2.Medico");
-            opcion = scanner.nextLine();
-            switch (opcion) {
-                case "1":
-                    rol = Roles.RECEPCIONISTA;
-                    break;
-                case "2":
-                    rol = Roles.MEDICO;
-                    break;
+            while(!rolIngresado){
+                System.out.println("Seleccione  un rol: ");
+                System.out.println("1.Recepcionista");
+                System.out.println("2.Medico");
+                opcion = scanner.nextLine();
+                switch (opcion) {
+                    case "1":
+                        rol = Roles.RECEPCIONISTA;
+                        rolIngresado=true;
+                        break;
+                    case "2":
+                        rol = Roles.MEDICO;
+                        rolIngresado=true;
+                        break;
+                    default:
+                        System.out.println("Rol invalido");
+                }
             }
+
             
             Personal pl1 = new Personal(sueldo, horario, u1.getIdUsuario(), rol);
 

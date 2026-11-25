@@ -56,11 +56,6 @@ public class MenuModificarCliente extends MenuAbstracto {
                 p1.setApellido(apellido);
             }
 
-            System.out.println("Ingrese el dni o deje en blanco para mantener " + p1.getDni() + ": ");
-            String dni = scanner.nextLine();
-            if (!dni.isEmpty()) {
-                p1.setDni(dni);
-            }
 
             System.out.println("Ingrese el numero telefonico o deje en blanco para mantener " + p1.getTelefono() + ": ");
             String numeroTelefonico = scanner.nextLine();

@@ -34,7 +34,7 @@ public class LogearUI extends MenuAbstracto {
             u1 = serviceU.findUsuarioByEmailPassword(u1.getEmail(), u1.getPassword());
             if(u1==null){
                 System.out.println("No se pudo iniciar sesion");
-                return TipoInterfaz.INICIAR_SESION;
+                return TipoInterfaz.MENU_PRINCIPAL;
             }
             Persona p1 =new Persona();
             PersonaService serviceP = new PersonaService();
@@ -42,7 +42,7 @@ public class LogearUI extends MenuAbstracto {
 
             if(p1==null){
                 System.out.println("No se pudo iniciar sesion");
-                return TipoInterfaz.INICIAR_SESION;
+                return TipoInterfaz.MENU_PRINCIPAL;
             }
 
             Cliente c1 = new Cliente();
@@ -69,7 +69,7 @@ public class LogearUI extends MenuAbstracto {
                 this.setDatos(pl1);
             }else{
                 System.out.println("No se pudo iniciar sesion");
-                return TipoInterfaz.INICIAR_SESION;
+                return TipoInterfaz.MENU_PRINCIPAL;
             }
 
             switch (pl1.getRol()){
@@ -84,7 +84,7 @@ public class LogearUI extends MenuAbstracto {
             System.out.println("Presione una tecla para continuar...");
             scanner.nextLine();
 
-            return TipoInterfaz.INICIAR_SESION;
+            return TipoInterfaz.MENU_PRINCIPAL;
 
         }catch (ParametroNullException | ParametroInvalidoException e){
             System.out.println(e.getMessage());

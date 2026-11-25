@@ -12,6 +12,7 @@ import Service.TurnoService;
 import UI.MenuAbstracto;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 public class MenuAgendarTurnoRecepcionistaUI extends MenuAbstracto {
@@ -69,11 +70,29 @@ public class MenuAgendarTurnoRecepcionistaUI extends MenuAbstracto {
                 return TipoInterfaz.MENU_AGENDAR_TURNO_RECEPCIONISTA;
             }
 
-            System.out.println("Ingrese la fecha: (AAAA-MM-DD) ");
-            LocalDate fecha = LocalDate.parse(scanner.nextLine());
+            boolean fechaCapturada=false;
+            LocalDate fecha=null;
+            while(!fechaCapturada){
+                try {
+                    System.out.println("Ingrese la fecha: (AAAA-MM-DD) ");
+                    fecha = LocalDate.parse(scanner.nextLine());
+                    fechaCapturada = true;
+                }catch (DateTimeParseException e){
+                    System.out.println("La fecha ingresada no es valida, el formato deberia ser: AAAA-MM-DD");
+                }
+            }
 
-            System.out.println("Ingrese la hora: (HH:MM)");
-            LocalTime horario = LocalTime.parse(scanner.nextLine());
+            boolean horaCapturada=false;
+            LocalTime horario=null;
+            while(!horaCapturada){
+                try {
+                    System.out.println("Ingrese la hora: (HH:MM)");
+                    horario = LocalTime.parse(scanner.nextLine());
+                    horaCapturada = true;
+                }catch (DateTimeParseException e){
+                    System.out.println("La hora ingresada no es valida, el formato deberia ser: AAAA-MM-DD");
+                }
+            }
 
             System.out.println("Ingrese el motivo de la consulta: ");
             String motivoConsulta = scanner.nextLine();
