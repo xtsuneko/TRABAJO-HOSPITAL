@@ -140,6 +140,36 @@ public class UsuarioDao {
         return null;
     }
 
+    public Usuario findBYEmail(String email) {
+
+        String sql = "SELECT id, email, pass, dni_persona FROM usuario WHERE email = ?";
+        try (Connection con = ConexionDB.connect()) {
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setString(1, email);
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                if (resultSet.next()) {
+                    return new Usuario(
+
+                            resultSet.getInt("id"),
+                            resultSet.getString("email"),
+                            resultSet.getString("pass"),
+                            resultSet.getString("dni_persona"));
+
+                } else {
+                    return null;
+                }
+            }catch(SQLException e) {
+                System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } catch(SQLException e) {
+            System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
 
 
     public ArrayList<Usuario> listarUsuarios() {

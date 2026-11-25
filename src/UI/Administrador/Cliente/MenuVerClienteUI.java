@@ -33,6 +33,7 @@ public class MenuVerClienteUI extends MenuAbstracto {
             System.out.println(c1);
         }
         System.out.println("Presione cualquier tecla para volver atras...");
+        scanner.nextLine();
 
         return TipoInterfaz.MENU_GESTION_CLIENTES;
 

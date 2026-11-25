@@ -38,6 +38,7 @@ public class MenuModificarPersonalUI extends MenuAbstracto {
             if (pl1 == null) {
                 System.out.println("No se encontro el personal en el sistema");
                 System.out.println("Presione cualquier tecla para regresar atras...");
+                scanner.nextLine();
                 return TipoInterfaz.MENU_GESTION_PERSONAL;
             }
 
@@ -68,8 +69,6 @@ public class MenuModificarPersonalUI extends MenuAbstracto {
                 p1.setTelefono(numeroTelefonico);
             }
 
-            serviceP.modificar(p1);
-
             System.out.println("Ingrese el email o deje en blanco para mantener " + u1.getEmail() + ": ");
             String email = scanner.nextLine();
             if (!email.isEmpty()) {
@@ -82,24 +81,27 @@ public class MenuModificarPersonalUI extends MenuAbstracto {
                 u1.setPassword(password);
             }
 
-            serviceU.modificar(u1);
-
-            //TODO REVISAR ESTE
-            System.out.println("Ingrese el sueldo del personal: ");
-            Double sueldo;
-            while (!scanner.hasNextDouble()) {
-                System.out.println("Error: debe ingresar un número valido.");
-                scanner.next();
+            System.out.println("Ingrese el sueldo del personal o deje en blanco para mantener " + pl1.getSueldo() + ": ");
+            Double sueldo = null;
+            while (sueldo == null) {
+                String sueldoIngresado = scanner.nextLine();
+                if (sueldoIngresado.isEmpty()) {
+                    sueldo = pl1.getSueldo();
+                } else {
+                    try {
+                        sueldo = Double.parseDouble(sueldoIngresado);
+                    } catch (NumberFormatException e) {
+                        System.out.println("Error: debe ingresar un número valido.");
+                    }
+                }
             }
-            sueldo=scanner.nextDouble();
-            scanner.nextLine();
             pl1.setSueldo(sueldo);
 
             boolean horarioIngresado=false;
             HorarioLaboral horario = null;
             String opcion;
             while (!horarioIngresado){
-                System.out.println("Seleccione  un horario laboral: ");
+                System.out.println("Seleccione  un horario laboral o presione Enter para mantener: ");
                 System.out.println("1.DIURNO");
                 System.out.println("2.VESPERTINO");
                 System.out.println("3.NOCTURNO");
@@ -117,6 +119,10 @@ public class MenuModificarPersonalUI extends MenuAbstracto {
                         horario = HorarioLaboral.NOCTURNO;
                         horarioIngresado=true;
                         break;
+                    case "":
+                        horario = pl1.getHorarioLaboral();
+                        horarioIngresado=true;
+                        break;
                     default:
                         System.out.println("Horario invalido");
                 }
@@ -126,7 +132,7 @@ public class MenuModificarPersonalUI extends MenuAbstracto {
             boolean rolIngresado=false;
             Roles rol = null;
             while(!rolIngresado){
-                System.out.println("Seleccione  un rol: ");
+                System.out.println("Seleccione  un rol o presione Enter para mantener: ");
                 System.out.println("1.Recepcionista");
                 System.out.println("2.Medico");
                 opcion = scanner.nextLine();
@@ -139,12 +145,22 @@ public class MenuModificarPersonalUI extends MenuAbstracto {
                         rol = Roles.MEDICO;
                         rolIngresado=true;
                         break;
+                    case "":
+                        rol = pl1.getRol();
+                        rolIngresado=true;
+                        break;
                     default:
                         System.out.println("Rol invalido");
                 }
             }
             pl1.setRol(rol);
 
+            serviceP.validarPersona(p1);
+            serviceU.validarUsuario(u1);
+            servicePl.validarPersonal(pl1);
+
+            serviceP.modificar(p1);
+            serviceU.modificar(u1);
 
             if(servicePl.modificar(pl1)){
                 System.out.println("El personal fue modificado correctamente");

@@ -21,7 +21,7 @@ public class UsuarioService {
         this.coleccionU = new UsuarioColeccion();
     }
 
-    public int crearUsuario(Usuario u) {
+    public void validarUsuario(Usuario u) {
         if (u == null) {
             throw new ParametroNullException("El usuario es NULO");
         }
@@ -58,18 +58,14 @@ public class UsuarioService {
             throw new ParametroInvalidoException("El email debe terminar con \".com\" ");
         }
 
-        //TODO que tenga 5 digitos ademas del @gmail.com
-        //TODO el mail no se puede repetir
-        //TODO el dni no se puede repetir
+        Usuario existente = dao.findBYEmail(u.getEmail());
+        if (existente != null && !existente.getId().equals(u.getId())) {
+            throw new ParametroInvalidoException("Ya existe un usuario registrado con ese email");
+        }
+    }
 
-//EMAIL:
-
-        //tiene que tener al menos @gmail.com
-        //no se puede repetir, si ya esta registrado avisar
-        //
-//CONTRASEÑA
-        //Al menos 1 numero y 1 letra
-        //entre 5 y 8 caracteres
+    public int crearUsuario(Usuario u) {
+        validarUsuario(u);
 
         int idAux= dao.insertar(u);
         if(idAux!=-1){
@@ -81,45 +77,7 @@ public class UsuarioService {
 
 
     public Boolean modificar(Usuario u){
-        if (u == null) {
-            throw new ParametroNullException("El usuario es NULO");
-        }
-        if (u.getEmail() == null) {
-            throw new ParametroNullException("El email es NULO");
-        }
-        if (u.getPassword() == null) {
-            throw new ParametroNullException("La contraseña es NULA");
-        }
-        if (u.getDniPersona() == null) {
-            throw new ParametroNullException("El dni es NULO");
-        }
-        if (u.getPassword().length() < 5 || u.getPassword().length() > 8) {
-            throw new ParametroInvalidoException("La contraseña debe tener entre 5 y 8 digitos");
-        }
-        Boolean tieneLetra = false;
-        Boolean tieneNumero = false;
-
-        for(char letra : u.getPassword().toUpperCase().toCharArray()) {
-            if ((letra >= 'A' && letra <= 'Z')) {
-                tieneLetra=true;
-            }
-            if((letra>='0' && letra<='9')){
-                tieneNumero=true;
-            }
-        }
-        if(!(tieneLetra && tieneNumero)){
-            throw new ParametroInvalidoException("La contraseña tiene que tener al menos una letra y un numero");
-        }
-        if(!(u.getEmail().contains("@"))){
-            throw new ParametroInvalidoException("El email debe tener un @");
-        }
-        if(!(u.getEmail().endsWith(".com"))){
-            throw new ParametroInvalidoException("El email debe terminar con \".com\" ");
-        }
-
-        //TODO que tenga 5 digitos ademas del @gmail.com
-        //TODO el mail no se puede repetir
-        //TODO el dni no se puede repetir
+        validarUsuario(u);
 
         Boolean daoBool= dao.modificar(u);
         if(daoBool==true){
@@ -131,7 +89,15 @@ public class UsuarioService {
 
     public Boolean eliminar(Usuario u) throws SQLException {
 
-        //TODO no tiene que ser NULL, TIENE Q EXISTIR
+        if (u == null) {
+            throw new ParametroNullException("El usuario es NULO");
+        }
+        if (u.getId() == null || u.getId() <= 0) {
+            throw new ParametroInvalidoException("El id de usuario es invalido");
+        }
+        if (dao.findBYID(u.getId()) == null) {
+            throw new ParametroInvalidoException("El usuario no existe");
+        }
 
         boolean daoBool= dao.eliminar(u);
         if(daoBool){
@@ -147,13 +113,11 @@ public class UsuarioService {
             throw new ParametroNullException("El ID es NULO");
         }
 
-        boolean coleccionBool= coleccionU.buscarUsuario(id);
-        if(coleccionBool){
-            Usuario u = dao.findBYID(id);
-           return u;
+        Usuario u = dao.findBYID(id);
+        if (u != null) {
+            coleccionU.agregarUsuarios(u);
         }
-
-        return null;
+        return u;
     }
 
 
@@ -180,6 +144,9 @@ public class UsuarioService {
     public void listarUsuario() {
 
         ArrayList<Usuario> u = dao.listarUsuarios();
+        if (u == null) {
+            return;
+        }
         for (Usuario uu : u) {
             coleccionU.agregarUsuarios(uu);
         }

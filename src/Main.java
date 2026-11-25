@@ -152,8 +152,8 @@ void main() {
                 ui.setDatos(datos);
                 interfaz = ui.mostrarInterfaz();
                 break;
-            case TipoInterfaz.MENU_MODIFICAR_FICHAS_MEDICAS:
-                ui = new MenuVerTurnosMedicoUI();
+            case TipoInterfaz.MENU_VER_FICHAS_MEDICAS_MEDICO:
+                ui = new MenuVerFichasMedicasMedicoUI();
                 ui.setDatos(datos);
                 interfaz = ui.mostrarInterfaz();
                 break;
@@ -176,6 +176,9 @@ void main() {
                 ui = new MenuVerTurnosRecepcionistaUI();
                 ui.setDatos(datos);
                 interfaz = ui.mostrarInterfaz();
+                break;
+            default:
+                interfaz = TipoInterfaz.MENU_PRINCIPAL;
                 break;
         }
 

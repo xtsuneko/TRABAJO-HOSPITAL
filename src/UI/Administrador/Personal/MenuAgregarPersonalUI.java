@@ -33,23 +33,11 @@ public class MenuAgregarPersonalUI extends MenuAbstracto {
             System.out.println("Ingrese el numero telefonico: ");
             String numeroTelefonico = scanner.nextLine();
 
-            Persona p1 = new Persona(nombre, apellido, dni, numeroTelefonico);
-
-            PersonaService serviceP = new PersonaService();
-
-            serviceP.crearPersona(p1);
-
             System.out.println("Ingrese el email: ");
             String email = scanner.nextLine();
 
             System.out.println("Ingrese la contraseña: ");
             String password = scanner.nextLine();
-
-            Usuario u1 = new Usuario(email, password, p1.getDni());
-
-            UsuarioService serviceU = new UsuarioService();
-
-            int id = serviceU.crearUsuario(u1);
 
             System.out.println("Ingrese el sueldo del personal: ");
             Double sueldo;
@@ -110,9 +98,29 @@ public class MenuAgregarPersonalUI extends MenuAbstracto {
             }
 
             
-            Personal pl1 = new Personal(sueldo, horario, u1.getIdUsuario(), rol);
+            Persona p1 = new Persona(nombre, apellido, dni, numeroTelefonico);
+            Usuario u1 = new Usuario(email, password, p1.getDni());
+            Personal pl1 = new Personal(sueldo, horario, 0, rol);
 
+            PersonaService serviceP = new PersonaService();
+            UsuarioService serviceU = new UsuarioService();
             PersonalService servicePl = new PersonalService();
+
+            serviceP.validarPersonaNueva(p1);
+            serviceU.validarUsuario(u1);
+            servicePl.validarPersonal(pl1);
+
+            serviceP.crearPersona(p1);
+
+            int id = serviceU.crearUsuario(u1);
+            if (id == -1) {
+                System.out.println("No pudo crearse el usuario del personal");
+                System.out.println("Presione cualquier tecla para regresar atras...");
+                scanner.nextLine();
+                return TipoInterfaz.MENU_GESTION_PERSONAL;
+            }
+
+            pl1.setIdUsuario(id);
 
             if(servicePl.crearPersonal(pl1) > 0){
                 System.out.println("El personal fue creado correctamente");

@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class TurnoDao {
@@ -89,7 +91,7 @@ public class TurnoDao {
 
     public Turno findBYID(int id) {
 
-        String sql = "SELECT t.id_cliente, t.id_personal, t.fecha, t.horario, t.motivo_consulta,  \n" +
+        String sql = "SELECT t.id, t.activo, t.id_cliente, t.id_personal, t.fecha, t.horario, t.motivo_consulta,  \n" +
                 "c.direccion, c.id_usuario AS id_usuario_cliente, \n" +
                 "pl.sueldo, pl.horario_laboral_id, pl.id_rol, pl.id_usuario AS id_usuario_personal,\n" +
                 "pc.nombre AS nombre_cliente, pc.dni AS dni_cliente, pc.apellido AS apellido_cliente, pc.telefono AS telefono_cliente,\n" +
@@ -119,7 +121,7 @@ public class TurnoDao {
 
                             resultSet.getDouble("sueldo"),
                             resultSet.getInt("horario_laboral_id"),
-                            resultSet.getInt("id"),
+                            resultSet.getInt("id_personal"),
                             resultSet.getInt("id_usuario_personal"),
                             resultSet.getInt("id_rol"));
 
@@ -135,7 +137,7 @@ public class TurnoDao {
                     Cliente c1 = new Cliente(
 
                             resultSet.getString("direccion"),
-                            resultSet.getInt("id"),
+                            resultSet.getInt("id_cliente"),
                             resultSet.getInt("id_usuario_cliente"));
 
                     Persona p2 = new Persona(
@@ -148,6 +150,8 @@ public class TurnoDao {
                     c1.setPersona(p2);
                     t.setCliente(c1);
                     t.setMedico(pl);
+                    t.setId(resultSet.getInt("id"));
+                    t.setActivo(resultSet.getBoolean("activo"));
 
                     return t;
                 } else {
@@ -167,7 +171,7 @@ public class TurnoDao {
 
     public Turno findBYIDYIDCliente(int id, int idCliente) {
 
-        String sql = "SELECT t.id_cliente, t.id_personal, t.fecha, t.horario, t.motivo_consulta,  \n" +
+        String sql = "SELECT t.id, t.activo, t.id_cliente, t.id_personal, t.fecha, t.horario, t.motivo_consulta,  \n" +
                 "c.direccion, c.id_usuario AS id_usuario_cliente, \n" +
                 "pl.sueldo, pl.horario_laboral_id, pl.id_rol, pl.id_usuario AS id_usuario_personal,\n" +
                 "pc.nombre AS nombre_cliente, pc.dni AS dni_cliente, pc.apellido AS apellido_cliente, pc.telefono AS telefono_cliente,\n" +
@@ -198,7 +202,7 @@ public class TurnoDao {
 
                             resultSet.getDouble("sueldo"),
                             resultSet.getInt("horario_laboral_id"),
-                            resultSet.getInt("id"),
+                            resultSet.getInt("id_personal"),
                             resultSet.getInt("id_usuario_personal"),
                             resultSet.getInt("id_rol"));
 
@@ -214,7 +218,7 @@ public class TurnoDao {
                     Cliente c1 = new Cliente(
 
                             resultSet.getString("direccion"),
-                            resultSet.getInt("id"),
+                            resultSet.getInt("id_cliente"),
                             resultSet.getInt("id_usuario_cliente"));
 
                     Persona p2 = new Persona(
@@ -227,6 +231,8 @@ public class TurnoDao {
                     c1.setPersona(p2);
                     t.setCliente(c1);
                     t.setMedico(pl);
+                    t.setId(resultSet.getInt("id"));
+                    t.setActivo(resultSet.getBoolean("activo"));
 
                     return t;
                 } else {
@@ -247,7 +253,7 @@ public class TurnoDao {
     public ArrayList<Turno> findBYIDMedico(int id) {
 
         ArrayList<Turno> listaTurnos=new ArrayList<>();
-        String sql = "SELECT t.id_cliente, t.id_personal, t.fecha, t.horario, t.motivo_consulta,  \n" +
+        String sql = "SELECT t.id, t.activo, t.id_cliente, t.id_personal, t.fecha, t.horario, t.motivo_consulta,  \n" +
                 "c.direccion, c.id_usuario AS id_usuario_cliente, \n" +
                 "pl.sueldo, pl.horario_laboral_id, pl.id_rol, pl.id_usuario AS id_usuario_personal,\n" +
                 "pc.nombre AS nombre_cliente, pc.dni AS dni_cliente, pc.apellido AS apellido_cliente, pc.telefono AS telefono_cliente,\n" +
@@ -277,7 +283,7 @@ public class TurnoDao {
 
                             resultSet.getDouble("sueldo"),
                             resultSet.getInt("horario_laboral_id"),
-                            resultSet.getInt("id"),
+                            resultSet.getInt("id_personal"),
                             resultSet.getInt("id_usuario_personal"),
                             resultSet.getInt("id_rol"));
 
@@ -293,7 +299,7 @@ public class TurnoDao {
                     Cliente c1 = new Cliente(
 
                             resultSet.getString("direccion"),
-                            resultSet.getInt("id"),
+                            resultSet.getInt("id_cliente"),
                             resultSet.getInt("id_usuario_cliente"));
 
                     Persona p2 = new Persona(
@@ -306,6 +312,8 @@ public class TurnoDao {
                     c1.setPersona(p2);
                     t.setCliente(c1);
                     t.setMedico(pl);
+                    t.setId(resultSet.getInt("id"));
+                    t.setActivo(resultSet.getBoolean("activo"));
 
                     listaTurnos.add(t);
                 }
@@ -324,7 +332,7 @@ public class TurnoDao {
 
     public Turno findBYIDCliente(int id) {
 
-        String sql = "SELECT t.id_cliente, t.id_personal, t.fecha, t.horario, t.motivo_consulta,  \n" +
+        String sql = "SELECT t.id, t.activo, t.id_cliente, t.id_personal, t.fecha, t.horario, t.motivo_consulta,  \n" +
                 "c.direccion, c.id_usuario AS id_usuario_cliente, \n" +
                 "pl.sueldo, pl.horario_laboral_id, pl.id_rol, pl.id_usuario AS id_usuario_personal,\n" +
                 "pc.nombre AS nombre_cliente, pc.dni AS dni_cliente, pc.apellido AS apellido_cliente, pc.telefono AS telefono_cliente,\n" +
@@ -354,7 +362,7 @@ public class TurnoDao {
 
                             resultSet.getDouble("sueldo"),
                             resultSet.getInt("horario_laboral_id"),
-                            resultSet.getInt("id"),
+                            resultSet.getInt("id_personal"),
                             resultSet.getInt("id_usuario_personal"),
                             resultSet.getInt("id_rol"));
 
@@ -370,7 +378,7 @@ public class TurnoDao {
                     Cliente c1 = new Cliente(
 
                             resultSet.getString("direccion"),
-                            resultSet.getInt("id"),
+                            resultSet.getInt("id_cliente"),
                             resultSet.getInt("id_usuario_cliente"));
 
                     Persona p2 = new Persona(
@@ -383,6 +391,8 @@ public class TurnoDao {
                     c1.setPersona(p2);
                     t.setCliente(c1);
                     t.setMedico(pl);
+                    t.setId(resultSet.getInt("id"));
+                    t.setActivo(resultSet.getBoolean("activo"));
 
                     return t;
                 } else {
@@ -403,7 +413,7 @@ public class TurnoDao {
     public ArrayList<Turno> listarTurnosPorCliente(Integer idCliente) {
 
         ArrayList<Turno> listaTurnos = new ArrayList<>();
-        String sql = "SELECT t.id_cliente, t.id_personal, t.fecha, t.horario, t.motivo_consulta,  \n" +
+        String sql = "SELECT t.id, t.activo, t.id_cliente, t.id_personal, t.fecha, t.horario, t.motivo_consulta,  \n" +
                 "c.direccion, c.id_usuario AS id_usuario_cliente, \n" +
                 "pl.sueldo, pl.horario_laboral_id, pl.id_rol, pl.id_usuario AS id_usuario_personal,\n" +
                 "pc.nombre AS nombre_cliente, pc.dni AS dni_cliente, pc.apellido AS apellido_cliente, pc.telefono AS telefono_cliente,\n" +
@@ -433,7 +443,7 @@ public class TurnoDao {
 
                             resultSet.getDouble("sueldo"),
                             resultSet.getInt("horario_laboral_id"),
-                            resultSet.getInt("id"),
+                            resultSet.getInt("id_personal"),
                             resultSet.getInt("id_usuario_personal"),
                             resultSet.getInt("id_rol"));
 
@@ -449,7 +459,7 @@ public class TurnoDao {
                     Cliente c1 = new Cliente(
 
                             resultSet.getString("direccion"),
-                            resultSet.getInt("id"),
+                            resultSet.getInt("id_cliente"),
                             resultSet.getInt("id_usuario_cliente"));
 
                     Persona p2 = new Persona(
@@ -462,6 +472,8 @@ public class TurnoDao {
                     c1.setPersona(p2);
                     t.setCliente(c1);
                     t.setMedico(pl);
+                    t.setId(resultSet.getInt("id"));
+                    t.setActivo(resultSet.getBoolean("activo"));
 
                     listaTurnos.add(t);
                 }
@@ -481,7 +493,7 @@ public class TurnoDao {
     public ArrayList<Turno> listarTurnos() {
 
         ArrayList<Turno> listaTurnos = new ArrayList<>();
-        String sql = "SELECT t.id_cliente, t.id_personal, t.fecha, t.horario, t.motivo_consulta, \n" +
+        String sql = "SELECT t.id, t.activo, t.id_cliente, t.id_personal, t.fecha, t.horario, t.motivo_consulta, \n" +
                 "c.direccion, c.id_usuario AS id_usuario_cliente, \n" +
                 "pl.sueldo, pl.horario_laboral_id, pl.id_rol, pl.id_usuario AS id_usuario_personal,\n" +
                 "pc.nombre AS nombre_cliente, pc.dni AS dni_cliente, pc.apellido AS apellido_cliente, pc.telefono AS telefono_cliente,\n" +
@@ -510,7 +522,7 @@ public class TurnoDao {
 
                             resultSet.getDouble("sueldo"),
                             resultSet.getInt("horario_laboral_id"),
-                            resultSet.getInt("id"),
+                            resultSet.getInt("id_personal"),
                             resultSet.getInt("id_usuario_personal"),
                             resultSet.getInt("id_rol"));
 
@@ -526,7 +538,7 @@ public class TurnoDao {
                     Cliente c1 = new Cliente(
 
                             resultSet.getString("direccion"),
-                            resultSet.getInt("id"),
+                            resultSet.getInt("id_cliente"),
                             resultSet.getInt("id_usuario_cliente"));
 
                     Persona p2 = new Persona(
@@ -539,6 +551,8 @@ public class TurnoDao {
                     c1.setPersona(p2);
                     t.setCliente(c1);
                     t.setMedico(pl);
+                    t.setId(resultSet.getInt("id"));
+                    t.setActivo(resultSet.getBoolean("activo"));
 
                     listaTurnos.add(t);
                 }
@@ -553,6 +567,29 @@ public class TurnoDao {
         }
 
         return listaTurnos;
+    }
+
+    public boolean existeTurnoMedico(int idPersonal, LocalDate fecha, LocalTime horario, int idTurnoExcluido) {
+
+        String sql = "SELECT id FROM turno WHERE id_personal = ? AND fecha = ? AND horario = ? AND id <> ? AND activo = TRUE";
+        try (Connection con = ConexionDB.connect()) {
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setInt(1, idPersonal);
+            preparedStatement.setDate(2, java.sql.Date.valueOf(fecha));
+            preparedStatement.setTime(3, java.sql.Time.valueOf(horario));
+            preparedStatement.setInt(4, idTurnoExcluido);
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                return resultSet.next();
+            }catch(SQLException e) {
+                System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } catch(SQLException e) {
+            System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
 }

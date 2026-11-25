@@ -95,18 +95,19 @@ public class Turno extends ClaseBaseBddGenerica<Integer> {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Turno turno = (Turno) o;
-        return idCliente == turno.idCliente && idPersonal == turno.idPersonal && Objects.equals(cliente, turno.cliente) && Objects.equals(medico, turno.medico) && Objects.equals(fechaTurno, turno.fechaTurno) && Objects.equals(horaTurno, turno.horaTurno) && Objects.equals(motivoConsulta, turno.motivoConsulta);
+        return Objects.equals(getId(), turno.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idCliente, idPersonal, cliente, medico, fechaTurno, horaTurno, motivoConsulta);
+        return Objects.hash(getId());
     }
 
 
     @Override
     public String toString() {
         return "\nTurno:" +
+                "\n\tID=" + this.getId() +
                 "\n\tidCliente=" + idCliente +
                 "\n\tidPersonal=" + idPersonal +
                 "\n\tcliente=" + cliente +

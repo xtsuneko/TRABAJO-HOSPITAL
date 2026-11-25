@@ -34,6 +34,7 @@ public class MenuVerPersonalUI extends MenuAbstracto {
             System.out.println(pl1);
         }
         System.out.println("Presione cualquier tecla para volver atras...");
+        scanner.nextLine();
 
         return TipoInterfaz.MENU_GESTION_PERSONAL;
     }

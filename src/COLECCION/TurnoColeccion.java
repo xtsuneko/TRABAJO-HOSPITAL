@@ -2,6 +2,7 @@ package COLECCION;
 import POJO.Turno;
 import POJO.Usuario;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class TurnoColeccion {
@@ -60,7 +61,7 @@ public class TurnoColeccion {
 
 
         for(Turno t : listaTurno){
-            if(t.getId()==id){
+            if(Objects.equals(t.getId(), id)){
                 System.out.println("Turno encontrado: ");
                 System.out.println(t);
                 return true;

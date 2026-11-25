@@ -60,12 +60,12 @@ public class MenuModificarTurnoUI extends MenuAbstracto {
 
             Personal pl1 = new Personal();
 
-            pl1=servicePl.findPersonalByID(idMedico);
+            pl1=servicePl.findMedicoByID(idMedico);
             if (pl1 == null) {
                 System.out.println("No se encontro el medico en el sistema");
                 System.out.println("Presione cualquier tecla para regresar atras...");
                 scanner.nextLine();
-                return TipoInterfaz.MENU_AGENDAR_TURNO;
+                return TipoInterfaz.MENU_CLIENTE;
             }
             t1.setIdPersonal(idMedico);
 
@@ -91,7 +91,7 @@ public class MenuModificarTurnoUI extends MenuAbstracto {
                     horario = LocalTime.parse(scanner.nextLine());
                     horaCapturada = true;
                 }catch (DateTimeParseException e){
-                    System.out.println("La hora ingresada no es valida, el formato deberia ser: AAAA-MM-DD");
+                    System.out.println("La hora ingresada no es valida, el formato deberia ser: HH:MM");
                 }
             }
 
@@ -113,8 +113,10 @@ public class MenuModificarTurnoUI extends MenuAbstracto {
             return TipoInterfaz.MENU_CLIENTE;
         } catch (ParametroNullException | ParametroInvalidoException e) {
             System.out.println(e.getMessage());
+            System.out.println("Presione cualquier tecla para regresar atras...");
+            scanner.nextLine();
         }
-        return TipoInterfaz.MENU_AGENDAR_TURNO;
+        return TipoInterfaz.MENU_CLIENTE;
     }
 
 

@@ -43,6 +43,8 @@ public class TurnoService {
             throw new ParametroInvalidoException("No se puede crear un turno en un horario ya pasado");
         }
 
+        validarMedicoDisponible(t, 0);
+
         t.setActivo(true);
 
         int idAux = dao.insertarTurno(t);
@@ -68,13 +70,14 @@ public class TurnoService {
             throw new ParametroInvalidoException("El motivo de consulta no puede estar vacio");
         }
 
-        // Verifica que el turno exista en la BD y no este dado de baja logica
         Turno existente = dao.findBYID(t.getId());
+        if (existente == null) {
+            throw new ParametroInvalidoException("No existe un turno activo con el ID: " + t.getId());
+        }
         if (!existente.isActivo()) {
             throw new ParametroInvalidoException("No se puede modificar un turno dado de baja");
         }
 
-        // Validacion de fecha y horario al reprogramar/modificar
         LocalDate hoy = LocalDate.now();
         LocalTime ahora = LocalTime.now();
 
@@ -85,6 +88,7 @@ public class TurnoService {
             throw new ParametroInvalidoException("No se puede mover el turno a un horario ya pasado");
         }
 
+        validarMedicoDisponible(t, t.getId());
 
         Boolean daoBool = dao.modificar(t);
         if (daoBool == true) {
@@ -92,6 +96,18 @@ public class TurnoService {
         }
 
         return daoBool;
+    }
+
+    private void validarMedicoDisponible(Turno t, int idTurnoExcluido) {
+
+        PersonalService servicePl = new PersonalService();
+        if (servicePl.findMedicoByID(t.getIdPersonal()) == null) {
+            throw new ParametroInvalidoException("El ID ingresado no corresponde a un medico");
+        }
+
+        if (dao.existeTurnoMedico(t.getIdPersonal(), t.getFechaTurno(), t.getHoraTurno(), idTurnoExcluido)) {
+            throw new ParametroInvalidoException("El medico ya tiene un turno asignado en esa fecha y horario");
+        }
     }
 
     public Boolean eliminar(Turno t) throws SQLException {
@@ -175,7 +191,7 @@ public class TurnoService {
 
         ArrayList<Turno> t = dao.listarTurnosPorCliente(idCliente);
         if (t == null || t.isEmpty()) {
-            System.out.println("No se encontro al cliente en el sistema");
+            System.out.println("No se encontraron turnos para el cliente");
         } else {
             for (Turno tt : t) {
                 coleccionT.agregarTurno(tt);

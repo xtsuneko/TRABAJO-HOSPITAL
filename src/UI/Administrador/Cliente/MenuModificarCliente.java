@@ -34,6 +34,7 @@ public class MenuModificarCliente extends MenuAbstracto {
             if (c1 == null) {
                 System.out.println("No se encontro el cliente en el sistema");
                 System.out.println("Presione cualquier tecla para regresar atras...");
+                scanner.nextLine();
                 return TipoInterfaz.MENU_GESTION_CLIENTES;
             }
 
@@ -63,8 +64,6 @@ public class MenuModificarCliente extends MenuAbstracto {
                 p1.setTelefono(numeroTelefonico);
             }
 
-            serviceP.modificar(p1);
-
             System.out.println("Ingrese el email o deje en blanco para mantener " + u1.getEmail() + ": ");
             String email = scanner.nextLine();
             if (!email.isEmpty()) {
@@ -77,13 +76,18 @@ public class MenuModificarCliente extends MenuAbstracto {
                 u1.setPassword(password);
             }
 
-            serviceU.modificar(u1);
-
             System.out.println("Ingrese la direccion o deje en blanco para mantener " + c1.getDireccion() + ": ");
             String direccion = scanner.nextLine();
             if(!direccion.isEmpty()){
                 c1.setDireccion(direccion);
             }
+
+            serviceP.validarPersona(p1);
+            serviceU.validarUsuario(u1);
+            serviceC.validarCliente(c1);
+
+            serviceP.modificar(p1);
+            serviceU.modificar(u1);
 
             if(serviceC.modificar(c1)){
                 System.out.println("El cliente fue modificado correctamente");
